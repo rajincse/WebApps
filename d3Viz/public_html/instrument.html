@@ -1,0 +1,244 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+<style>
+    .node {
+        stroke: #fff;
+        stroke-width: 1.5px;
+    }
+    .link {
+        stroke: #999;
+        stroke-opacity: .6;
+    }
+</style>
+
+<title>Insert title here</title>
+</head>
+<body onload="init()">
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+    <script>
+    
+    var d3nodes;
+    var d3links = "bla";
+    var pickedNode = null;
+    var drg = null;
+    var trans = [0,0];
+    var zoom = 1;
+
+    var transform = "translate(0,0)";
+    
+    function sendCommands(c){
+    	var s = "http://localhost:9999/apa/bla.txt?";
+        
+    	for (var i=0; i<c.length; i++)
+    		s+= "command=" + c[i];
+    	d3.tsv(s, function(error, data) {
+           if (error) throw error;
+            if(data)
+            {
+                console.log(data);
+            }
+        });	
+    }
+    
+    var screenX = 0;
+    var screenY = 0;
+    
+    var visHeight = 450;
+    var visWidth = 1000;
+    
+    var svg = null;
+    
+    function windowReshaped(){
+    	sendCommands(["window_" + screenX + "_" + screenY + "_" + Math.min(window.innerWidth,visWidth) + "_" + Math.min(window.innerHeight, visHeight)]);
+    }
+    
+	window.onmousemove = function(e){
+		
+		
+		var newscreenx = e.screenX - e.clientX - document.getElementById("mainsvg").getBoundingClientRect().left ;
+		var newscreeny = e.screenY - e.clientY - document.getElementById("mainsvg").getBoundingClientRect().top ;;
+		if (newscreenx != screenX || newscreeny != screenY){
+			screenX = newscreenx; screenY = newscreeny;
+			windowReshaped();
+		}
+		//sendCommands(["gaze_"+e.screenX + "_" + e.screenY]);
+	}
+	
+	window.onblur = function(){
+		sendCommands(["lostfocus"]);
+	}
+	
+	window.onfocus = function(){
+		sendCommands(["gainedfocus"]);
+	}
+	
+    
+        function init() {
+
+            var svg = d3.select("body").append("svg")
+            		.attr("id","mainsvg")
+                    .attr("width", visWidth)
+                    .attr("height", visHeight)
+                    .style("background-color", "#EEEEEE")
+                    .on("mousedown", function(){
+                    	drg = d3.mouse(this);                 
+                    	
+                    })
+                    .on("dblclick", function(){
+                    	if (d3.event.button == 0){
+                    		transform += " scale(1.1)";
+                    		zoom *= 1.1;
+                    		sendCommands([["scale_1.1_1.1"]])
+                    	}
+                    	else{ 
+                    		transform += " scale(0.9)";
+                    		zoom *= 0.9;
+                    		sendCommands([["scale_0.9_0.9"]])
+                    	}
+                    	d3.select("#group").attr("transform", transform);
+             
+           			 })
+                    .on("mouseup", function(){
+                        	 pickedNode = null;
+                        	
+                        	 if (drg != null){                       
+                        		var coordinates = d3.mouse(this);
+        	                	var x = coordinates[0];
+        	                	var y = coordinates[1];        	                	
+        	                	
+                     			trans[0] += x - drg[0];
+                    			trans[1] += y - drg[1];
+                    			
+                    			transform += " translate(" + ((x-drg[0])/zoom) + "," + ((y-drg[1])/zoom) + ")";
+                    			sendCommands(["translate_" + ((x-drg[0])/zoom) + "_" + ((y-drg[1])/zoom)])
+        	                
+                        	 }
+                        	 drg = null;
+                         })
+                    .on("mousemove", function(d){
+                  
+                    	 if (pickedNode == null){
+    	                   	 var coordinates = d3.mouse(this);
+    	                	 var x = coordinates[0];
+    	                	 var y = coordinates[1];
+                    		 if (drg != null){                    			
+                    				d3.select("#group").attr("transform", transform + " translate("+ ((x-drg[0])/zoom) + "," + ((y-drg[1])/zoom) + ")");
+                    	
+                    		 }
+                    		
+                    		 return;
+                    	 }
+                    	 
+
+	                   	 var coordinates = d3.mouse(d3.select("#group")[0][0]);
+	                	 var x = coordinates[0];
+	                	 var y = coordinates[1];
+	                	 
+                        	 pickedNode.x = x;
+                        	 pickedNode.y = y;
+                        	 
+                        	 
+                        	 d3.selectAll("#"+pickedNode.label).attr("cx", x).attr("cy",y);
+                        	 
+                        	 var lnk = d3.selectAll(".link");    	
+                        	 lnk
+                        	 .style("stroke", "blue")
+                        	 .attr("x1", function(){return d3.select(this).property("start").x})
+                             .attr("y1", function(){return d3.select(this).property("start").y})
+                             .attr("x2", function(){return d3.select(this).property("end").x})
+                             .attr("y2", function(){return d3.select(this).property("end").y});
+                         });
+            
+            var g = svg.append("g").attr("id", "group");
+          
+            
+            d3.tsv("graphnodes.txt", function(error, data) {
+
+            	var nodes = [];
+            	for (var i=0; i<data.length; i++){
+            		var node = new Object();
+            		node.label = data[i].label;
+            		node.x = parseInt(data[i].x);
+            		node.y = parseInt(data[i].y);
+            		nodes.push(node);
+            	}
+            	   
+            	
+                d3nodes = g.selectAll(".node")
+                        .data(nodes)
+                        .enter().append("circle")
+                        .attr("id", function(d){
+                        	sendCommands(["addElem_" + d.label + "_" + (d.x-10) + "_" + (d.y-10) + "_20_20",
+                        	              "addCategory_"+ d.label]);
+                        	return d.label;
+                        	})
+                        .on("mouseover", function(){
+                        	 d3.select(this)
+                             .style("fill","red");})
+                         .on("mouseout", function(){
+                        	 d3.select(this)
+                             .style("fill","gray");})
+                         .on("mousedown", function(d){
+                        	 pickedNode = d;
+                        	 d3.event.stopPropagation();
+                         		})                      	 
+                        .attr("class", "node")
+                        .attr("r", 10)
+                        .attr("cx", function(d){return d.x})
+                        .attr("cy", function(d){return d.y})
+                        .style("fill", function(d) {
+                            return "gray";
+                        });
+                
+                d3nodes.append("title")
+                        .text(function(d) {
+                            return d.name;
+                        });
+                
+                d3.tsv("graphedges.txt", function(error, edgedata){
+                	var edges = [];
+                	for (var i=0; i<edgedata.length; i++){
+                		var edge = new Object();
+                		for (var j=0; j<nodes.length; j++){
+                			if (nodes[j].label === edgedata[i].start)
+                				edge.start = nodes[j];
+                			else if (nodes[j].label === edgedata[i].end)
+                				edge.end = nodes[j];
+                		}
+                		edges.push(edge);
+                	}
+                	
+                	
+                	 var d3links = g.selectAll(".link")
+                     .data(edges)
+                     .enter().append("line")
+                     .attr("id", function(d){
+                    	 sendCommands(["setTransition_"+ d.start.label + "_" + d.end.label + "_" + 2]);
+                    	 return "link_" + d.start.label + d.end.label;
+                     })
+                     .attr("class", "link")
+                     .property("start", function(d){return d.start})
+                     .property("end", function(d){return d.end})
+                     .attr("x1", function(d){return d.start.x})
+                     .attr("y1", function(d){return d.start.y})
+                     .attr("x2", function(d){return d.end.x})
+                     .attr("y2", function(d){return d.end.y});
+                });
+                
+            });
+        }
+      
+        
+    </script>
+
+<div id = "mainDiv"></div>
+</body>
+</html>
+
+
+
+

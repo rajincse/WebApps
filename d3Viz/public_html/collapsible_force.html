@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <title>D3-Collapsible Force Layout </title>
         <link href="http://www.cs.fiu.edu/images/scislogo.png" rel="shortcut icon">
         <style>
 
@@ -22,17 +23,24 @@
                 stroke: #9ecae1;
                 stroke-width: 1.5px;
             }
+            line.selected-link
+            {
+                fill: none;
+                stroke: #ff0000;
+                stroke-width: 1.5px;
+            }
+            
 
         </style>
     </head>
 
 
     <body>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
         <script>
 
-            var width = 960,
-                    height = 500,
+            var width = 1280,
+                    height = 960,
                     root;
 
             var force = d3.layout.force()
@@ -49,13 +57,27 @@
             var link = svg.selectAll(".link"),
                     node = svg.selectAll(".node");
 
-            d3.json("data/force_graph.json", function (error, json) {
+            d3.json("data/flare.json", function (error, json) {
                 if (error)
                     throw error;
 
                 root = json;
                 update();
             });
+            
+            function sendCommands(c){
+                var s = "http://localhost:9999/apa/bla.txt?";
+
+                for (var i=0; i<c.length; i++)
+                        s+= "command=" + c[i];
+//                d3.tsv(s, function(error, data) {
+//                   if (error) throw error;
+//                    if(data)
+//                    {
+//                        console.log(data);
+//                    }
+//                });	
+            }
 
             function update() {
                 var nodes = flatten(root),
@@ -75,7 +97,16 @@
                 link.exit().remove();
 
                 link.enter().insert("line", ".node")
-                        .attr("class", "link");
+                        .attr("class", "link")
+                        .attr("source", function(d)
+                {
+                        return d.source.name;
+                })
+                     .attr("target", function(d)
+                {
+                        return d.target.name;
+                })
+                ;
 
                 // Update nodes.
                 node = node.data(nodes, function (d) {
@@ -87,6 +118,21 @@
                 var nodeEnter = node.enter().append("g")
                         .attr("class", "node")
                         .on("click", click)
+                        .on("mouseover", function(d){
+                        	d3.select(this).select('circle').style("fill","red");
+                                
+                               d3.select('svg')
+                                           .selectAll('line[source="'+d.name+'"],line[target="'+d.name+'"]')
+                                           .attr('class','selected-link');
+                                   
+                        })
+                        .on("mouseout", function(){
+                        	d3.select(this).select('circle').style("fill",color);
+                                d3.select('svg')
+                                           .selectAll('line')
+                                           .attr('class','link');
+                        })
+                                
                         .call(force.drag);
 
                 nodeEnter.append("circle")
