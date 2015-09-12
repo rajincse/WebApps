@@ -1,5 +1,5 @@
 // Get JSON data
-treeJSON = d3.json("data/force_graph.json", function(error, treeData) {
+treeJSON = d3.json("data/flare.json", function(error, treeData) {
 
     // Calculate total nodes, max label length
     var totalNodes = 0;
@@ -380,7 +380,25 @@ treeJSON = d3.json("data/force_graph.json", function(error, treeData) {
             .attr("transform", function(d) {
                 return "translate(" + source.y0 + "," + source.x0 + ")";
             })
-            .on('click', click);
+            .on('click', click)
+            .on("mouseover", function(d){
+                        	d3.select(this).select('circle')
+                               .style("fill", '#ff0000');
+                                
+                               d3.select('svg').select('g')
+                                           .selectAll('path[source="'+d.name+'"],path[target="'+d.name+'"]')
+                                           .attr('class','selected-link');
+                                   
+                        })
+            .on("mouseout", function(d){
+                        	d3.select(this).select('circle').style("fill", function(d) {
+                                    return d._children ? "lightsteelblue" : "#fff";
+                                });
+                                d3.select('svg').select('g')
+                                           .selectAll('path[source="'+d.name+'"],path[target="'+d.name+'"]')
+                                           .attr('class','link');
+                        })
+            ;
 
         nodeEnter.append("circle")
             .attr('class', 'nodeCircle')
@@ -462,7 +480,7 @@ treeJSON = d3.json("data/force_graph.json", function(error, treeData) {
             .style("fill-opacity", 0);
 
         // Update the links…
-        var link = svgGroup.selectAll("path.link")
+        var link = svgGroup.selectAll("path.link, path.selected-link")
             .data(links, function(d) {
                 return d.target.id;
             });
@@ -470,6 +488,8 @@ treeJSON = d3.json("data/force_graph.json", function(error, treeData) {
         // Enter any new links at the parent's previous position.
         link.enter().insert("path", "g")
             .attr("class", "link")
+            .attr('source', function(d) { return d.source.name;})
+            .attr('target', function(d) { return d.target.name;})
             .attr("d", function(d) {
                 var o = {
                     x: source.x0,
