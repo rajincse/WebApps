@@ -32,17 +32,19 @@
             
 
         </style>
+        <script src="js/instrument.js" type="text/javascript"></script>
     </head>
 
 
     <body>
         <script src="http://d3js.org/d3.v3.min.js"></script>
+        
         <script>
 
             var width = 1280,
                     height = 960,
                     root;
-
+            instrument.init(width, height);
             var force = d3.layout.force()
                     .linkDistance(80)
                     .charge(-120)
@@ -51,13 +53,14 @@
                     .on("tick", tick);
 
             var svg = d3.select("body").append("svg")
+                    .attr("id", "mainsvg")
                     .attr("width", width)
                     .attr("height", height);
 
             var link = svg.selectAll(".link"),
                     node = svg.selectAll(".node");
 
-            d3.json("data/flare.json", function (error, json) {
+            d3.json("data/force_small.json", function (error, json) {
                 if (error)
                     throw error;
 
@@ -65,19 +68,7 @@
                 update();
             });
             
-            function sendCommands(c){
-                var s = "http://localhost:9999/apa/bla.txt?";
 
-                for (var i=0; i<c.length; i++)
-                        s+= "command=" + c[i];
-//                d3.tsv(s, function(error, data) {
-//                   if (error) throw error;
-//                    if(data)
-//                    {
-//                        console.log(data);
-//                    }
-//                });	
-            }
 
             function update() {
                 var nodes = flatten(root),
@@ -118,6 +109,14 @@
                 var nodeEnter = node.enter().append("g")
                         .attr("class", "node")
                         .on("click", click)
+                        .attr('id', function(d)
+                        {
+                                instrument.sendCommands(["addElem_" + d.name + "_0_0_20_20",
+                        	              "addCategory_"+ d.name]);
+                                
+                                
+                                return d.name;
+                        })
                         .on("mouseover", function(d){
                         	d3.select(this).select('circle').style("fill","red");
                                 
@@ -165,6 +164,7 @@
                         });
 
                 node.attr("transform", function (d) {
+                    instrument.sendCommands(["reshapeElem_"+d.name+"_"+d.x+"_"+d.y]);
                     return "translate(" + d.x + "," + d.y + ")";
                 });
             }

@@ -1,5 +1,5 @@
 // Get JSON data
-treeJSON = d3.json("data/flare.json", function(error, treeData) {
+treeJSON = d3.json("data/force_small.json", function(error, treeData) {
 
     // Calculate total nodes, max label length
     var totalNodes = 0;
@@ -18,7 +18,8 @@ treeJSON = d3.json("data/flare.json", function(error, treeData) {
     // size of the diagram
     var viewerWidth = $(window).width();
     var viewerHeight = $(window).height();
-
+    instrument.init(viewerWidth, viewerHeight);
+    
     var tree = d3.layout.tree()
         .size([viewerHeight, viewerWidth]);
 
@@ -145,6 +146,7 @@ treeJSON = d3.json("data/flare.json", function(error, treeData) {
 
     // define the baseSvg, attaching a class for styling and the zoomListener
     var baseSvg = d3.select("#tree-container").append("svg")
+            .attr('id', 'mainsvg')
         .attr("width", viewerWidth)
         .attr("height", viewerHeight)
         .attr("class", "overlay")
@@ -376,8 +378,10 @@ treeJSON = d3.json("data/flare.json", function(error, treeData) {
         // Enter any new nodes at the parent's previous position.
         var nodeEnter = node.enter().append("g")
             .call(dragListener)
-            .attr("class", "node")
+            .attr("class","node")
             .attr("transform", function(d) {
+                instrument.sendCommands(["addElem_" + d.name + "_"+source.y0+"_"+ source.x0+"_20_20",
+                        	              "addCategory_"+ d.name ]);
                 return "translate(" + source.y0 + "," + source.x0 + ")";
             })
             .on('click', click)
@@ -458,6 +462,7 @@ treeJSON = d3.json("data/flare.json", function(error, treeData) {
         var nodeUpdate = node.transition()
             .duration(duration)
             .attr("transform", function(d) {
+                 instrument.sendCommands(["reshapeElem_"+d.name+"_"+d.y+"_"+d.x]);
                 return "translate(" + d.y + "," + d.x + ")";
             });
 
