@@ -1,5 +1,5 @@
 // Get JSON data
-treeJSON = d3.json("data/force_small.json", function(error, treeData) {
+treeJSON = d3.json("data/flare.json", function(error, treeData) {
 
     // Calculate total nodes, max label length
     var totalNodes = 0;
@@ -86,6 +86,7 @@ treeJSON = d3.json("data/force_small.json", function(error, treeData) {
             d3.select(domNode).select('g.node').attr("transform", "translate(" + translateX + "," + translateY + ")");
             zoomListener.scale(zoomListener.scale());
             zoomListener.translate([translateX, translateY]);
+            instrument.sendCommands(["translate_"+translateX+"_"+translateY, "scale_"+zoomListener.scale()+"_"+zoomListener.scale()]);
             panTimer = setTimeout(function() {
                 pan(domNode, speed, direction);
             }, 50);
@@ -96,6 +97,7 @@ treeJSON = d3.json("data/force_small.json", function(error, treeData) {
 
     function zoom() {
         svgGroup.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+        instrument.sendCommands(["translate_"+d3.event.translate[0]+"_"+d3.event.translate[1], "scale_"+d3.event.scale+"_"+d3.event.scale]);
     }
 
 
@@ -199,7 +201,10 @@ treeJSON = d3.json("data/force_small.json", function(error, treeData) {
             d.x0 += d3.event.dy;
             d.y0 += d3.event.dx;
             var node = d3.select(this);
-            node.attr("transform", "translate(" + d.y0 + "," + d.x0 + ")");
+            node.attr("transform", function(d){
+                instrument.sendCommands(["reshapeElem_"+d.name+"_"+d.y+"_"+d.x]);
+                return "translate(" + d.y0 + "," + d.x0 + ")"
+            });
             updateTempConnector();
         }).on("dragend", function(d) {
             if (d == root) {
@@ -310,9 +315,14 @@ treeJSON = d3.json("data/force_small.json", function(error, treeData) {
         y = y * scale + viewerHeight / 2;
         d3.select('g').transition()
             .duration(duration)
-            .attr("transform", "translate(" + x + "," + y + ")scale(" + scale + ")");
+            .attr("transform", function(){
+                 
+                 return "translate(" + x + "," + y + ")scale(" + scale + ")"
+            });
         zoomListener.scale(scale);
         zoomListener.translate([x, y]);
+        instrument.sendCommands(["translate_"+x+"_"+y, "scale_"+scale+"_"+scale]);
+        
     }
 
     // Toggle children function
@@ -331,7 +341,8 @@ treeJSON = d3.json("data/force_small.json", function(error, treeData) {
     // Toggle children on click.
 
     function click(d) {
-        if (d3.event.defaultPrevented) return; // click suppressed
+//        console.log('click method'+d3.event.defaultPrevented);
+//        if (d3.event.defaultPrevented) return; // click suppressed
         d = toggleChildren(d);
         update(d);
         centerNode(d);
@@ -390,7 +401,7 @@ treeJSON = d3.json("data/force_small.json", function(error, treeData) {
         sendUpdateNodes({"nodes":nodes});
         // Enter any new nodes at the parent's previous position.
         var nodeEnter = node.enter().append("g")
-            .call(dragListener)
+//            .call(dragListener)
             .attr("class","node")
             .attr("transform", function(d) {
                 
