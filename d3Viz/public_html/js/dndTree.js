@@ -344,23 +344,14 @@ treeJSON = d3.json("data/flare.json", function(error, treeData) {
 //        console.log('click method'+d3.event.defaultPrevented);
 //        if (d3.event.defaultPrevented) return; // click suppressed
         d = toggleChildren(d);
-        update(d);
+        instrument.sendCommands(["removeAllElem"], function(){
+            update(d);
+        });
+        
         centerNode(d);
     }
 
-    function sendUpdateNodes(data)
-    {
-        
-        var commands = ["removeAllElem"];
-        for(var i=0;i<data.nodes.length;i++)
-        {
-            var d = data.nodes[i];
-            commands.push("addElem_" + d.name + "_"+d.y+"_"+d.x+"_20_20");
-            commands.push("addCategory_"+ d.name );
-        }
-        instrument.sendCommands(commands);
-        
-    }
+   
     function update(source) {
         // Compute the new height, function counts total children of root node and sets tree height accordingly.
         // This prevents the layout looking squashed when new nodes are made visible or looking sparse when nodes are removed
@@ -398,13 +389,12 @@ treeJSON = d3.json("data/flare.json", function(error, treeData) {
             .data(nodes, function(d) {
                 return d.id || (d.id = ++i);
             });
-        sendUpdateNodes({"nodes":nodes});
         // Enter any new nodes at the parent's previous position.
         var nodeEnter = node.enter().append("g")
 //            .call(dragListener)
             .attr("class","node")
             .attr("transform", function(d) {
-                
+                instrument.sendCommands(["addElem_" + d.name + "_"+source.y0+"_"+source.x0+"_20_20", "addCategory_"+ d.name]);
                 return "translate(" + source.y0 + "," + source.x0 + ")";
             })
             .on('click', click)

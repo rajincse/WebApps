@@ -67,27 +67,14 @@
                     throw error;
 
                 root = json;
-                update();
+                instrument.sendCommands(["removeAllElem"], update);
+                
             });
             
-            function sendUpdateNodes(data)
-            {
-
-                var commands = ["removeAllElem"];
-                for(var i=0;i<data.nodes.length;i++)
-                {
-                    var d = data.nodes[i];
-                    commands.push("addElem_" + d.name +"_0_0_20_20");
-                    commands.push("addCategory_"+ d.name );
-                }
-                instrument.sendCommands(commands);
-
-            }
 
             function update() {
                 var nodes = flatten(root),
                         links = d3.layout.tree().links(nodes);
-                sendUpdateNodes({"nodes":nodes})
                 // Restart the force layout.
                 force
                         .nodes(nodes)
@@ -125,6 +112,7 @@
                         .on("click", click)
                         .attr('id', function(d)
                         {
+                             instrument.sendCommands(["addElem_" + d.name +"_0_0_20_20", "addCategory_"+ d.name ]);
                                 return d.name;
                         })
                         .on("mouseover", function(d){
