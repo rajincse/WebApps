@@ -154,6 +154,8 @@ treeJSON = d3.json("data/flare.json", function(error, treeData) {
         .attr("class", "overlay")
         .call(zoomListener);
 
+    instrument.sendCommands(["setTransition_default_highlighted_2",
+                      "setTransition_highlighted_highlighted_2"]);
 
     // Define the drag listeners for drag/drop behaviour of nodes.
     dragListener = d3.behavior.drag()
@@ -404,7 +406,13 @@ treeJSON = d3.json("data/flare.json", function(error, treeData) {
                                 
                                d3.select('svg').select('g')
                                            .selectAll('path[source="'+d.name+'"],path[target="'+d.name+'"]')
-                                           .attr('class','selected-link');
+                                           .attr('class',function(d){
+                                                instrument.sendCommands(["setTransition_" + d.source.name + "_" + d.target.name + "_" + 4,	                              			              
+	                              			               "changeCategory_" + d.source.name + "_default_highlighted", 
+	                              			               "changeCategory_" + d.target.name  + "_default_highlighted"]);
+                                                return    'selected-link';
+                                            });
+                               
                                    
                         })
             .on("mouseout", function(d){
@@ -413,7 +421,14 @@ treeJSON = d3.json("data/flare.json", function(error, treeData) {
                                 });
                                 d3.select('svg').select('g')
                                            .selectAll('path[source="'+d.name+'"],path[target="'+d.name+'"]')
-                                           .attr('class','link');
+                                           .attr('class',function(d)
+                                            {
+                                                instrument.sendCommands(["setTransition_" + d.source.name + "_" + d.target.name + "_" + 2,	                              			              
+	                              			               "changeCategory_" + d.source.name + "_highlighted_default", 
+	                              			               "changeCategory_" + d.target.name  + "_highlighted_default"]);
+                                                return 'link';
+                                            }
+                                            );
                         })
             ;
 
@@ -506,7 +521,10 @@ treeJSON = d3.json("data/flare.json", function(error, treeData) {
         // Enter any new links at the parent's previous position.
         link.enter().insert("path", "g")
             .attr("class", "link")
-            .attr('source', function(d) { return d.source.name;})
+            .attr('source', function(d) {
+                instrument.sendCommands(["setTransition_"+ d.source.name + "_" + d.target.name + "_" + 2]);
+                return d.source.name;
+            })
             .attr('target', function(d) { return d.target.name;})
             .attr("d", function(d) {
                 var o = {

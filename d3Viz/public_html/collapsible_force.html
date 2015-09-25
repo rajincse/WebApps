@@ -67,6 +67,8 @@
                     throw error;
 
                 root = json;
+                instrument.sendCommands(["setTransition_default_highlighted_2",
+                      "setTransition_highlighted_highlighted_2"]);
                 instrument.sendCommands(["removeAllElem"], update);
                 
             });
@@ -92,6 +94,7 @@
                         .attr("class", "link")
                         .attr("source", function(d)
                 {
+                        instrument.sendCommands(["setTransition_"+ d.source.name + "_" + d.target.name + "_" + 2]);
                         return d.source.name;
                 })
                      .attr("target", function(d)
@@ -120,14 +123,25 @@
                                 
                                d3.select('svg')
                                            .selectAll('line[source="'+d.name+'"],line[target="'+d.name+'"]')
-                                           .attr('class','selected-link');
+                                           .attr('class',function(d){
+                                               instrument.sendCommands(["setTransition_" + d.source.name + "_" + d.target.name + "_" + 4,	                              			              
+	                              			               "changeCategory_" + d.source.name + "_default_highlighted", 
+	                              			               "changeCategory_" + d.target.name  + "_default_highlighted"]);
+                                                return    'selected-link';
+                                           });
+                               
                                    
                         })
                         .on("mouseout", function(){
                         	d3.select(this).select('circle').style("fill",color);
                                 d3.select('svg')
                                            .selectAll('line')
-                                           .attr('class','link');
+                                           .attr('class',function(d){
+                                               instrument.sendCommands(["setTransition_" + d.source.name + "_" + d.target.name + "_" + 2,	                              			              
+	                              			               "changeCategory_" + d.source.name + "_highlighted_default", 
+	                              			               "changeCategory_" + d.target.name  + "_highlighted_default"]);
+                                                return 'link';
+                                           });
                         })
                                 
                         .call(force.drag);
