@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Instrumenting a graph visualization</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/info.css" rel="stylesheet" type="text/css"/>
+        <link href="http://www.cs.fiu.edu/images/scislogo.png" rel="shortcut icon">
+    </head>
+    <body>
+        <div class="row">
+
+            <a href="info1.html">Graph</a>
+            <a href="info2.html">Barchart</a>
+            <a href="info3.html">Collapsible Tree</a>
+
+        </div>
+        <div class="textdiv row">
+            <p class="header-paragraph">Instrumenting a graph visualization</p>
+            <p>
+                The D3 graph visualization demoed in the videos below, built from the “Les Miserables” dataset, allows a user to zoom and pan, mouse over nodes to highlight them and their incident edges, and drag nodes. 
+                Check the visualization <a href="instrument.html">here</a>.
+            </p>
+            <p>The visualization was instrumented to communicate with an object-detection library (written as a stand-alone, reusable Java application) through HTML protocols. The visualization informed the library of what it drew on the screen (nodes), of zooms and translations that a user performed, and of viewing transition preferences (details of which are described below). </p>
+            <p>The video shows a user’s gaze (pink dot) and what the object-detection algorithm thought the user looked at (red rectangles).  The user looked for paths between Bahorel and Marguerite. The screenshots and overlays were taken and rendered by the instrumentation library in debug mode and proves that the library knew at all times what was happening in the visualization. The video shows a side by side comparison of the probabilistic and predictive algorithms. Generally, the videos show that the predictive method removes some of the noise present in output of the probabilistic algorithm. </p>
+            <p>We assumed the following transition probabilities:</p>                 
+                <ul>
+                    <li>A transition between two highlighted elements, or between an un-highlighted element and a highlighted one is twice as likely as the default case</li>
+                    <li>A transition along an edge is twice as likely as the default case</li>
+                    <li>A transition along a highlighted edge is eight times more likely than the default case</li>
+                </ul>
+            
+            <p>To implement these transitions, the visualization assigned nodes to groups, and specified transitions between groups. Each node was in either a highlighted or un-highlighted group, and in its own individual group, specified by the nodes name/id (we’ll name these id-groups). We specified biased transition likelihoods between highlighted nodes (highlighted <-> highlighted = 2), between un-highlighted and highlighted nodes (un-highlighted -> highlighted = 2), and for each edge we specified a transition between the singleton id-groups of the two nodes (e.g., Javert <-> Marius = 2). Moreover, when an edge changed color to red, this transition became 4 (e.g., Javert <->Marius = 4). When multiple transitions applied to a pair of nodes, we multiplied them. For example, if Javert and Marius are both highlighted, and so is the edge between them, then the transition probability between them becomes 2x4 = 8.</p>
+            <p>To see how the code of the D3 visualization was augmented to implement these operation scroll down. Note how the code changes mirror the rendering code. </p>
+        </div>
+        
+        <div class="row">
+            <video controls>
+                 <source src="media/SidebysideGraph.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="row">
+            <img src="media/graphcode.png" alt=""/>
+        </div>
+    </body>
+</html>

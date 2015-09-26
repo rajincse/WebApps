@@ -1,0 +1,384 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+<style>
+    .where {
+        stroke: #fff;
+        stroke-width: 1.5px;
+    }
+    .year1 {
+        stroke: #999;
+        stroke-opacity: .6;
+    }
+    
+    .year1 {
+        stroke: #999;
+        stroke-opacity: .6;
+    }
+ 
+     .All {
+       
+        stroke-opacity: .1;
+    }
+    .American {
+       
+        stroke-opacity: .1;
+    }
+    
+   .European {
+        
+        stroke-opacity: .1;
+    }
+    
+    .Japanese {
+       
+        stroke-opacity: .1;
+    }
+    
+    .Selected {
+        stroke: red;
+        stroke-opacity: .6;
+    }
+    
+    .axis text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+    
+    
+
+    
+</style>
+
+<title>Insert title here</title>
+</head>
+<body onload="init()">
+
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script>
+  
+    //communicate with the eye-tracking instrumentation library via local ajax calls;
+    //c is an array of string commands that the instrumentation library will understand
+    function eyetrackCall(c){
+    	var s = "http://localhost:9999/apa/blah.txt?";
+    	for (var i=0; i<c.length; i++)
+    		s+= "command=" + c[i];    	
+    	d3.xhr(s, function(error, data) {});	
+    }
+    
+    //the position of the visualization window on the screen; gets set whenever a user moves the mouse (no better way)
+    var screenX = 0;
+    var screenY = 0;
+	window.onmousemove = function(e){		
+		var newscreenx = e.screenX - e.clientX + document.getElementById("mainsvg").getBoundingClientRect().left ;
+		var newscreeny = e.screenY - e.clientY + document.getElementById("mainsvg").getBoundingClientRect().top ;
+
+		if (newscreenx != screenX || newscreeny != screenY){
+			screenX = newscreenx; screenY = newscreeny;
+			windowReshaped();
+		}
+	}
+    
+    //alert the instrumentation library that the visualization was reshaped (e.g., browser window was resized or moved on the screen)
+    function windowReshaped(){
+    	eyetrackCall(["window_" + screenX + "_" + screenY + "_" + Math.min(window.innerWidth,visWidth) + "_" + Math.min(window.innerHeight, visHeight)]);
+    }
+    
+    //alert the instrumentation library if the browser window gained or lost focus;
+    //we don't process gazes if the window has lost focus (optional); ideally, we would be able to tell when a window
+    //is hidden under another window
+	window.onblur = function(){
+		eyetrackCall(["lostfocus"]);
+	}	
+	window.onfocus = function(){
+		eyetrackCall(["gainedfocus"]);
+	}
+	
+	//the size of the visualization
+    var visHeight = 600;
+    var visWidth = 900;
+    
+	function init() {
+
+		//create a visualization panel
+		var svg = d3.select("body").append("svg")
+            		.attr("id","mainsvg")
+                    .attr("width", visWidth)
+                    .attr("height", visHeight)
+                    .style("background-color", "#EEEEEE");            
+    
+            
+        //define transitions between highlighted nodes and unhighlighted nodes, between
+        //pairs of highlighted nodes, and between same group objects (e.g., American <-> American)
+        //(note that all transitions not specified, such as highlighted to default, are considered
+        //to be 1 by default and don't need to be defined explicitly)
+        eyetrackCall(["setTransition_default_highlighted_5",
+                      "setTransition_highlighted_highlighted_5",
+                      "setTransition_American_American_3",
+                      "setTransition_Japanese_Japanese_3",
+                      "setTransition_European_European_3",
+                      "setTransition_All_All_3"]);
+          
+            
+         //load the data
+         d3.tsv("cars.txt", function(error, data) {
+            	var mpgdata = [];
+            	var hpdata = [];
+            	var mxmpg = 0;
+            	var mxhp = 0;
+            	for (var i=0; i<data.length; i++){
+            		var mpg = new Object();
+            		mpg.where = data[i].where;
+            		mpg.year = data[i].year;
+            		mpg.value = parseFloat(data[i].mpg);
+            		mpgdata.push(mpg);
+            		mxmpg = Math.max(mxmpg, mpg.value);
+            		
+            		var hp = new Object();
+            		hp.where = data[i].where;
+            		hp.year = data[i].year;
+            		hp.value = parseFloat(data[i].hp);
+            		hpdata.push(hp);
+            		mxhp = Math.max(mxhp, hp.value);
+               }  
+            	
+               //create two domains, for mpg and hp   
+		       var xmpg = d3.scale.linear()
+		       		.domain([0, mxmpg])
+		            .range([0, 350]);
+		            	
+		       var xhp = d3.scale.linear()
+		            .domain([0, mxhp])
+		            .range([0, 350]);
+		            	
+            	//first chart: mpg            	
+            	svg.selectAll()
+            		.data(mpgdata)
+            		.enter().append("rect")
+            			.attr("class", function(d){return d.where})
+            			.attr("y", function(d,i){
+            				var y = i*10 + Math.floor(i/4)*10;
+            				
+            				//inform the instrumentation library that a bar was created; only add the 'tip' of the bar
+            				//rater than the full bar; add the bar to the following groups: default (i.e., unhighlighted,
+            				//origin (i.e., All, American, Jap, EU), and year (i.e, 70, 71, etc.)
+            				var elemid = "mpg"+d.year+d.where;
+            				eyetrackCall(["addElem_" + elemid + "_" + (10+xmpg(d.value)) +"_" + y + "_20_9",
+                        	              "addGroup_"+ elemid + "_" + d.where,                        	              
+                        	              "addGroup_"+ elemid + "_default",
+                        	              "addGroup_" + elemid + "_" + d.year]);
+            				
+            				return y;
+            			   })
+            			.attr("x", "20")
+            			.attr("width", function(d){return xmpg(d.value);})
+            			.attr("height", "9")
+            			.style("fill", function(d){return getColor(d.where)})        			
+            			.on("mouseover", function(d){
+            				d3.select(this).style("fill", "pink");
+            				svg.append("line")
+            					.attr("id", "hoverline")
+            					.attr("x1", function(){return 20 + xmpg(d.value)})
+            					.attr("x2", function(){return 20 + xmpg(d.value)})
+            					.attr("y1", "0")
+            					.attr("y2", "500")
+            					.style("stroke", "pink");
+            				
+            				//if a bar is mouse-overed, change its group to highlighted
+	        				var elemid = "mpg"+d.year+d.where;
+	        				eyetrackCall(["changeGroup_" + elemid + "_default_highlighted"]);
+            			})
+            			.on("mouseout", function(d){
+            				d3.select(this).style("fill", function(){return getColor(d.where)});            				
+            				d3.select("#hoverline").remove();
+            				
+            				//if a bar stops being mouse-overed, change its group back to default
+            				var elemid = "mpg"+d.year+d.where;
+            				eyetrackCall(["changeGroup_" + elemid + "_highlighted_default"]);
+            			});
+            
+            	
+            	//create the vertical, year, axis for the mpg graph
+            	svg.selectAll()
+        		.data([70,71,72,73,74,75,76,77,78,79])
+        		.enter().append("text")
+        			.attr("class","year1")
+        			.text(function(d,i){
+        				var elemid = "mpg" + d;
+        				
+        				//track each of the year labels; add each tracked label to a group
+        				//defined by that year (e.g., the mpg 70 label -> 70 group);
+        				//also create a transition between year groups: 70 <-> 70 = 4;        				
+        				eyetrackCall(["addElem_" +  elemid + "_0_" + (i*50 + 15) + "_20_10",
+        				              "addGroup_" + elemid + "_" + d,
+        				              "setTransition_" + d + "_" + d + "_4"]);
+        				return d;})
+        			.attr("x","0")
+        			.attr("y",function(d,i){return i*50 + 25;});
+            	
+            	
+            	//create the bottom axis for the mpg chart
+            	var xAxis1 = d3.svg.axis()
+                .scale(xmpg)
+                .orient("bottom");
+            	
+            	svg.append("g")
+                .attr("class", function(){
+                	//trach the bottom axis
+                	eyetrackCall(["addElem_mpgaxis_20_490_350_20",
+                	              "addGroup_mpgaxis_axis"]);
+                	return "axis";})
+                .attr("transform", "translate(20,490)")
+                .call(xAxis1);
+            	
+            	
+            	//second chart; the instrumentation calls mirror the first chart           	
+            	svg.selectAll()
+        			.data(hpdata)
+        			.enter().append("rect")
+	        			.attr("class", function(d){return d.where})
+	        			.attr("y", function(d,i){
+	        				
+	        				var y = i*10 + Math.floor(i/4)*10;
+	        				
+            				var elemid = "hp"+d.year+d.where;
+            				eyetrackCall(["addElem_" + elemid + "_" + (460+xhp(d.value)) + "_" + y + "_20_9",
+                        	              "addGroup_"+ elemid + "_" + d.where,                        	              
+                        	              "addGroup_"+ elemid + "_default",
+                        	              "addGroup_" + elemid + "_" + d.year]);
+	        				return y;
+	        				
+	        				})
+	        			.attr("x", "470")
+	        			.attr("width", function(d,i){return xhp(d.value);})
+	        			.attr("height", "9")
+	        			.style("fill", function(d){return getColor(d.where)})
+	        			.on("mouseover", function(d){
+            				d3.select(this).style("fill", "pink");
+            				svg.append("line")
+            					.attr("id", "hoverline")
+            					.attr("x1", function(){return 470 + xhp(d.value)})
+            					.attr("x2", function(){return 470 + xhp(d.value)})
+            					.attr("y1", "0")
+            					.attr("y2", "500")
+            					.style("stroke", "pink");
+            				
+	        				var elemid = "mpg"+d.year+d.where;
+	        				eyetrackCall(["changeGroup_" + elemid + "_default_highlighted"]);
+            			})
+            			.on("mouseout", function(d){
+            				d3.select(this).style("fill", function(){return getColor(d.where)});            				
+            				d3.select("#hoverline").remove();
+            				
+            				var elemid = "mpg"+d.year+d.where;
+            				eyetrackCall(["changeGroup_" + elemid + "_highlighted_default"]);
+            			});
+            	
+            	svg.selectAll()
+        		.data([70,71,72,73,74,75,76,77,78,79])
+        		.enter().append("text")
+        			.attr("class","year2")
+        			.text(function(d,i){
+        				var elemid = "hp" + d;
+        				eyetrackCall(["addElem_" +  elemid + "_450_" + (i*50 + 15) + "_20_10"]);
+        				return d;})
+        			.attr("x","450")
+        			.attr("y",function(d,i){return i*50 + 25;})	
+
+            	var xAxis2 = d3.svg.axis()
+                .scale(xhp)
+                .orient("bottom");            	
+
+            	svg.append("g")
+                .attr("class", function(){                	
+                	eyetrackCall(["addElem_hpaxis_470_490_350_20",
+                	              "addCategory_hpaxis_axis"]);
+                	return "axis";
+                })
+                .attr("transform", "translate(470,490)")
+                .call(xAxis2);
+            			
+            			
+
+            	//labels for "All", "American", "European", "Japanese"        			
+                svg.selectAll()
+            		.data(["All","American","European","Japanese"])
+            		.enter().append("text")            		
+            			.text(function(d){return d;})
+            			.attr("x", function(d,i){
+            				var x = 200 +  i*150;
+            				
+            				//track these origin labels; moreover annotate them with groups with
+            				//the same name; this way, if a user looks at one of these lables
+            				//and then at bars with the same origin, a special transition will apply
+            				var width = d.length * 8;
+            				eyetrackCall(["addElem_" + d + "_" + x + "_560_" + width + "_10",
+                        	              "addGroup_"+ d + "_" + d,                        	              
+                        	              "addGroup_"+ d + "_default"]);
+            				
+            				return x;
+            				})
+            			.attr("y","570")
+            			.style("stroke", function(d){return getColor(d)})
+            			// these labels can be mouse-overed, resulting in all bars/data with that origin
+            			//to be highlighted; it follows that all such bars should also change their group
+            			//from default to highlighted in the instrumentation library
+            			.on("mouseover", function(d){
+            				d3.select(this).style("stroke","pink");
+            				eyetrackCall(["changeGroup_" + d + "_default_highlighted"]);
+            				
+            				svg.selectAll("." + d)
+            					.style("fill",function(d){
+                    				var elemid = "mpg"+d.year+d.where;
+                    				eyetrackCall(["changeGroup_" + elemid + "_default_highlighted"]);                    				
+                    				return "pink";
+            					});
+            					        					
+            			})
+            			//on mouse-out, the previous changes get reverted
+            			.on("mouseout", function(d){
+            				d3.select(this).style("stroke",function(){return getColor(d)});
+            				eyetrackCall(["changeGroup_" + d + "_highlighted_default"]);
+            				
+            				svg.selectAll("." + d)        					
+        					.style("fill", function(dd){
+                				var elemid = "mpg"+dd.year+dd.where;
+                				eyetrackCall(["changeGroup_" + elemid + "_highlighted_default"]);  
+        						return getColor(d);
+        					});
+            			});
+            			
+
+
+            });//end load nodes
+        }//end init
+        
+        
+        
+        
+    function getColor(s){
+    	if (s === "All") return "cadetblue";
+		else if (s === "American") return "lightblue";
+		else if (s === "European") return "steelblue";
+		else return "deepskyblue";
+   }
+      
+        
+    </script>
+
+<div id = "mainDiv"></div>
+</body>
+</html>
+
+
+
+

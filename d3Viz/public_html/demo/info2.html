@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Instrumenting a bar chart visualization</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/info.css" rel="stylesheet" type="text/css"/>
+        <link href="http://www.cs.fiu.edu/images/scislogo.png" rel="shortcut icon">
+    </head>
+    <body>
+        <div class="row">
+
+            <a href="info1.html">Graph</a>
+            <a href="info2.html">Barchart</a>
+            <a href="info3.html">Collapsible Tree</a>
+
+        </div>
+        <div class="textdiv">
+            <p class="header-paragraph">Instrumenting a bar chart visualization</p>
+            <p>
+                The D3 bar chart visualization demoed in the videos below, built from the “Cars” dataset, shows the average mpg (left) and horsepower (right) of cars manufactured in US, Europe, Japan or irrespective of the origin (All) between 1970 and 1979. The visualization allows a user to hover one of the four origins (US, EU, Japan, All) to highlight averages for these origins. 
+                Check the visualization <a href="cars.html">here</a>.
+            </p>
+            <p>The visualization was instrumented to communicate with an object-detection library (written as a stand-alone, reusable Java application) through HTML protocols. The visualization informed the library of what it drew on the screen (bars, origin labels, year labels, axes),and of viewing transition preferences (details of which are described below). </p>
+            <p>The video shows a user’s gaze (pink dot) and what the object-detection algorithm thought the user looked at (red rectangles). The user looked at European horsepower averages, then at US mpg averages. The screenshots and overlays were taken and rendered by the instrumentation library in debug mode and proves that the library knew at all times what was happening in the visualization. The video shows a side by side comparison of the probabilistic and predictive algorithms. Generally, the videos show that the predictive method removes some of the noise present in output of the probabilistic algorithm. </p>
+            <p>We assumed the following transition probabilities: </p>                 
+                <ul>
+                    <li>Transitions between bars corresponding to the same origin (e.g., US 71 mpg -> US 72 mpg, or US 73 mpg -> US 78 hp) is three times as likely as the default case</li>
+                    <li>Transitions between bars corresponding to the same year (e.g., US 71 mpg -> EU 71 hp) is three times as likely as the default case</li>
+                    <li>A transition between one of the four origin labels and a bar corresponding to that origin (e.g., US -> US 71 mpg) is three times as likely as the default case</li>
+                    <li>A transition between highlighted elements, or between unhighlighted and highlighted elements is five time as likely as the default case</li>
+                </ul>
+            
+            <p>To implement these transitions, the visualization assigned tracked elements to groups, and specified transitions between groups. Each bar was in either a highlighted or un-highlighted group, in a group corresponding to its origin (e.g., US), and in a group corresponding to its year (e.g., 71).  Year labels were in groups corresponding to that year (e.g., 71). Origin labels were in groups corresponding to that origin (e.g., US). We specified transition probabilities between those groups to match those described above (e.g., highlighted <-> highlighted = 5, un-highlighted -> highlighted = 5, US->US = 3, etc.). When multiple transitions applied to a pair of nodes, we multiplied them. For example, if a user viewed a highlighted bar showing US data, after another highlighted bar showing US data, then the transition probability between them was 3x5 = 15.</p>
+            <p>To see how the code of the D3 visualization was augmented to implement these operation scroll down. Note how the code changes mirror the rendering code.  </p>
+            
+            
+        </div>
+        <div class="row">
+            <video controls>
+                 <source src="media/SidebysideBar.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="row">
+            <img src="media/chartcode.png" alt=""/>
+        </div>
+    </body>
+</html>
