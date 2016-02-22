@@ -105,17 +105,23 @@ and open the template in the editor.
                         }
                         else
                         {
-                            d3.select("svg").selectAll('.removable').remove();
+                            initialize();
                         }
                     }
                 );
              
-            
+            function initialize()
+            {
+               d3.select("svg").selectAll('.removable').remove();
+               zoomListener.scale(1);
+               zoomListener.translate([0,0]);
+            }
             
             function render(rectData, data)
             {
-               d3.select("svg").selectAll('.removable').remove();
-                 var baseGroup =d3.select("svg").append('g')
+                initialize();
+               
+                var baseGroup =d3.select("svg").append('g')
                                 .attr('id','base')
                                 .attr('class', 'removable')    
                         .call(zoomListener)
