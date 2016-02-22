@@ -14,6 +14,7 @@ and open the template in the editor.
         <link href="css/main.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        <div><h1>Heatmap Analysis</h1></div>
         <div>
             <select id='dataSelection'>
                 <option value="" selected>None</option>
@@ -78,12 +79,12 @@ and open the template in the editor.
                         if(this.value)
                         {
                             d3.select('#loading').style('display','block');
-                            d3.select('#mainsvg').style('display','none');
+                            d3.select('.container').style('display','none');
                             d3.json("data/"+this.value, function (error, data) {
                                 if (error)
                                     throw error;
                                 d3.select('#loading').style('display','none');
-                                d3.select('#mainsvg').style('display','block');
+                                d3.select('.container').style('display','block');
                                 rectData =[];
                                 var v = -1;
                                 for (var i=0; i<data.index.length; i++){
@@ -101,6 +102,10 @@ and open the template in the editor.
                                render(rectData,data);
 
                             });
+                        }
+                        else
+                        {
+                            d3.select("svg").selectAll('.removable').remove();
                         }
                     }
                 );

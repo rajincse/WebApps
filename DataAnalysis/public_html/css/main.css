@@ -1,4 +1,9 @@
+body
+{
+    background-color: #B6E3F2;
+}
 .container
 {
     border: 1px black solid;
+    background-color: white;
 }
