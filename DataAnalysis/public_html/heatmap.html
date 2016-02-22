@@ -83,8 +83,7 @@ and open the template in the editor.
                             d3.json("data/"+this.value, function (error, data) {
                                 if (error)
                                     throw error;
-                                d3.select('#loading').style('display','none');
-                                d3.select('.container').style('display','block');
+                                
                                 rectData =[];
                                 var v = -1;
                                 for (var i=0; i<data.index.length; i++){
@@ -100,6 +99,8 @@ and open the template in the editor.
                                         }
                                 }
                                render(rectData,data);
+                               d3.select('#loading').style('display','none');
+                               d3.select('.container').style('display','block');
 
                             });
                         }
