@@ -37,7 +37,6 @@ and open the template in the editor.
                 height = 960;
             var cellWidth = 1;
             var cellHeight = 12;
-            var rectData=[];
             
             var svg = d3.select(".container").append("svg")
                     .attr("id", "mainsvg")
@@ -50,13 +49,15 @@ and open the template in the editor.
                 .on("dragstart", dragstarted)
                 .on("drag", dragged)
                 .on("dragend", dragended);
+            var dragX =500;
             function dragstarted(d) {
                 d3.event.sourceEvent.stopPropagation();
                 d3.select(this).classed("dragging", true);
               }
-
+              
               function dragged(d) {
-                d3.select(this).attr("transform", "translate(" +  d3.event.x +",0)");
+                  dragX+= d3.event.dx;
+                d3.select(this).attr("transform", "translate(" +  dragX+",0)");
               }
 
               function dragended(d) {
@@ -67,7 +68,20 @@ and open the template in the editor.
             function zoom() {
                 d3.select('#base').attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
             }
-            
+            function onMouseOver()
+            {
+                var currentElementId = d3.select(this).attr('id');
+                var index = currentElementId.split('-');
+                var hoverId = 'hover-'+index[1];
+                d3.select('#'+hoverId).style('visibility','visible');
+            }
+            function onMouseOut()
+            {
+                var currentElementId = d3.select(this).attr('id');
+                var index = currentElementId.split('-');
+                var hoverId = 'hover-'+index[1];
+                d3.select('#'+hoverId).style('visibility','hidden');
+            }
             d3.select('#dataSelection')
                     .on('change', function(){ 
                         if(this.value)
@@ -78,21 +92,8 @@ and open the template in the editor.
                                 if (error)
                                     throw error;
                                 
-                                rectData =[];
-                                var v = -1;
-                                for (var i=0; i<data.index.length; i++){
-                                        if (data.dataObjects[data.index[i]].hidden)
-                                                continue;
-
-                                        v++;
-                                        for (var j=0; j<data.heatmap[data.index[i]].length; j++){
-                                                var colorScheme = Color.DEFAULT_COLOR_SCHEME;
-                                                var c = Color.getColorFromRange(colorScheme, data.heatmap[data.index[i]][j]);
-                                                var rect={color:c, x:j*cellWidth, y:v*cellHeight, w:cellWidth, h:cellHeight, obj:data.dataObjects[data.index[i]]};
-                                                rectData.push(rect);
-                                        }
-                                }
-                               render(rectData,data);
+                              
+                               render(data);
                                d3.select('#loading').style('display','none');
                                d3.select('.container').style('display','block');
 
@@ -111,8 +112,7 @@ and open the template in the editor.
                zoomListener.scale(1);
                zoomListener.translate([0,0]);
             }
-            
-            function render(rectData, data)
+            function render( data)
             {
                 initialize();
                
@@ -136,46 +136,74 @@ and open the template in the editor.
                         .attr('id','labelText')
                     ;
                 
+                var hoverRectGroup = baseGroup.append('g')
+                        .attr('id','hoverRect')
+                        
+                ;
                 
-                
-                labelRectGroup.selectAll('rect').data(data.viewedObjects)
+                labelRectGroup.selectAll('rect').data(data.entryList)
                         .enter()
                         .insert('rect')
+                        .attr('id', function(d,i){ return 'labelrect-'+i;})
                         .attr("x", function(d){ return cellWidth;})
                         .attr("y", function(d, j){ return j* cellHeight;})
                         .attr('width', 500)
                         .attr('height',cellHeight)
                         .style({fill:function(d)
                                     { 
-                                       return Color.getColorFromType(d).getColorString();
+                                       return Color.getColorFromType(d.dataObject).getColorString();
                                     }
-                                ,'stroke-width':1,stroke:'rgb(225,225,225)'});
-                            
-                heatmapGroup.selectAll('rect').data(rectData)
-                        .enter()
-                        .insert('rect')
-                        .attr("x", function(d){ return d.x;})
-                        .attr("y", function(d){ return d.y;})   
-                        .attr('width', function(d){ return d.w;})
-                        .attr('height', function(d){ return d.h;})
-                        .style({fill:function(d){return d.color.getColorString();},'stroke-width':0.01,stroke:'rgb(225,225,225)'})                        
+                                ,'stroke-width':1,stroke:'rgb(225,225,225)'})
+                        .on('mouseover', onMouseOver)
+                        .on('mouseout', onMouseOut)
                         .append("svg:title")
-                        .text(function(d) { return d.obj.label; })
-                
+                        .text(function(d) { return d.dataObject.label; })
+                            ;
+                            
+                heatmapGroup.selectAll('image').data(data.entryList)
+                        .enter()
+                        .insert('svg:image')
+                        .attr("xlink:href",function(d){return "data/"+d.imagePath;})
+                        .attr('id', function(d,i){ return 'heatmapImage-'+i;})
+                        .attr("x", function(d){ return cellWidth;})
+                        .attr("y", function(d, j){ return j* cellHeight;})                          
+                        .attr('width', data.totalCells * cellWidth)
+                        .attr('height', cellHeight)
+                        .on('mouseover', onMouseOver)
+                        .on('mouseout', onMouseOut)
+                        .append("svg:title")
+                        .text(function(d) { return d.dataObject.label; })
                 ;
                 
-                labelTextGroup.selectAll('text').data(data.viewedObjects)
+                labelTextGroup.selectAll('text').data(data.entryList)
                         .enter()
                         .insert("text")
-                        .text(function(d) { return d.label; })
+                        .attr('id', function(d,i){ return 'text-'+i;})
+                        .text(function(d) { return d.dataObject.label; })
                         .attr("x", function(d){ return cellWidth;})
-                        .attr("y", function(d, j){ return (j+1)* cellHeight;})
+                        .attr("y", function(d, j){ return (j+1)* cellHeight;})                        
                         .attr('font-family',"Verdana")
-                        .attr('font-size','10');
+                        .attr('font-size','10')
+                        .on('mouseover', onMouseOver)
+                        .on('mouseout', onMouseOut)
+                        .append("svg:title")
+                        .text(function(d) { return d.dataObject.label; })
+                ;
                 
-        
-                
+                hoverRectGroup.selectAll('rect').data(data.entryList)
+                        .enter()
+                        .insert('rect')
+                        .attr('id', function(d,j){ return 'hover-'+j;})
+                        .attr("x", function(d){ return cellWidth;})
+                        .attr("y", function(d, j){ return j* cellHeight;})
+                        .attr('width', 500+data.totalCells * cellWidth)
+                        .attr('height',cellHeight)
+                        .style({fill:'none',stroke:'rgb(125,125,125)', 'stroke-opacity':1, 'visibility':'hidden'})
+                        ;
                         
+                    
+                
+                
                     
             }
              </script>

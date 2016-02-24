@@ -7,3 +7,14 @@ body
     border: 1px black solid;
     background-color: white;
 }
+
+.visible
+{
+    display: block;
+}
+
+.hidden
+{
+    display: none;
+}
+
