@@ -1,0 +1,38 @@
+{
+    "categories":
+            {
+                "Building Envelopes":
+                        {
+                            "name": "Building Envelopes",
+                            "id":"c0",
+                            "description":"The building envelope is the primary interface of a building with  the exterior surroundings. As a result, the building envelope plays  a critical role in the energy management and sustainability of the  built environment. The proper selection of walls, roof and floor  systems, construction materials and a rigorous, detailed development of connections and structural joinery are important  components of energy saving strategies. In addition, thermal and  moisture control, sound and fire insulation, and natural lighting  strategies can significantly reduce dependence on mechanical  climate control systems. The following sections will introduce  concepts, principles, and strategies for the selection and evaluation of building enclosures with respect to their environmental  performance.",
+                            "unSelectedLogo": "images/building_envelopes_logo.jpg",
+                            "selectedLogo": "images/building_envelope_activated.png",
+                            "welcomeMessageImage":"images/building_envelopes_message.jpg",
+                            "subCategory": {
+                                "Envelope Concepts": {
+                                    "name": "Envelope Concepts",
+                                    "id":"c0m0",
+                                    "unSelectedLogo": "images/envelope_concepts.png",
+                                    "selectedLogo": "images/envelope_concepts_activated.png",
+                                    "dataFile":"data/envelope_concepts.json"
+                                },
+                                "Wall Systems": {
+                                    "name": "Wall Systems",
+                                    "id":"c0m1",
+                                    "unSelectedLogo": "images/wall_systems.png",
+                                    "selectedLogo": "images/wall_systems_activated.png",
+                                    "dataFile":"data/wall_systems.json"
+                                },
+                                "Climate Responsive Facades": {
+                                    "name": "Climate Responsive Facades",
+                                    "id":"c0m2",
+                                    "unSelectedLogo": "images/climate_responsive_faccades.png",
+                                    "selectedLogo": "images/climate_responsive_faccades_activated.png",
+                                    "dataFile":"data/climate_responsive_facades.json"
+                                }
+                            }
+
+                        }
+            }
+}

@@ -18,3 +18,24 @@ body
     display: none;
 }
 
+.selected-content
+{
+    height: 350px;
+    border: 1px blue solid;
+    background-color: #EDF9F8;
+}
+
+.media-image img
+{
+    height: 250px;
+}
+.label{
+    font-size: 14px;
+    font-weight: bold;
+    float: left;
+    clear: left;
+}
+.content-text
+{
+    font-size: 14px;    
+}
