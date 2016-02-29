@@ -20,22 +20,46 @@ body
 
 .selected-content
 {
-    height: 350px;
     border: 1px blue solid;
+    width: 500px;
     background-color: #EDF9F8;
+    position: absolute;
+    overflow: auto;
 }
-
+.selected-content-title
+{
+    text-align: center;
+    font-weight: bold;
+    font-size: 12px;
+}
 .media-image img
 {
     height: 250px;
 }
 .label{
-    font-size: 14px;
+    font-size: 10px;
     font-weight: bold;
     float: left;
     clear: left;
+    font-family: verdana;
 }
 .content-text
 {
-    font-size: 14px;    
+    font-size: 14px;
+    font-family: verdana;
+}
+.media-image
+{
+    clear: left;
+}
+.aoi-rect
+{
+    fill:none;
+    stroke:#FF0000;
+    stroke-width:4px;
+}
+.small-font
+{
+    font-size: 10px;
+    font-family: verdana;
 }

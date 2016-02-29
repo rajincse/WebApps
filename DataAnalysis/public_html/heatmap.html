@@ -31,19 +31,20 @@ and open the template in the editor.
         <div class="container">
             
         </div>
-        <div class="selected-content">
-            <h3>DOI info:</h3>
+         
+        <div class="selected-content" style="display:none">
+            <div class="selected-content-title">DOI info</div>
             <div class="label">Type:</div>
-            <div class="type content-text"></div>
+            <div class="type small-font"></div>
             <div class="label">Flow:</div>
-            <div class="navigation-text content-text"></div>
-            <div class="label content-text">Type Text:</div>
-            <div class="type-text content-text "></div>
+            <div class="navigation-text small-font"></div>
+            <div class="label ">Type Text:</div>
+            <div class="type-text small-font"></div>
             <div class="label data-content">Text:</div>
-            <div class="data-text"></div>
+            <div class="data-text small-font"></div>
             <div class="media-image">
-                <img />
-                
+                <svg class="media-image-svg" width="500" >
+                </svg>
             </div>
         </div>
         <div id='loading' style="display: none">
@@ -62,6 +63,11 @@ and open the template in the editor.
                     .attr("width", width)
                     .attr("height", height)
                     .attr('class','main-svg')
+                    .on('click', function()
+                                {
+                                     d3.select('.selected-content')
+                                        .style('display','none');
+                                })
                 ;
             
             var drag = d3.behavior.drag()
@@ -101,6 +107,98 @@ and open the template in the editor.
                 var hoverId = 'hover-'+index[1];
                 d3.select('#'+hoverId).style('visibility','hidden');
             }
+            function onClick(d, i)
+            {
+                d3.event.stopPropagation();
+                console.log('click');
+                d3.select('.selected-content')
+                        .style('display','block')
+                        .style('left',d3.event.pageX+'px')
+                        .style('top', d3.event.pageY+'px')
+                    ;
+                
+                
+                var svgWidth = d3.select('.media-image-svg').attr('width');
+                
+
+                var selectedObject =inputdb.getContent(d.dataObject.label);
+
+                d3.select('.type').text(selectedObject.type);
+                d3.select('.type-text').text(selectedObject.typeText);
+                d3.select('.navigation-text').text(selectedObject.navigationText);
+
+                if(selectedObject.type ==='image'
+                        ||selectedObject.type ==='button')
+                {
+                    d3.select('.data-content').text('Image:')
+                    d3.select('.data-text').text('');
+                    
+                    var imagePath = 'input'+selectedObject.image.path;
+                    d3.select('.media-image-svg').selectAll("*").remove();
+                    var ratio = 1.0 * svgWidth /selectedObject.image.dimension[0];
+                    
+                    d3.select('.media-image-svg')
+                            .attr('height', 500)
+                            .append('svg:image')
+                            .attr('xlink:href', imagePath)
+                            .attr('x',0)
+                            .attr('y',0)                            
+                            .attr('width',selectedObject.image.dimension[0] * ratio)
+                            .attr('height', selectedObject.image.dimension[1] * ratio)
+                    ;
+                    
+                }
+                else if(selectedObject.type ==='aoi')
+                {
+                   
+                    d3.select('.data-content').text('Image:')
+                    d3.select('.data-text').text('');
+                    var ratio = 1.0 * svgWidth /selectedObject.image.dimension[0];
+                    
+                    
+                    d3.select('.media-image-svg').selectAll("*").remove();
+                    var imagePath = 'input'+selectedObject.image.path;
+                    d3.select('.media-image-svg')
+                            .attr('height', 500)
+                            .append('svg:image')
+                            .attr('xlink:href', imagePath)
+                            .attr('x',0)
+                            .attr('y',0)
+                            .attr('width',selectedObject.image.dimension[0] * ratio)
+                            .attr('height', selectedObject.image.dimension[1] * ratio)
+                    ;
+                    if(selectedObject.aoi)
+                    {
+                        d3.select('.media-image-svg')
+                                .append('rect')
+                                .attr('class','aoi-rect')
+                                .attr('x',selectedObject.aoi.x* ratio)
+                                .attr('y',selectedObject.aoi.y* ratio)
+                                .attr('width',selectedObject.aoi.width* ratio)
+                                .attr('height', selectedObject.aoi.height* ratio);
+                        d3.select('.media-image-svg')
+                                .append('text')
+                                .text(selectedObject.aoi.name)
+                                .attr('x',selectedObject.aoi.x* ratio)
+                                .attr('y',(selectedObject.aoi.y +20)* ratio)
+                                .attr('font-family',"Verdana")
+                                .attr('font-size',20 *ratio)
+                                .attr('fill','blue')
+                        ;
+                    } 
+                }
+                else if(selectedObject.type ==='text')
+                {
+                    d3.select('.media-image-svg').attr('height', 0).selectAll("*").remove();
+                    var text = selectedObject.object;
+                    if(selectedObject.object.text)
+                    {
+                        text = selectedObject.object.text;
+                    }
+                    d3.select('.data-content').text('Text:');
+                    d3.select('.data-text').text(text);
+                }
+            }
             d3.select('#dataSelection')
                     .on('change', function(){ 
                         if(this.value)
@@ -130,14 +228,17 @@ and open the template in the editor.
                d3.select("svg").selectAll('.removable').remove();
                zoomListener.scale(1);
                zoomListener.translate([0,0]);
+                d3.select('.selected-content')
+                                        .style('display','none');
             }
             function render( data)
             {
                 initialize();
-               
+                
                 var zoomContainer = d3.select("svg").append('g')
                                 .attr('id','zoomContainer')
                                 .attr('class', 'removable')    
+                                
                                 .call(zoomListener);
                 var baseGroup =zoomContainer.append('g')
                                 .attr('id','base')
@@ -175,6 +276,7 @@ and open the template in the editor.
                                 ,'stroke-width':1,stroke:'rgb(225,225,225)'})
                         .on('mouseover', onMouseOver)
                         .on('mouseout', onMouseOut)
+                        .on('click', onClick )
                         .append("svg:title")
                         .text(function(d) { return d.dataObject.label; })
                             ;
@@ -190,38 +292,7 @@ and open the template in the editor.
                         .attr('height', cellHeight)
                         .on('mouseover', onMouseOver)
                         .on('mouseout', onMouseOut)
-                        .on('click', function(d, i)
-                            {
-                               
-                                var selectedObject =inputdb.getContent(d.dataObject.label);
-                                
-                                d3.select('.type').text(selectedObject.type);
-                                d3.select('.type-text').text(selectedObject.typeText);
-                                d3.select('.navigation-text').text(selectedObject.navigationText);
-                                
-                                if(selectedObject.type ==='image'
-                                        ||selectedObject.type ==='button')
-                                {
-                                    d3.select('.data-content').text('Image:')
-                                    d3.select('.data-text').text('');
-                                    d3.select('.media-image img').attr('src', 'input'+selectedObject.imagePath);
-                                }
-                                else if(selectedObject.type ==='aoi')
-                                {
-                                    d3.select('.media-image img').attr('src', 'inputdata/media/'+selectedObject.imagePath);
-                                }
-                                else if(selectedObject.type ==='text')
-                                {
-                                    var text = selectedObject.object;
-                                    if(selectedObject.object.text)
-                                    {
-                                        text = selectedObject.object.text;
-                                    }
-                                    d3.select('.data-content').text('Text:');
-                                    d3.select('.data-text').text(text);
-                                    d3.select('.media-image img').attr('src','');
-                                }
-                            })
+                        .on('click', onClick )
                     
                         .append("svg:title")
                         .text(function(d) { return d.dataObject.label; })
@@ -238,6 +309,7 @@ and open the template in the editor.
                         .attr('font-size','10')
                         .on('mouseover', onMouseOver)
                         .on('mouseout', onMouseOut)
+                        .on('click', onClick )
                         .append("svg:title")
                         .text(function(d) { return d.dataObject.label; })
                 ;
