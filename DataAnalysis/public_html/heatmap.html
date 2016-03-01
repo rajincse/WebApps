@@ -10,8 +10,11 @@ and open the template in the editor.
         <link href="http://www.cs.fiu.edu/images/scislogo.png" rel="shortcut icon">
         <meta charset="UTF-8">        
         <script src="http://d3js.org/d3.v3.min.js"></script> 
+        <script src="js/constants.js" type="text/javascript"></script>
         <script src="js/inputdb.js" type="text/javascript"></script>
         <script src="js/color.js" type="text/javascript"></script>
+        <script src="js/handlers.js" type="text/javascript"></script>
+        
         <link href="css/main.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
@@ -32,7 +35,7 @@ and open the template in the editor.
             
         </div>
          
-        <div class="selected-content" style="display:none">
+        <div class="selected-content" style="visibility:hidden">
             <div class="selected-content-title">DOI info</div>
             <div class="label">Type:</div>
             <div class="type small-font"></div>
@@ -51,154 +54,19 @@ and open the template in the editor.
             <img src="images/loading_spinner.gif" alt=""/>
         </div>
         <script>
-            var width = 1280,
-                height = 300;
-            var cellWidth = 1;
-            var cellHeight = 12;
+            
             inputdb.load();
             
             
             var svg = d3.select(".container").append("svg")
                     .attr("id", "mainsvg")
-                    .attr("width", width)
-                    .attr("height", height)
+                    .attr("width", mainSVGwidth)
+                    .attr("height", mainSVGheight)
                     .attr('class','main-svg')
-                    .on('click', function()
-                                {
-                                     d3.select('.selected-content')
-                                        .style('display','none');
-                                })
+                    .on('click', onSvgClick)
                 ;
             
-            var drag = d3.behavior.drag()
-                .on("dragstart", dragstarted)
-                .on("drag", dragged)
-                .on("dragend", dragended);
-            var dragX =500;
-            function dragstarted(d) {
-                d3.event.sourceEvent.stopPropagation();
-                d3.select(this).classed("dragging", true);
-              }
-              
-              function dragged(d) {
-                  dragX+= d3.event.dx;
-                d3.select(this).attr("transform", "translate(" +  dragX+",0)");
-              }
-
-              function dragended(d) {
-                d3.select(this).classed("dragging", false);
-              }
             
-            var zoomListener = d3.behavior.zoom().scaleExtent([0.1, 3]).on("zoom", zoom);
-            function zoom() {
-                d3.select('#base').attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-            }
-            function onMouseOver()
-            {
-                var currentElementId = d3.select(this).attr('id');
-                var index = currentElementId.split('-');
-                var hoverId = 'hover-'+index[1];
-                d3.select('#'+hoverId).style('visibility','visible');
-            }
-            function onMouseOut()
-            {
-                var currentElementId = d3.select(this).attr('id');
-                var index = currentElementId.split('-');
-                var hoverId = 'hover-'+index[1];
-                d3.select('#'+hoverId).style('visibility','hidden');
-            }
-            function onClick(d, i)
-            {
-                d3.event.stopPropagation();
-                console.log('click');
-                d3.select('.selected-content')
-                        .style('display','block')
-                        .style('left',d3.event.pageX+'px')
-                        .style('top', d3.event.pageY+'px')
-                    ;
-                
-                
-                var svgWidth = d3.select('.media-image-svg').attr('width');
-                
-
-                var selectedObject =inputdb.getContent(d.dataObject.label);
-
-                d3.select('.type').text(selectedObject.type);
-                d3.select('.type-text').text(selectedObject.typeText);
-                d3.select('.navigation-text').text(selectedObject.navigationText);
-
-                if(selectedObject.type ==='image'
-                        ||selectedObject.type ==='button')
-                {
-                    d3.select('.data-content').text('Image:')
-                    d3.select('.data-text').text('');
-                    
-                    var imagePath = 'input'+selectedObject.image.path;
-                    d3.select('.media-image-svg').selectAll("*").remove();
-                    var ratio = 1.0 * svgWidth /selectedObject.image.dimension[0];
-                    
-                    d3.select('.media-image-svg')
-                            .attr('height', 500)
-                            .append('svg:image')
-                            .attr('xlink:href', imagePath)
-                            .attr('x',0)
-                            .attr('y',0)                            
-                            .attr('width',selectedObject.image.dimension[0] * ratio)
-                            .attr('height', selectedObject.image.dimension[1] * ratio)
-                    ;
-                    
-                }
-                else if(selectedObject.type ==='aoi')
-                {
-                   
-                    d3.select('.data-content').text('Image:')
-                    d3.select('.data-text').text('');
-                    var ratio = 1.0 * svgWidth /selectedObject.image.dimension[0];
-                    
-                    
-                    d3.select('.media-image-svg').selectAll("*").remove();
-                    var imagePath = 'input'+selectedObject.image.path;
-                    d3.select('.media-image-svg')
-                            .attr('height', 500)
-                            .append('svg:image')
-                            .attr('xlink:href', imagePath)
-                            .attr('x',0)
-                            .attr('y',0)
-                            .attr('width',selectedObject.image.dimension[0] * ratio)
-                            .attr('height', selectedObject.image.dimension[1] * ratio)
-                    ;
-                    if(selectedObject.aoi)
-                    {
-                        d3.select('.media-image-svg')
-                                .append('rect')
-                                .attr('class','aoi-rect')
-                                .attr('x',selectedObject.aoi.x* ratio)
-                                .attr('y',selectedObject.aoi.y* ratio)
-                                .attr('width',selectedObject.aoi.width* ratio)
-                                .attr('height', selectedObject.aoi.height* ratio);
-                        d3.select('.media-image-svg')
-                                .append('text')
-                                .text(selectedObject.aoi.name)
-                                .attr('x',selectedObject.aoi.x* ratio)
-                                .attr('y',(selectedObject.aoi.y +20)* ratio)
-                                .attr('font-family',"Verdana")
-                                .attr('font-size',20 *ratio)
-                                .attr('fill','blue')
-                        ;
-                    } 
-                }
-                else if(selectedObject.type ==='text')
-                {
-                    d3.select('.media-image-svg').attr('height', 0).selectAll("*").remove();
-                    var text = selectedObject.object;
-                    if(selectedObject.object.text)
-                    {
-                        text = selectedObject.object.text;
-                    }
-                    d3.select('.data-content').text('Text:');
-                    d3.select('.data-text').text(text);
-                }
-            }
             d3.select('#dataSelection')
                     .on('change', function(){ 
                         if(this.value)
@@ -229,7 +97,7 @@ and open the template in the editor.
                zoomListener.scale(1);
                zoomListener.translate([0,0]);
                 d3.select('.selected-content')
-                                        .style('display','none');
+                                        .style('visibility','hidden');
             }
             function render( data)
             {
@@ -243,15 +111,16 @@ and open the template in the editor.
                 var baseGroup =zoomContainer.append('g')
                                 .attr('id','base')
                     ;
+                var heatmapGroup = baseGroup
+                    .append('g')
+                    .attr('id','heatmap')
+                    .attr('transform','translate('+labelRectWidth+',0)')
+                    .call(drag)
+                ;
                 var labelRectGroup = baseGroup.append('g')
                         .attr('id','labelRect')
                     ;
-                var heatmapGroup = baseGroup
-                        .append('g')
-                        .attr('id','heatmap')
-                        .attr('transform','translate(500,0)')
-                        .call(drag)
-                ;
+                
                 var labelTextGroup = baseGroup.append('g')
                         .attr('id','labelText')
                     ;
@@ -267,16 +136,16 @@ and open the template in the editor.
                         .attr('id', function(d,i){ return 'labelrect-'+i;})
                         .attr("x", function(d){ return cellWidth;})
                         .attr("y", function(d, j){ return j* cellHeight;})
-                        .attr('width', 500)
+                        .attr('width', labelRectWidth)
                         .attr('height',cellHeight)
                         .style({fill:function(d)
                                     { 
                                        return Color.getColorFromType(d.dataObject).getColorString();
                                     }
-                                ,'stroke-width':1,stroke:'rgb(225,225,225)'})
+                                ,'stroke-width':1,stroke:'rgb(225,225,225)', 'fill-opacity':0.75})
                         .on('mouseover', onMouseOver)
                         .on('mouseout', onMouseOut)
-                        .on('click', onClick )
+                        .on('dblclick', onClick )
                         .append("svg:title")
                         .text(function(d) { return d.dataObject.label; })
                             ;
@@ -292,7 +161,7 @@ and open the template in the editor.
                         .attr('height', cellHeight)
                         .on('mouseover', onMouseOver)
                         .on('mouseout', onMouseOut)
-                        .on('click', onClick )
+                        .on('dblclick', onClick )
                     
                         .append("svg:title")
                         .text(function(d) { return d.dataObject.label; })
@@ -309,7 +178,7 @@ and open the template in the editor.
                         .attr('font-size','10')
                         .on('mouseover', onMouseOver)
                         .on('mouseout', onMouseOut)
-                        .on('click', onClick )
+                        .on('dblclick', onClick )
                         .append("svg:title")
                         .text(function(d) { return d.dataObject.label; })
                 ;
@@ -320,15 +189,10 @@ and open the template in the editor.
                         .attr('id', function(d,j){ return 'hover-'+j;})
                         .attr("x", function(d){ return cellWidth;})
                         .attr("y", function(d, j){ return j* cellHeight;})
-                        .attr('width', 500+data.totalCells * cellWidth)
+                        .attr('width', labelRectWidth+data.totalCells * cellWidth)
                         .attr('height',cellHeight)
                         .style({fill:'none',stroke:'rgb(125,125,125)', 'stroke-opacity':1, 'visibility':'hidden'})
                         ;
-                        
-                    
-                
-                
-                    
             }
              </script>
        
