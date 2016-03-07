@@ -68,7 +68,7 @@ var inputdb=
              
          };
          
-         console.log(JSON.stringify(selected));
+         console.log(id+":"+JSON.stringify(selected));
          return selected;
          
     },
@@ -247,6 +247,31 @@ var inputdb=
                 object.navigationText+= '=> Media Button';
                 object.image ={path:object.current.object.mediaImage, 
                                 dimension:[object.current.object.aoiData.width,object.current.object.aoiData.height] };
+            }
+            object.currentKey =key;
+        }
+        else if(key === 'ai')
+        {
+            if(object.currentKey==='s')
+            {
+                var mediaIndex=-1;
+                for(var i=0;i<object.current.object.mediaList.length;i++)
+                {
+                    if(object.current.object.mediaList[i].additionalMedia)
+                    {
+                        mediaIndex =i;
+                        break;
+                    }
+                }
+                object.current ={ 
+                                object:object.current.object.mediaList[mediaIndex].additionalMedia[value]
+                                ,parent:object.current
+                            }
+                        ;
+                object.current.typeText = 'Additional Media';
+                object.navigationText+= '=> Additional Media';
+                object.image ={path:object.current.object, 
+                                dimension:[object.current.parent.object.mediaList[mediaIndex].aoiData.width,object.current.parent.object.mediaList[mediaIndex].aoiData.height]  };
             }
             object.currentKey =key;
         }
