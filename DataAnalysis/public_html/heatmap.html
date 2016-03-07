@@ -171,7 +171,11 @@ and open the template in the editor.
                         .enter()
                         .insert("text")
                         .attr('id', function(d,i){ return 'text-'+i;})
-                        .text(function(d) { return d.dataObject.label; })
+                        .text(function(d) { 
+                            var id = d.dataObject.label;
+                            var label = inputdb.getLabel(id);
+                            return label; 
+                        })
                         .attr("x", function(d){ return cellWidth;})
                         .attr("y", function(d, j){ return (j+1)* cellHeight;})                        
                         .attr('font-family',"Verdana")

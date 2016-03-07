@@ -72,6 +72,20 @@ var inputdb=
          return selected;
          
     },
+    getLabel: function(id)
+    {
+       
+       var content = this.getContent(id);
+       var colonIndex = id.indexOf(':'); 
+       var name = id.substring(0,colonIndex);
+       var suffix = "("+content.typeText+")";
+       var label =name+suffix;
+       if(label.length > maxLabelChars)
+       {
+           label = name.substring(0,maxLabelChars-suffix.length-3)+"..."+suffix;
+       }
+       return label;
+    },
     setItem : function( key, value, object)
     {
        
@@ -89,7 +103,7 @@ var inputdb=
                 object.current ={ 
                             object:{ 
                                         'title': object.current.object.name,
-                                        'description': object.current.object.description
+                                        'text': object.current.object.description
                                     }
                             ,parent:object.current
                             }
