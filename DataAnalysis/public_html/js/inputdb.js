@@ -168,6 +168,17 @@ var inputdb=
                 object.current.typeText = 'Submodule Name';
                 object.navigationText+= '=> Submodule Name:'+object.current.object;
             }
+            else if(object.currentKey === 'g')
+            {
+                object.current ={ 
+                                object:'HomeLogo Text'
+                                ,parent:object.current
+                            }
+                        ;
+                object.currentKey =key;    
+                object.current.typeText = 'HomeLogo Text';
+                object.navigationText+= '=> HomeLogo Text';
+            }
             
         }
         else if(key === 'm')
@@ -274,6 +285,12 @@ var inputdb=
                                 dimension:[object.current.parent.object.mediaList[mediaIndex].aoiData.width,object.current.parent.object.mediaList[mediaIndex].aoiData.height]  };
             }
             object.currentKey =key;
+        }
+        else if(key =='g')
+        {
+            object.current = { object: 'global' , parent:{}};
+            object.currentKey =key;
+            object.navigationText+= 'global';
         }
         
          
