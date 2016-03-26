@@ -6,3 +6,5 @@ var labelRectWidth =300;
 var maxLabelChars = 50;
 var imageSVGWidth =500, 
     imageSVGHeight =500;
+var backgroundTimeStep =1000;
+var backgroundTimeMarker = 60000;

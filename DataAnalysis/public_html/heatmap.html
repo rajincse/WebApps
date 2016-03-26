@@ -21,21 +21,18 @@ and open the template in the editor.
         <div><h1>Heatmap Analysis</h1></div>
         <div>
             <select id='dataSelection'>
-                <option value="" selected>None</option>
-                <option value="sampledata250.JSON">sampledata 250ms</option>      
-                <option value="sampledata500.JSON">sampledata 500ms</option>
-                <option value="Alexia250.JSON">Alexia 250ms</option>
-                <option value="Alexia500.JSON">Alexia 500ms</option>
-                <option value="Erika250.JSON">Erika 250ms</option>
-                <option value="Erika500.JSON">Erika 500ms</option>
-                <option value="Jasmin250.JSON">Jasmin 250ms</option>
-                <option value="Jasmin500.JSON">Jasmin 500ms</option>
-                <option value="Maria250.JSON">Maria 250ms</option>
-                <option value="Maria500.JSON">Maria 500ms</option>
-                <option value="Pedro250.JSON">Pedro 250ms</option>
-                <option value="Pedro500.JSON">Pedro 500ms</option>
+                <option value="" selected>None</option>                
+                <option value="sampledata">sampledata</option>
+                <option value="Alexia">Alexia</option>
+                <option value="Erika">Erika</option>
+                <option value="Jasmin">Jasmin</option>
+                <option value="Maria">Maria</option>
+                <option value="Pedro">Pedro</option>
               </select>
-            
+            <select id='timeStep'>
+                <option value="250" >250ms</option>
+                <option value="500" selected>500ms</option>
+            </select>
         </div>
         
         <div class="container">
@@ -78,18 +75,10 @@ and open the template in the editor.
                     .on('change', function(){ 
                         if(this.value)
                         {
-                            d3.select('#loading').style('display','block');
-                            d3.select('.container').style('display','none');
-                            d3.json("data/"+this.value, function (error, data) {
-                                if (error)
-                                    throw error;
-                                
-                              
-                               render(data);
-                               d3.select('#loading').style('display','none');
-                               d3.select('.container').style('display','block');
-
-                            });
+                            var timeStep = d3.select('#timeStep').node().value;
+                            console.log(timeStep);
+                            var filePath = 'data/'+this.value+timeStep+'.JSON';
+                            loadFile(filePath);
                         }
                         else
                         {
@@ -97,7 +86,34 @@ and open the template in the editor.
                         }
                     }
                 );
-             
+            d3.select('#timeStep')
+                    .on('change', function()
+                        {
+                            if(this.value){
+                                var userName = d3.select('#dataSelection').node().value;
+                                if(userName)
+                                {
+                                    var filePath = 'data/'+userName+this.value+'.JSON';
+                                    loadFile(filePath);
+                                }
+                            }
+                        })
+            
+            function loadFile(filePath)
+            {
+                d3.select('#loading').style('display','block');
+                d3.select('.container').style('display','none');
+                d3.json(filePath, function (error, data) {
+                    if (error)
+                        throw error;
+
+
+                   render(data);
+                   d3.select('#loading').style('display','none');
+                   d3.select('.container').style('display','block');
+
+                });
+            }
             function initialize()
             {
                d3.select("svg").selectAll('.removable').remove();
@@ -105,6 +121,35 @@ and open the template in the editor.
                zoomListener.translate([0,0]);
                 d3.select('.selected-content')
                                         .style('visibility','hidden');
+            }
+            function getBackgroundRects(data)
+            {
+                var timeStep = d3.select('#timeStep').node().value;
+                var totalTime = data.totalCells * timeStep;
+                var totalRects = totalTime/backgroundTimeStep;
+                var rectHeight = cellHeight * data.entryList.length;
+                var rectWidth = cellWidth * backgroundTimeStep / timeStep;
+                var rectData =[];
+                
+                for(var i=0;i<totalRects;i++)
+                {
+                    var fillColor =''
+                    if(i % ( backgroundTimeMarker / backgroundTimeStep) ===0 )
+                    {
+                        fillColor ='#000000';
+                    }
+                    else if(i % 2 === 0)                            
+                    {   
+                       fillColor= '#D7DADB';
+                    }
+                    else
+                    {
+                        fillColor= '#F7FBFC';
+                    }
+                    var rect = {x:i*rectWidth, y: 0, w:rectWidth, h:rectHeight, fill:fillColor};
+                    rectData.push(rect);
+                }
+                return rectData;
             }
             function render( data)
             {
@@ -156,8 +201,27 @@ and open the template in the editor.
                         .append("svg:title")
                         .text(function(d) { return d.dataObject.label; })
                             ;
-                            
-                heatmapGroup.selectAll('image').data(data.entryList)
+                
+                var heatmapBackgroundGroup = heatmapGroup
+                        .append('g')
+                        .attr('id', 'heatmapBackground');
+                
+                var backgroundRects = getBackgroundRects(data);
+                heatmapBackgroundGroup.selectAll('rect').data(backgroundRects)
+                        .enter()
+                        .insert('rect')
+                        .attr("x", function(d){ return d.x;})
+                        .attr("y", function(d){ return d.y;})
+                        .attr('width', function(d){ return d.w;})
+                        .attr('height',function(d) { return d.h;})
+                        .attr('fill', function(d){return d.fill;})
+                ;
+                        
+                
+                var heatmapImageGroup = heatmapGroup
+                        .append('g')
+                        .attr('id', 'heatmapImage');
+                heatmapImageGroup.selectAll('image').data(data.entryList)
                         .enter()
                         .insert('svg:image')
                         .attr("xlink:href",function(d){return "data/"+d.imagePath;})
