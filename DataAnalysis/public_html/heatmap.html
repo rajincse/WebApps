@@ -122,9 +122,9 @@ and open the template in the editor.
                 d3.select('.selected-content')
                                         .style('visibility','hidden');
             }
-            function getBackgroundRects(data)
+            function getBackgroundRects(data, timeStep)
             {
-                var timeStep = d3.select('#timeStep').node().value;
+                
                 var totalTime = data.totalCells * timeStep;
                 var totalRects = totalTime/backgroundTimeStep;
                 var rectHeight = cellHeight * data.entryList.length;
@@ -133,12 +133,8 @@ and open the template in the editor.
                 
                 for(var i=0;i<totalRects;i++)
                 {
-                    var fillColor =''
-                    if(i % ( backgroundTimeMarker / backgroundTimeStep) ===0 )
-                    {
-                        fillColor ='#000000';
-                    }
-                    else if(i % 2 === 0)                            
+                    var fillColor ='';
+                    if(i % 2 === 0)                            
                     {   
                        fillColor= '#D7DADB';
                     }
@@ -150,6 +146,21 @@ and open the template in the editor.
                     rectData.push(rect);
                 }
                 return rectData;
+            }
+            function getBackgroundLines(data, timeStep)
+            {
+                var totalTime = data.totalCells * timeStep;
+                var totalLines = totalTime/backgroundTimeMarker;
+                var lineGap = backgroundTimeMarker/timeStep /cellWidth;
+                var lineHeight = cellHeight * data.entryList.length;
+                var lineData =[];
+                for(var i =0;i<totalLines;i++)
+                {
+                    var line = {x1: lineGap*i, y1:0, x2:lineGap*i, y2:lineHeight, text: ''+backgroundTimeMarker*i/60000+' min' };
+                    lineData.push(line);
+                }
+                
+                return lineData;
             }
             function render( data)
             {
@@ -194,7 +205,7 @@ and open the template in the editor.
                                     { 
                                        return Color.getColorFromType(d.dataObject).getColorString();
                                     }
-                                ,'stroke-width':1,stroke:'rgb(225,225,225)', 'fill-opacity':0.75})
+                                ,'stroke-width':1,stroke:'rgb(225,225,225)', 'fill-opacity':1})
                         .on('mouseover', onMouseOver)
                         .on('mouseout', onMouseOut)
                         .on('dblclick', onClick )
@@ -206,7 +217,8 @@ and open the template in the editor.
                         .append('g')
                         .attr('id', 'heatmapBackground');
                 
-                var backgroundRects = getBackgroundRects(data);
+                var timeStep = d3.select('#timeStep').node().value;
+                var backgroundRects = getBackgroundRects(data, timeStep);
                 heatmapBackgroundGroup.selectAll('rect').data(backgroundRects)
                         .enter()
                         .insert('rect')
@@ -217,6 +229,28 @@ and open the template in the editor.
                         .attr('fill', function(d){return d.fill;})
                 ;
                         
+                
+                var backgroundLines = getBackgroundLines(data, timeStep);
+                heatmapBackgroundGroup.selectAll('line').data(backgroundLines)
+                        .enter()
+                        .insert('line')
+                        .attr("x1", function(d){ return d.x1;})
+                        .attr("y1", function(d){ return d.y1-20;})
+                        .attr("x2", function(d){ return d.x2;})
+                        .attr("y2", function(d){ return d.y2;})
+                        .style({stroke:'rgb(0,0,0)', 'stroke-width':1}) 
+                         .append("svg:title")
+                        .text(function(d) { return d.text; })
+                ;
+                heatmapBackgroundGroup.selectAll('text').data(backgroundLines)
+                        .enter()
+                        .append('text')
+                        .text(function(d) { return d.text;})
+                        .attr("x", function(d){ return d.x1;})
+                        .attr("y", function(d){ return d.y1-20;})  
+                        .attr('font-family',"Verdana")
+                        .attr('font-size','10')
+                ;
                 
                 var heatmapImageGroup = heatmapGroup
                         .append('g')
