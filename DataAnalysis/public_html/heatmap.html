@@ -128,8 +128,7 @@ and open the template in the editor.
             function initialize()
             {
                d3.select("svg").selectAll('.removable').remove();
-               zoomListener.scale(1);
-               zoomListener.translate([0,0]);
+               initZoom();
                 d3.select('.selected-content')
                                         .style('visibility','hidden');
             }
@@ -181,7 +180,7 @@ and open the template in the editor.
                                 .attr('id','zoomContainer')
                                 .attr('class', 'removable')    
                                 
-                                .call(zoomListener);
+                                .call(zoomListernerWithVerticalPanning);
                 var baseGroup =zoomContainer.append('g')
                                 .attr('id','base')
                     ;

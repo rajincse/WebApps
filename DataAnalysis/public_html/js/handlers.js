@@ -28,6 +28,17 @@ var zoomListener = d3.behavior.zoom().scaleExtent([0.1, 3]).on("zoom", zoom);
 function zoom() {
     d3.select('#base').attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
 }
+var zoomListernerWithVerticalPanning = d3.behavior.zoom().scaleExtent([0.1, 3]).on("zoom", verticalPanningZoom);
+function verticalPanningZoom() {
+    d3.select('#base').attr("transform", "translate(0," + d3.event.translate[1] + ")scale(" + d3.event.scale + ")");
+}
+function initZoom()
+{
+    zoomListener.scale(1);
+    zoomListener.translate([0,0]);
+    zoomListernerWithVerticalPanning.scale(1);
+    zoomListernerWithVerticalPanning.translate([0,0]);
+}
 var selectedIndex =-1;
 function onMouseOver()
 {
