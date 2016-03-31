@@ -39,6 +39,45 @@ function initZoom()
     zoomListernerWithVerticalPanning.scale(1);
     zoomListernerWithVerticalPanning.translate([0,0]);
 }
+
+function onZoomIn()
+{
+    var newScale = Math.min(3, getScale()+0.1);
+    setScale(newScale);
+}
+
+function onZoomOut()
+{
+    var newScale = Math.max(0.1, getScale()-0.1);
+    setScale(newScale);
+}
+function getScale()
+{
+     var transform =d3.select('#base').attr("transform");
+     var regExp = /scale\([-]?\d*\.?\d+\)/;
+     if(regExp.test(transform))
+     {
+         var scaleComamnd = transform.match(regExp)[0];
+         var scaleValue = parseFloat(scaleComamnd.match(/[-]?\d*\.?\d+/)[0]);
+         return scaleValue;
+     }
+     return 1.0;
+}
+function setScale(newScale)
+{
+    var transform =d3.select('#base').attr("transform");
+    var regExp = /scale\([-]?\d*\.?\d+\)/;
+    var transformText ='';
+    if(regExp.test(transform))
+    {
+        transformText = transform.replace(regExp, 'scale('+newScale+')');    
+    }
+    else
+    {
+        transformText ='scale('+newScale+')';
+    }
+    d3.select('#base').attr("transform", transformText);
+}
 var selectedIndex =-1;
 function onMouseOver()
 {
