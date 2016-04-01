@@ -63,3 +63,19 @@ body
     font-size: 10px;
     font-family: verdana;
 }
+rect.background-alternate-0
+{
+    fill:#FFFFFF;
+    fill-opacity: 0.3;
+}
+rect.background-alternate-1
+{
+    fill:#7D7D7D;
+    fill-opacity: 0.3;
+}
+line.background-marker
+{
+    stroke:#7D7D7D; 
+    stroke-width:1; 
+    stroke-opacity:0.7;
+}

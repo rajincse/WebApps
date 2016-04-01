@@ -155,16 +155,16 @@ and open the template in the editor.
                 
                 for(var i=0;i<totalRects;i++)
                 {
-                    var fillColor ='';
+                    var fillColorClass ='';
                     if(i % 2 === 0)                            
                     {   
-                       fillColor= '#FFFFFF';
+                       fillColorClass= 'background-alternate-0';
                     }
                     else
                     {
-                        fillColor= '#D4D8D9';
+                        fillColorClass= 'background-alternate-1';
                     }
-                    var rect = {x:i*rectWidth, y: 0, w:rectWidth, h:rectHeight, fill:fillColor};
+                    var rect = {x:i*rectWidth, y: 0, w:rectWidth, h:rectHeight, fillClass:fillColorClass};
                     rectData.push(rect);
                 }
                 return rectData;
@@ -248,7 +248,7 @@ and open the template in the editor.
                         .attr("y", function(d){ return d.y;})
                         .attr('width', function(d){ return d.w;})
                         .attr('height',function(d) { return d.h;})
-                        .attr('fill', function(d){return d.fill;})
+                        .attr('class', function(d) { return d.fillClass;})                        
                 ;
                         
                 
@@ -260,7 +260,7 @@ and open the template in the editor.
                         .attr("y1", function(d){ return d.y1-20;})
                         .attr("x2", function(d){ return d.x2;})
                         .attr("y2", function(d){ return d.y2;})
-                        .style({stroke:'#8B8C8C', 'stroke-width':1}) 
+                        .attr('class','background-marker' )
                          .append("svg:title")
                         .text(function(d) { return d.text; })
                 ;
