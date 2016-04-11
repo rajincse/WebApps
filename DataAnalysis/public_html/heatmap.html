@@ -53,7 +53,7 @@ and open the template in the editor.
             
         </div>
          
-        <div class="selected-content" style="visibility:hidden">
+        <div class="selected-content" style="visibility:hidden; top:0px;">
             <div class="selected-content-title">DOI info</div>
             <div class="label">Type:</div>
             <div class="type small-font"></div>
@@ -78,7 +78,7 @@ and open the template in the editor.
             var svg = d3.select(".container").append("svg")
                     .attr("id", "mainsvg")
                     .attr("width", '100%')
-                    .attr("height", mainSVGheight)
+                    .attr("height", window.innerHeight * 0.80 )
                     .attr('class','main-svg')
                     .on('click', onSvgClick)
                 ;
