@@ -1,0 +1,56 @@
+{
+    "moduleName": "Vertical Spanning Systems",
+    "welcomeMessageImage":"images/vertical_spanning_systems_message.jpg",
+    "submodule":
+            [
+                {
+                    "subModuleName": "Columns",
+                    "thumbnail": "data/media/thumbnail_columns.jpg",
+                    "description": "Column nomenclature can vary based on size, location and structural function."
+                    ,
+                    "mediaList": [
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_steel_columns.jpg"
+                            ,
+                            "mediaImage": "data/media/media_steel_columns.jpg"
+                        },
+						{
+                            "mediaThumbnail": "data/media/media_thumbnail_concrete_columns.jpg"
+                            ,
+                            "mediaImage": "data/media/media_concrete_columns.jpg"
+                        }
+                    ]
+                }, 
+				{
+                    "subModuleName": "Load Bearing Walls",
+                    "thumbnail": "data/media/thumbnail_load_bearing_walls.jpg",
+                    "description": "Load-bearing walls are componenets of a buillding that can be used as exterior or interior walls. "
+                    ,
+                    "mediaList": [
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_load_bearing_walls.jpg"
+                            ,
+                            "mediaImage": "data/media/media_load_bearing_walls.jpg"
+                        }
+                    ]
+                }, 
+				{
+                    "subModuleName": "Shear Walls",
+                    "thumbnail": "data/media/thumbnail_shear_walls.jpg",
+                    "description": "Shear walls are vertical spanning elements that are used to resist wind load and earthquake forces."
+                    ,
+                    "mediaList": [
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_steel_shear_walls.jpg"
+                            ,
+                            "mediaImage": "data/media/media_steel_shear_walls.jpg"
+                        },
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_concrete_shear_walls.jpg"
+                            ,
+                            "mediaImage": "data/media/media_concrete_shear_walls.jpg"
+                        }
+                    ]
+                }
+            ]
+}

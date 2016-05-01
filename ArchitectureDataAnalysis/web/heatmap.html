@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Heatmap</title>
+        <link href="http://www.cs.fiu.edu/images/scislogo.png" rel="shortcut icon">
+        <meta charset="UTF-8">        
+        <script src="http://d3js.org/d3.v3.min.js"></script> 
+        <script src="js/constants.js" type="text/javascript"></script>
+        <script src="js/inputdb.js" type="text/javascript"></script>
+        <script src="js/color.js" type="text/javascript"></script>
+        <script src="js/handlers.js" type="text/javascript"></script>
+        
+        <link href="css/main.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <div><h1>Heatmap Analysis</h1></div>
+        <div>
+            <select id='dataSelection'>
+                <option value="" selected>None</option>                
+                <option value="sampledata">sampledata</option>
+                <option value="Alexia">Alexia</option>
+                <option value="Erika">Erika</option>
+                <option value="Jasmin">Jasmin</option>
+                <option value="Maria">Maria</option>
+                <option value="Pedro">Pedro</option>
+              </select>
+            <select id='timeStep'>
+                <option value="250" >250ms</option>
+                <option value="500" selected>500ms</option>
+                <option value="1000">1sec</option>
+                <option value="1500">1.5sec</option>
+                 <option value="2000">2sec</option>
+                <option value="2500">2.5sec</option>
+                <option value="3000">3sec</option>
+                <option value="5000">5sec</option>
+                <option value="10000">10sec</option>
+            </select>
+            <select id='sorting'>
+                <option value="0" >First Viewed</option>
+                <option value="1" >Most Viewed</option>
+                <option value="2" >Category</option>
+            </select>
+            <button id="zoomIn">zoom+</button>
+            <button id="zoomOut">zoom-</button>
+        </div>
+        
+        <div class="container">
+            
+        </div>
+         
+        <div class="selected-content" style="visibility:hidden; top:0px;">
+            <div class="selected-content-title">DOI info</div>
+            <div class="label">ID:</div>
+            <div class="id-container small-font"></div>
+            <div class="label">Type:</div>
+            <div class="type small-font"></div>
+            <div class="label">Flow:</div>
+            <div class="navigation-text small-font"></div>
+            <div class="label ">Type Text:</div>
+            <div class="type-text small-font"></div>            
+            <button id="additionalPropertyClick" style="clear:both;">Additional Properties</button>
+            <div class="label data-content">Text:</div>
+            <div class="data-text small-font"></div>            
+            <div class="media-image">
+                <svg class="media-image-svg" width="500" >
+                </svg>
+            </div>
+        </div>
+        <div class="additional-properties-container small-font floatable" style="visibility:hidden; top:0px;">
+            <div class="selected-content-title">
+                Properties
+            </div>
+            <div class="all-properties">
+            </div>
+            <div class="row">
+                Add Property:
+            </div>
+            <div class="row add-property">                
+                <input id='propertyName' value="">
+                <button id="addProperty">Add Property</button>
+            </div>
+            <div class="row add-property-value">
+                <select class="propertyList">
+                    
+                </select>
+                <input id='propertyValue' value="">
+                <button id="addPropertyValue">Add</button>
+            </div>
+        </div>
+        <div id='loading' style="display: none">
+            <img src="images/loading_spinner.gif" alt=""/>
+        </div>
+        <script>
+            
+            inputdb.load();
+            
+            var svg = d3.select(".container").append("svg")
+                    .attr("id", "mainsvg")
+                    .attr("width", '100%')
+                    .attr("height", window.innerHeight * 0.80 )
+                    .attr('class','main-svg')
+                    .on('click', onSvgClick)
+                ;
+            
+            var fileData ={};
+            d3.select('#dataSelection')
+                    .on('change', function(){ 
+                        if(this.value)
+                        {
+                            var timeStep = d3.select('#timeStep').node().value;
+                            console.log(timeStep);
+                            var filePath = 'data/'+this.value+timeStep+'.JSON';
+                            loadFile(filePath);
+                        }
+                        else
+                        {
+                            initialize();
+                        }
+                    }
+                );
+            d3.select('#timeStep')
+                    .on('change', function()
+                        {
+                            if(this.value){
+                                var userName = d3.select('#dataSelection').node().value;
+                                if(userName)
+                                {
+                                    var filePath = 'data/'+userName+this.value+'.JSON';
+                                    loadFile(filePath);
+                                }
+                            }
+                        });
+            d3.select('#sorting')
+                    .on('change', function()
+                        {
+                            render(fileData);
+                        });
+            
+            d3.select('#zoomIn')
+                    .on('click', onZoomIn);
+            d3.select('#zoomOut')
+                    .on('click', onZoomOut);
+            
+                
+            function loadFile(filePath)
+            {
+                d3.select('#loading').style('display','block');
+                d3.select('.container').style('display','none');
+                d3.json(filePath, function (error, data) {
+                    if (error)
+                        throw error;
+
+
+                   render(data);
+                   fileData =data;
+                   d3.select('#loading').style('display','none');
+                   d3.select('.container').style('display','block');
+
+                });
+            }
+            function initialize()
+            {
+               d3.select("svg").selectAll('.removable').remove();
+               initZoom();
+                d3.select('.selected-content')
+                                        .style('visibility','hidden');
+            }
+            function getBackgroundRects(data, timeStep)
+            {
+                
+                var totalTime = data.totalCells * timeStep;
+                var totalRects = totalTime/backgroundTimeStep;
+                var rectHeight = cellHeight * data.entryList.length;
+                var rectWidth = cellWidth * backgroundTimeStep / timeStep;
+                var rectData =[];
+                
+                for(var i=0;i<totalRects;i++)
+                {
+                    var fillColorClass ='';
+                    if(i % 2 === 0)                            
+                    {   
+                       fillColorClass= 'background-alternate-0';
+                    }
+                    else
+                    {
+                        fillColorClass= 'background-alternate-1';
+                    }
+                    var rect = {x:i*rectWidth, y: 0, w:rectWidth, h:rectHeight, fillClass:fillColorClass};
+                    rectData.push(rect);
+                }
+                return rectData;
+            }
+            function getBackgroundLines(data, timeStep)
+            {
+                var totalTime = data.totalCells * timeStep;
+                var totalLines = totalTime/backgroundTimeMarker;
+                var lineGap = backgroundTimeMarker/timeStep /cellWidth;
+                var lineHeight = cellHeight * data.entryList.length;
+                var lineData =[];
+                for(var i =0;i<totalLines;i++)
+                {
+                    var line = {x1: lineGap*i, y1:0, x2:lineGap*i, y2:lineHeight, text: ''+backgroundTimeMarker*i/60000+' min' };
+                    lineData.push(line);
+                }
+                
+                return lineData;
+            }
+            function render( data)
+            {
+                initialize();
+                var sortingType = d3.select('#sorting').node().value;
+                var zoomContainer = d3.select("svg").append('g')
+                                .attr('id','zoomContainer')
+                                .attr('class', 'removable')    
+                                
+                                .call(zoomListernerWithVerticalPanning);
+                var baseGroup =zoomContainer.append('g')
+                                .attr('id','base')
+                    ;
+                var heatmapGroup = baseGroup
+                    .append('g')
+                    .attr('id','heatmap')
+                    .attr('transform','translate('+labelRectWidth+',0)')
+                    .call(drag)
+                ;
+                var labelRectGroup = baseGroup.append('g')
+                        .attr('id','labelRect')
+                    ;
+                
+                var labelTextGroup = baseGroup.append('g')
+                        .attr('id','labelText')
+                    ;
+                
+                var hoverRectGroup = baseGroup.append('g')
+                        .attr('id','hoverRect')
+                        
+                ;
+                
+                labelRectGroup.selectAll('rect').data(data.sortingIndex[sortingType])
+                        .enter()
+                        .insert('rect')
+                        .attr('id', function(d,i){ return 'labelrect-'+i;})
+                        .attr("x", function(d){ return cellWidth;})
+                        .attr("y", function(d, j){ return j* cellHeight;})
+                        .attr('width', labelRectWidth)
+                        .attr('height',cellHeight)
+                        .style({fill:function(d)
+                                    { 
+                                       return Color.getColorFromType(data.entryList[d].dataObject).getColorString();
+                                    }
+                                ,'stroke-width':1,stroke:'rgb(225,225,225)', 'fill-opacity':1})
+                        .on('mouseover', onMouseOver)
+                        .on('mouseout', onMouseOut)
+                        .on('dblclick', function ( d,i) {onClick(data.entryList[d], i) ;})
+                        .append("svg:title")
+                        .text(function(d) { return data.entryList[d].dataObject.label; })
+                            ;
+                
+                var heatmapBackgroundGroup = heatmapGroup
+                        .append('g')
+                        .attr('id', 'heatmapBackground');
+                
+                var timeStep = d3.select('#timeStep').node().value;
+                var backgroundRects = getBackgroundRects(data, timeStep);
+                heatmapBackgroundGroup.selectAll('rect').data(backgroundRects)
+                        .enter()
+                        .insert('rect')
+                        .attr("x", function(d){ return d.x;})
+                        .attr("y", function(d){ return d.y;})
+                        .attr('width', function(d){ return d.w;})
+                        .attr('height',function(d) { return d.h;})
+                        .attr('class', function(d) { return d.fillClass;})                        
+                ;
+                        
+                
+                var backgroundLines = getBackgroundLines(data, timeStep);
+                heatmapBackgroundGroup.selectAll('line').data(backgroundLines)
+                        .enter()
+                        .insert('line')
+                        .attr("x1", function(d){ return d.x1;})
+                        .attr("y1", function(d){ return d.y1-20;})
+                        .attr("x2", function(d){ return d.x2;})
+                        .attr("y2", function(d){ return d.y2;})
+                        .attr('class','background-marker' )
+                         .append("svg:title")
+                        .text(function(d) { return d.text; })
+                ;
+                heatmapBackgroundGroup.selectAll('text').data(backgroundLines)
+                        .enter()
+                        .append('text')
+                        .text(function(d) { return d.text;})
+                        .attr("x", function(d){ return d.x1;})
+                        .attr("y", function(d){ return d.y1-20;})  
+                        .attr('font-family',"Verdana")
+                        .attr('font-size','10')
+                ;
+                
+                var heatmapImageGroup = heatmapGroup
+                        .append('g')
+                        .attr('id', 'heatmapImage');
+                heatmapImageGroup.selectAll('image').data(data.sortingIndex[sortingType])
+                        .enter()
+                        .insert('svg:image')
+                        .attr("xlink:href",function(d){return "data/"+data.entryList[d].imagePath;})
+                        .attr('id', function(d,i){ return 'heatmapImage-'+i;})
+                        .attr("x", function(d){ return cellWidth;})
+                        .attr("y", function(d, j){ return j* cellHeight;})                          
+                        .attr('width', data.totalCells * cellWidth)
+                        .attr('height', cellHeight)
+                        .on('mouseover', onMouseOver)
+                        .on('mouseout', onMouseOut)
+                        .on('dblclick', function ( d,i) {onClick(data.entryList[d], i) ;})
+                    
+                        .append("svg:title")
+                        .text(function(d) { return data.entryList[d].dataObject.label; })
+                ;
+                
+                labelTextGroup.selectAll('text').data(data.sortingIndex[sortingType])
+                        .enter()
+                        .insert("text")
+                        .attr('id', function(d,i){ return 'text-'+i;})
+                        .text(function(d) { 
+                            var id = data.entryList[d].dataObject.label;
+                            var label = inputdb.getLabel(id);
+                            return label; 
+                        })
+                        .attr("x", function(d){ return cellWidth;})
+                        .attr("y", function(d, j){ return (j+1)* cellHeight;})                        
+                        .attr('font-family',"Verdana")
+                        .attr('font-size','10')
+                        .on('mouseover', onMouseOver)
+                        .on('mouseout', onMouseOut)
+                        .on('dblclick', function ( d,i) {onClick(data.entryList[d], i) ;})
+                        .append("svg:title")
+                        .text(function(d) { return data.entryList[d].dataObject.label; })
+                ;
+                
+                hoverRectGroup.selectAll('rect').data(data.sortingIndex[sortingType])
+                        .enter()
+                        .insert('rect')
+                        .attr('id', function(d,j){ return 'hover-'+j;})
+                        .attr("x", function(d){ return cellWidth;})
+                        .attr("y", function(d, j){ return j* cellHeight;})
+                        .attr('width', labelRectWidth+data.totalCells * cellWidth)
+                        .attr('height',cellHeight)
+                        .style({fill:'none',stroke:'rgb(125,125,125)', 'stroke-opacity':1, 'visibility':'hidden'})
+                        ;
+            }
+             </script>
+       
+        
+    </body>
+</html>
