@@ -1,0 +1,3 @@
+c0m0*	basic
+c0m1*	advanced
+c0m2*	advanced

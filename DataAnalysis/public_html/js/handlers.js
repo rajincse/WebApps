@@ -121,9 +121,11 @@ function onClick(d, i)
 
     var selectedObject =inputdb.getContent(d.dataObject.label);
 
+    d3.select('.id-container').text(d.dataObject.label);
     d3.select('.type').text(selectedObject.type);
     d3.select('.type-text').text(selectedObject.typeText);
     d3.select('.navigation-text').text(selectedObject.navigationText);
+    d3.select('.additional-properties-container').text(JSON.stringify(selectedObject.additionalProperties));
 
     if(selectedObject.type ==='image'
             ||selectedObject.type ==='button')

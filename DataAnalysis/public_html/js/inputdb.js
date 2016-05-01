@@ -42,6 +42,63 @@ var inputdb=
          });
          
     },
+    additionalProperties:{},
+    loadAdditionalProperties: function()
+    {
+        var baseDirectory ="inputdata/properties/";
+        var baseFile = "base.txt";
+        var filePath = baseDirectory+baseFile;
+        d3.text(filePath,  function(d) {
+            var properties = d3.csv.parseRows(d);
+            for(var i=0;i<properties.length;i++)
+            {
+                var property = properties[i][0];
+                inputdb.additionalProperties[property] ={};
+                d3.text(baseDirectory+property+".txt", function(propertyData)
+                {
+                    var lines = d3.tsv.parseRows(propertyData);
+                    console.log(property)
+                    for(var j=0;j<lines.length;j++)
+                    {
+                        var key = lines[j][0];
+                        var value = lines[j][1];
+                        inputdb.additionalProperties[properties][key] = value;
+                    }
+                });
+            }
+          });
+    },
+    getAdditionalProperties: function(id)
+    {
+         var colonIndex = id.indexOf(':'); 
+         var atIndex = id.indexOf('@');
+         var strId = id.substring(atIndex+1, id.length);
+         
+         var propertyKeys = Object.keys( inputdb.additionalProperties);
+         var propertyObj ={};
+         for(var i=0;i<propertyKeys.length;i++)
+         {
+             var propertyKey = propertyKeys[i];
+             var ids = Object.keys(inputdb.additionalProperties[propertyKey]);
+             for(var j=0;j<ids.length;j++)
+             {
+                 if(strId == ids[j])
+                 {
+                     propertyObj[propertyKey] = inputdb.additionalProperties[propertyKey][ids[j]];
+                 }
+                 else if(ids[j].indexOf("*")> -1)
+                 {
+                     var starIndex = ids[j].indexOf("*");
+                     var prefix = ids[j].substring(0, starIndex);
+                     if(strId.indexOf(prefix) === 0)
+                     {
+                         propertyObj[propertyKey] = inputdb.additionalProperties[propertyKey][ids[j]];
+                     }
+                 }   
+             }
+         }
+         return propertyObj;
+    },
     getContent : function(id)
     {
          var colonIndex = id.indexOf(':'); 
@@ -64,8 +121,8 @@ var inputdb=
              "type":type, 
              'navigationText':objectId.navigationText,
              'image':objectId.image,
-             'aoi':objectId.aoi
-             
+             'aoi':objectId.aoi,
+             'additionalProperties':inputdb.getAdditionalProperties(id)
          };
          
          console.log(id+":"+JSON.stringify(selected));

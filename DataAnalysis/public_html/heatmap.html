@@ -55,14 +55,18 @@ and open the template in the editor.
          
         <div class="selected-content" style="visibility:hidden; top:0px;">
             <div class="selected-content-title">DOI info</div>
+            <div class="label">ID:</div>
+            <div class="id-container small-font"></div>
             <div class="label">Type:</div>
             <div class="type small-font"></div>
             <div class="label">Flow:</div>
             <div class="navigation-text small-font"></div>
             <div class="label ">Type Text:</div>
             <div class="type-text small-font"></div>
+            <div class="label">Additional Properties:</div>
+            <div class="additional-properties-container small-font"></div>
             <div class="label data-content">Text:</div>
-            <div class="data-text small-font"></div>
+            <div class="data-text small-font"></div>            
             <div class="media-image">
                 <svg class="media-image-svg" width="500" >
                 </svg>
@@ -74,6 +78,7 @@ and open the template in the editor.
         <script>
             
             inputdb.load();
+            inputdb.loadAdditionalProperties();
             
             var svg = d3.select(".container").append("svg")
                     .attr("id", "mainsvg")
