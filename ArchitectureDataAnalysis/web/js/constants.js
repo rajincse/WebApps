@@ -10,3 +10,4 @@ var backgroundTimeStep =1000; // 1 sec
 var backgroundTimeMarker = 60000; // 1 min
 var dataServletGetElementProperties ='DataServlet?method=getElementProperties&id=';
 var dataServletGetAllProperties ='DataServlet?method=getAllProperties';
+var selectionColor ='#0000FF';

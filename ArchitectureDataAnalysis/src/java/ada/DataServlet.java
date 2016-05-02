@@ -53,11 +53,10 @@ public class DataServlet extends HttpServlet {
             else if(method.equalsIgnoreCase(METHOD_GET_ELEMENT_PROPERTIES))
             {
                 String id = request.getParameter("id");
-                JSONObject json = db.getJSONData("SELECT V.element_id,V.property_id, P.property_name , V.property_value \n" +
-                                        "FROM additional_property_values AS V\n" +
-                                        "INNER JOIN additional_properties AS P\n" +
-                                        "ON P.id = V.property_id\n" +
-                                        "WHERE '"+id+"' LIKE REPLACE(V.element_id, '*','%');");
+                JSONObject json = db.getJSONData("SELECT V.element_id, V.property_id, P.property_name , V.property_value "+
+                                            " FROM additional_property_values AS V " +
+                                            " INNER JOIN additional_properties AS P ON P.id = V.property_id " +
+                                            " WHERE FIND_IN_SET( V.element_id, '"+id+"');");
                 jsonData = json.toJSONString();
             }
             else if(method.equalsIgnoreCase(METHOD_ADD_NEW_PROPERTY))
@@ -72,10 +71,19 @@ public class DataServlet extends HttpServlet {
             else if(method.equalsIgnoreCase(METHOD_ADD_NEW_PROPERTY_VALUE))
             {
                 String propertyId = request.getParameter("propertyId");
-                String elementId = request.getParameter("elementId");
                 String propertyValue = request.getParameter("propertyValue");
+                String elementIdsParam = request.getParameter("elementIds");
+                String[] ids = elementIdsParam.split(",");
+                String valueString ="";
+                for(String id: ids)
+                {
+                    valueString+= "( "+propertyId+", '"+id+"', '"+propertyValue+"'),";
+                }
+                valueString = valueString.substring(0,valueString.length()-1);
+                
                 String command = "INSERT INTO additional_property_values(property_id, element_id,property_value)\n" +
-                                    "VALUES ( "+propertyId+", '"+elementId+"', '"+propertyValue+"');";
+                                    "VALUES  "+valueString+";";
+                System.out.println(command);
                 boolean result = db.execute(command);
                 JSONObject obj = new JSONObject();
                 obj.put("result", result?"Success":"Fail");

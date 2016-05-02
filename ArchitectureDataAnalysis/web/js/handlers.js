@@ -105,24 +105,35 @@ function onSvgClick(d,i)
     d3.select('.additional-properties-container').style('visibility','hidden');
     selectedIndex =-1;
 }
-function refreshAdditionalPropertiesView(id)
+function refreshAdditionalPropertiesView(ids)
 {
-    console.log('refresh');
-    d3.json(dataServletGetElementProperties+id, 
+    var IdsContainer = d3.select('.additional-properties-container div.ids-container');
+    var idsContainerSelection =IdsContainer.selectAll('span').data(ids);
+    idsContainerSelection
+            .enter().append('span').text(function(d){ return d+',';});
+    idsContainerSelection.exit().remove();
+    d3.json(dataServletGetElementProperties+ids, 
                 function(error, data)
                 {
                     var container = d3.select('.additional-properties-container div.all-properties');
-                    var divs = container.selectAll('div').data(data.DataArray)
+                    var divsSelection = container.selectAll('div').data(data.DataArray);
+                    divsSelection.exit().remove();
+                    var divs = divsSelection
                             .enter()
                             .append('div')
-                            .attr('class','row');
+                            .attr('class','row')
+                    ;
                     
                     divs.append('div')
                             .attr('class','cell label')                            
-                            .text(function(d){ return d.property_name+': ';});
+                            .text(function(d){ return d.property_name+': ';})                            
+                    ;
                     divs.append('div')
                             .attr('class','cell')
-                            .text(function(d){ return d.property_value;});     
+                            .text(function(d){ 
+                                return d.property_value;
+                    })                            
+                    ;     
                 }
             );
     d3.json(dataServletGetAllProperties, 
@@ -139,7 +150,7 @@ function refreshAdditionalPropertiesView(id)
                 }
             );
 }
-function onAdditionalClick(id, x, y)
+function onAdditionalClick(ids, x, y)
 {
    
     var dialogBox = d3.select('.additional-properties-container');
@@ -149,7 +160,7 @@ function onAdditionalClick(id, x, y)
             .style('left',x+'px')
             .style('top', y+'px')            
         ;
-    refreshAdditionalPropertiesView(id);   
+    refreshAdditionalPropertiesView(ids);   
         
         
         d3.select('#addProperty')
@@ -159,7 +170,7 @@ function onAdditionalClick(id, x, y)
                         var url = 'DataServlet?method=addNewProperty&propertyName='+propertyName;
                         d3.json(url, function(error, data)
                         {
-                           refreshAdditionalPropertiesView(id); 
+                           refreshAdditionalPropertiesView(ids); 
                         });
                     });
         d3.select('#addPropertyValue')
@@ -170,11 +181,11 @@ function onAdditionalClick(id, x, y)
                         
                         var url = 'DataServlet?method=addNewPropertyValue'
                                         +'&propertyId='+propertyId
-                                        +'&elementId='+id
+                                        +'&elementIds='+ids
                                         +'&propertyValue='+propertyValue;
                         d3.json(url, function(error, data)
                         {
-                           refreshAdditionalPropertiesView(id);
+                           refreshAdditionalPropertiesView(ids);
                         });
                     });
         
@@ -203,17 +214,6 @@ function onClick(d, i)
     d3.select('.type-text').text(selectedObject.typeText);
     d3.select('.navigation-text').text(selectedObject.navigationText);
     
-    var atIndex = d.dataObject.label.indexOf('@');
-    var strId = d.dataObject.label.substring(atIndex+1, d.dataObject.label.length);
-    d3.select('#additionalPropertyClick')
-                    .on('click', function ()
-            {
-                    onAdditionalClick(strId, x+500, y);
-            });
-   
-
-    
-
     if(selectedObject.type ==='image'
             ||selectedObject.type ==='button')
     {
@@ -286,4 +286,26 @@ function onClick(d, i)
         d3.select('.data-content').text('Text:');
         d3.select('.data-text').text(text);
     }
+}
+
+function onSelectionClick(d, elem){
+        var isSelectionCheckBoxChecked = d3.select('#checkBoxSelection').property('checked');
+        if(isSelectionCheckBoxChecked)
+        {
+            
+            var element = d3.select(elem);
+            var isSelected = (element.attr('selected') === 'true');
+            if(isSelected)
+            {
+                element.attr('selected', 'false');
+                element.style('fill', Color.getColorFromType(d).getColorString());
+                element.style('fill-opacity',1);
+            }
+            else
+            {
+                element.attr('selected', 'true');
+                element.style('fill', selectionColor);
+                element.style('fill-opacity',0.5);
+            }
+        }
 }

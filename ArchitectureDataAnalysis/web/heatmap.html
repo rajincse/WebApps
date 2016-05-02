@@ -47,6 +47,8 @@ and open the template in the editor.
             </select>
             <button id="zoomIn">zoom+</button>
             <button id="zoomOut">zoom-</button>
+            <input id='checkBoxSelection' type='checkbox' ><span>Selection</span>
+            <button id="additionalPropertyClick">Additional Properties</button>
         </div>
         
         <div class="container">
@@ -62,8 +64,7 @@ and open the template in the editor.
             <div class="label">Flow:</div>
             <div class="navigation-text small-font"></div>
             <div class="label ">Type Text:</div>
-            <div class="type-text small-font"></div>            
-            <button id="additionalPropertyClick" style="clear:both;">Additional Properties</button>
+            <div class="type-text small-font"></div>
             <div class="label data-content">Text:</div>
             <div class="data-text small-font"></div>            
             <div class="media-image">
@@ -74,6 +75,12 @@ and open the template in the editor.
         <div class="additional-properties-container small-font floatable" style="visibility:hidden; top:0px;">
             <div class="selected-content-title">
                 Properties
+            </div>
+            <div class="row label">
+                Ids:
+            </div>
+            <div class='ids-container'>
+                
             </div>
             <div class="all-properties">
             </div>
@@ -145,7 +152,30 @@ and open the template in the editor.
                     .on('click', onZoomIn);
             d3.select('#zoomOut')
                     .on('click', onZoomOut);
-            
+            d3.select('#checkBoxSelection')
+                    .on('change', function()
+            {
+               var isSelectionCheckBoxChecked = d3.select(this).property('checked'); 
+               if(!isSelectionCheckBoxChecked )
+               {
+                   render(fileData);
+               }
+            });
+            d3.select('#additionalPropertyClick')
+                    .on('click', function ()
+            {
+                var selectedItems =d3.selectAll('rect[selected=true]');
+                var selectedItemsId = [];
+                selectedItems.each(function(d,i){ 
+                    var doiId = d3.select(this).attr('doi-id');
+                    var atIndex = doiId.indexOf('@');
+                    var doiId = doiId.substring(atIndex+1, doiId.length);
+                    selectedItemsId.push(doiId);
+                    
+                });
+                console.log('hi:'+dataServletGetElementProperties+selectedItemsId);
+                onAdditionalClick(selectedItemsId, 300, 100);
+            });
                 
             function loadFile(filePath)
             {
@@ -257,6 +287,9 @@ and open the template in the editor.
                         .on('mouseover', onMouseOver)
                         .on('mouseout', onMouseOut)
                         .on('dblclick', function ( d,i) {onClick(data.entryList[d], i) ;})
+                        .attr('doi-id', function(d){ return data.entryList[d].dataObject.id;})
+                        .attr('selected', 'false')
+                        .on('click', function(d){onSelectionClick(data.entryList[d].dataObject, this);})
                         .append("svg:title")
                         .text(function(d) { return data.entryList[d].dataObject.label; })
                             ;
@@ -335,18 +368,18 @@ and open the template in the editor.
                         .attr('font-size','10')
                         .on('mouseover', onMouseOver)
                         .on('mouseout', onMouseOut)
-                        .on('dblclick', function ( d,i) {onClick(data.entryList[d], i) ;})
+                        .on('dblclick', function ( d,i) {onClick(data.entryList[d], i) ;})                        
                         .append("svg:title")
                         .text(function(d) { return data.entryList[d].dataObject.label; })
                 ;
                 
                 hoverRectGroup.selectAll('rect').data(data.sortingIndex[sortingType])
                         .enter()
-                        .insert('rect')
-                        .attr('id', function(d,j){ return 'hover-'+j;})
+                        .insert('rect')                        
+                        .attr('id', function(d,j){ return 'hover-'+j;})                        
                         .attr("x", function(d){ return cellWidth;})
                         .attr("y", function(d, j){ return j* cellHeight;})
-                        .attr('width', labelRectWidth+data.totalCells * cellWidth)
+                        .attr('width', labelRectWidth+data.totalCells * cellWidth)                        
                         .attr('height',cellHeight)
                         .style({fill:'none',stroke:'rgb(125,125,125)', 'stroke-opacity':1, 'visibility':'hidden'})
                         ;
