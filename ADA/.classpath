@@ -8,9 +8,9 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="E:/Rajin/Development/SVNProjects/WebApps/ADA/lib/servlet-api.jar"/>
-	<classpathentry kind="lib" path="E:/Rajin/Development/SVNProjects/WebApps/ADA/lib/gson-2.2.4.jar"/>
-	<classpathentry kind="lib" path="E:/Rajin/Development/SVNProjects/WebApps/ADA/lib/json-simple-1.1.1.jar"/>
-	<classpathentry kind="lib" path="E:/Rajin/Development/SVNProjects/WebApps/ADA/lib/mysql-connector-java-5.1.20-bin.jar"/>
+	<classpathentry kind="lib" path="lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="lib/gson-2.2.4.jar"/>
+	<classpathentry kind="lib" path="lib/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.20-bin.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
