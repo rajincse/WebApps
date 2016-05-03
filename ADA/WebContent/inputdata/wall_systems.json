@@ -1,0 +1,431 @@
+{
+    "moduleName": "Wall Systems",
+    "id":"c0m1",
+    "welcomeMessageImage": "images/wall_systems_message.jpg",
+    "description":
+    {
+        "title":"Wall Systems",
+        "text":"The design and the technology used in exterior walls entail the use  of diverse materials. In general, wall systems can be designed as  a monolithic construction or a multi-layered system. In monolithic  wall construction, the protective insulation and the structural system are all integrated into the same layer. Multilayer walls carry  these functions in separate layers. The capacity of walls to function as structural systems is dependent on the material and construction type. Walls can serve as the primary or secondary loadbearing structure, or not perform any structural function at all. The following sections will introduce a number of commonly  used wall types, their components, construction and assembly  methods, and their sustainability properties. Each wall will be accompanied by tabulated property values for standard construction as well as for green construction. The values listed for green construction are based on the use of alternative materials with  improved environmental performance"
+    },    
+    "submodule":
+            [
+                {
+                    "subModuleName": "Cavity Wall",
+                    "thumbnail": "data/media/thumbnail_cavity_wall.png",
+					 "description": [
+						{ 	"title":"",
+							"text":"A cavity wall consists of two unbonded wythes of masonry separated by an air space. The primary purpose of the cavity is to prevent water from reaching the inner wythe. Cavity walls can be load bearing or nonload-bearing. For load-bearing constructions, the floor and roof loads of the building are carried by the inner wythe. For nonload-bearing assemblies, another primary structure such as steel or concrete carries roofs and floors. The cavity wall carries only its own weight."
+						},
+						{ 	"title":"INNER WYTHE",
+							"text":"In load-bearing assemblies, the inner wythe is  structural. All floor and roof loads are transferred into the inner  wythe, which transmits those loads down to the foundations. The  inner wythe is typically made of concrete masonry units (CMUs)  and can vary in thickness. In load-bearing assemblies, several  thicknesses of block might be used in the same building, typically 8-inch (20.2 cm) CMUs on upper floors and 12- or 16-inch  (30.5 - 40.6 cm) CMUs on lower floors, where accumulated loads  are greater.  The most commonly used device where floor and roof loads are  transferred into a CMU wall is a bond beam: U-shaped blocks  placed in a section without intermediate webs. The trough formed  is filled with steel reinforcement and grout, which ties the blocks  together to create what is effectively a reinforced concrete beam  embedded in the wall, making a strong bearing beam to transfer/ distribute floor and roof loads into the wall.  Masonry is strong in compression and effective in resisting gravity  loads, but has no strength in tension. To deal with wind loads,  which introduce tensile forces in walls, the cavity wall may require  reinforcing. This is typically accomplished by horizontal joint reinforcement and/or vertical rebar grouted solid within the cells of  the CMU inner wythe. In nonload-bearing assemblies, the inner  wythe is an infill within another primary structure, such as a steel  or concrete frame. In this case, the inner wythe sits on the slab,and its weight is carried by the primary structure. Typically, the  outer face of the inner wythe is flushed with the edge of the slab to  ensure a continuous cavity."
+						},
+						{ 	"title":"OUTER WYTHE",
+							"text":"The outer wythe of a cavity wall is nonstructural.  The primary functions of the outer wythe are to determine the appearance of the wall, keep most liquid water out (not all), and  transfer lateral wind loads to the inner wythe through the cavity  ties. In small-scale construction, the outer wythe transmits its own load  directly down to the foundations. In larger-scale construction, the  outer wythe is typically carried by a shelf angle, which is bolted to  the edge of the floor slab. At each floor level, this angle transfers  the weight of the outer wythe to the primary structure. Ideally, the  shelf angle is stainless steel. Less costly galvanized steel angles  may be used, but these carry the risk of corrosion. The shelf angle, typically bolted to an insert cast into the edge of the slab, has  slotted holes for tolerance and leveling."
+						},
+						{ 	"title":"CAVITY",
+							"text":"The role of the cavity is primarily to provide a capillary  break against water penetration. The secondary benefits are that  it allows for differential movement of the inner and outer wythes  and enhances the insulation value of the wall. The dimension of  the cavity varies depending on how much additional insulation  is placed within the cavity. As a rule of thumb, the cavity must  retain a minimum clear dimension of 2 inches (50 mm) to work  effectively. A narrower cavity is too easily bridged by mortar, which  can squeeze out of joints or drop down inside the cavity, or by  insulation, which has been unevenly placed. Any such bridging in  the cavity must be avoided because it provides a path for water to  pass into the inner wythe. "
+						},
+						{ 	"title":"CAVITY TIES",
+							"text":"Because the two wythes of a cavity wall are not bonded, they must be connected by cavity ties, which are inserted in  the bed (horizontal) joints of both wythes at the spacing specified  by the manufacturer. Made of metal, plastic sheet or wire, cavity  ties are flexible and allow differential movement between wythes.  Because cavity ties must bridge the cavity, most are designed  with a drip detail to prevent the passage of water across the cavity. As the width of the cavity increases, cavity ties become more  expensive. The most durable and costly cavity ties are stainless  steel. Galvanized steel ties are less expensive, but carry the risk  of corrosion. "
+						},
+						{ 	"title":"INSULATION",
+							"text":"The air space of the cavity itself contributes to  the insulation value of the wall. However, it is rarely sufficient to  provide the required level of thermal, acoustical, and fire safety  performance, so insulation is typically added to the assembly. A  common location for insulation is within the cavity, where it is fixed  to the outer face of the inner wythe. Because insulation within the  cavity will get wet from time to time, it is important to specify products that will not degrade under wet conditions. Another location  for insulation systems are outside on the walls. They are called  exterior insulation and finish systems (EIFS). These systems are  added to bricks, concrete or other thermal mass materials to pro-vide a layer of continuous exterior insulation that protects from  temperature fluctuations and keeps interiors more comfortable.  In addition, by placing the insulation layer on the exterior of the  building, heat loss or heat transfer caused by thermal bridging is  reduced. 6  The thickness of insulation can be varied to enhance  the thermal performance of the wall. This improved performance  must be weighed against increased costs of insulation cavity ties  and flashings for thicker assemblies. However, higher first costs  for better insulation can also help to save energy with significant  pay back. "
+						},
+						{ 	"title":"VAPOR BARRIER",
+							"text":" Although the outer wythe and the cavity prevent  the ingress of water in liquid form, a barrier is required to resist  the passage of water vapor through the wall. Vapor pressure always seeks to equalize on both sides of a wall. Warm air has a  higher moisture content/vapor pressure than cool air, so vapor  will seek to move from warm to cool areas to equalize pressure.  As it does so, moisture-laden air cools and, if it reaches the dew  point, causes condensation problems within buildings. In general,  the vapor barrier is located on the warm side of the insulation to  prevent the moisture in warm air to cool and become condensate.  A vapor barrier is made of plastic or foil and can be a separate  membrane or, more commonly, an integral layer laminated to insulation. The vapor barrier may also be a liquid cementitious or  asphalt-based coating applied by brush."
+						},
+						{ 	"title":"INTERIOR FINISH",
+							"text":"  If the inner face of the inner wythe is not to be  seen in the completed building, a finish is required. This might be  gypsum board (dry wall), wet plaster, tile/stone, or wood/metal  paneling. Typically, wood or metal furring strips/channels are  required. The furring strips are screwed to the inner wythe and  can be shimmed to provide a level surface. The finish is in turn  screwed to the furring strips. The space thus created (1-2 inches  or 2.5-5.1 cm) between the inner wythe and the finish may be  used for concealing pipes and electrical conduit and wiring."
+						},
+						{ 	"title":"FLASHINGS",
+							"text":"A flashing is a continuous sheet of thin, impervious  material used as a barrier against the passage of water. There are  two broad categories: external flashings, which keep water out of  the cavity, and internal flashings, which take water from the cavity  and direct it out. Examples of locations where external flashings are required are at  the top of a wall or at the junction of a flat roof and a parapet wall.  External flashings are not always hidden, but might be exposed,  such as a sheet metal coping/flashing at the top of a wall or the  counter-flashing at a roof/wall junction. Internal flashings, which are also called cavity trays, are required  whenever anything interrupts, projects into, or bridges the cavity. The only exceptions are cavity ties, which do not need to be  flashed. Locations where internal flashings are required include  at floor levels where shelf angles are used to support the outer  wythe; at openings such as windows or doors, which must be  flashed at the top, the sides and at the sill; and at the base of a  wall where the cavity terminates. Instead of extending horizontally  through the wall, a cavity tray must be stepped 6-8 inches or 15.2- 20.3 cm down toward the outer wythe, so that any water in the  cavity is naturally directed down and out. "
+						},
+						{ 	"title":"CONSTRUCTION AND SUSTAINABILITY",
+							"text":"The construction of a cavity wall  requires highly skilled labor. Because of the mortar, a cavity wall is  a form of wet construction, which is more time consuming and site  labor intensive than dry forms of construction, which can be prefabricated and more quickly assembled on-site. Cavity wall construction is weather dependent. In extremely hot weather, mortarhydrates too quickly, which reduces its strength. If temperatures  drop below freezing, mortar will not hydrate. Work must either be  delayed or heating within temporary enclosures provided to enable work to continue. Masonry is a long-life material that requires  relatively little maintenance. The primary maintenance issue is  renewal of mortar pointing, which may be required at 50-year intervals."
+						}
+					]
+                    ,
+                    "mediaList": [
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_cavity_wall.png"
+                            ,
+                            "mediaImage": "data/media/media_cavity_wall.png"
+                            ,"aoiData":{"imageName":"media_cavity_wall.png","width":1034,"height":1195,"aoiItemList":[{"name":"full","x":0,"y":0,"width":1034,"height":1195},{"name":"Reinforced Concrete Floor","x":595,"y":146,"width":121,"height":105},{"name":"Steel Nut and Bolt on Steel Angle","x":504,"y":168,"width":146,"height":111},{"name":"Compressible Foam Filler","x":628,"y":244,"width":74,"height":68},{"name":"Metal Tie","x":649,"y":352,"width":42,"height":66},{"name":"Insulation","x":434,"y":418,"width":87,"height":103},{"name":"Vapor Barrier","x":428,"y":497,"width":85,"height":66},{"name":"Air Space","x":423,"y":531,"width":52,"height":68},{"name":"Mortar Joint","x":356,"y":592,"width":72,"height":61},{"name":"Brick Face","x":263,"y":622,"width":121,"height":142},{"name":"Mortar Dropping Control","x":583,"y":774,"width":45,"height":36},{"name":"Aluminum Flashing","x":557,"y":787,"width":42,"height":38},{"name":"Texts","x":567,"y":872,"width":486,"height":320},{"name":"CMU","x":587,"y":424,"width":66,"height":54}]}
+							,"description": []
+                        },
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_wall_section.png"
+                            ,
+                            "mediaImage": "data/media/media_wall_section.png"
+							,"aoiData":{"imageName":"media_wall_section.png","width":474,"height":1017,"aoiItemList":[{"name":"full","x":0,"y":0,"width":474,"height":1017},{"name":"Reinforced Concrete Floor","x":50,"y":25,"width":163,"height":82},{"name":"Steel Nut and Bolt on Steel Angle","x":196,"y":34,"width":74,"height":45},{"name":"Compressible Foam Filler","x":123,"y":101,"width":91,"height":38},{"name":"Metal Tie","x":140,"y":248,"width":143,"height":20},{"name":"Insulation","x":203,"y":76,"width":22,"height":309},{"name":"Vapor Barrier","x":221,"y":496,"width":7,"height":125},{"name":"Air Space","x":226,"y":79,"width":14,"height":289},{"name":"Mortar Joint","x":232,"y":226,"width":43,"height":28},{"name":"Brick Face","x":234,"y":79,"width":48,"height":292},{"name":"Mortar Dropping Control","x":230,"y":621,"width":42,"height":23},{"name":"Aluminum Flashing","x":198,"y":630,"width":77,"height":40},{"name":"Texts","x":33,"y":711,"width":430,"height":249},{"name":"CMU","x":149,"y":131,"width":52,"height":248},{"name":"Drywall on Furring","x":138,"y":119,"width":7,"height":266}]}
+							,"description": []
+                            
+                        },
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_punched_window.png"
+                            ,
+                            "mediaImage": "data/media/media_punched_window.png"
+							,"aoiData":{"imageName":"media_punched_window.png","width":1100,"height":1202,"aoiItemList":[{"name":"full","x":0,"y":0,"width":1100,"height":1202},{"name":"Reinforced Concrete Floor","x":611,"y":126,"width":286,"height":190},{"name":"Rough Jamb","x":803,"y":363,"width":39,"height":260},{"name":"Rough Sill","x":673,"y":500,"width":145,"height":99},{"name":"Metal Plate","x":764,"y":538,"width":71,"height":76},{"name":"Insulation","x":482,"y":253,"width":274,"height":515},{"name":"Window Sill","x":637,"y":509,"width":196,"height":110},{"name":"Brick Face","x":416,"y":278,"width":273,"height":547},{"name":"Window Casing","x":254,"y":469,"width":237,"height":337},{"name":"Aluminum Flashing","x":625,"y":264,"width":218,"height":110},{"name":"Texts","x":551,"y":871,"width":521,"height":316},{"name":"CMU","x":636,"y":522,"width":256,"height":158},{"name":"Aluminum Window Frame","x":155,"y":536,"width":222,"height":322},{"name":"Double Glazed Window System","x":54,"y":601,"width":206,"height":325},{"name":"Gypsum Board","x":738,"y":104,"width":246,"height":537}]}
+                            ,
+                            "additionalMedia": ["data/media/media_punched_window_barchart.png", "data/media/media_punched_window_table.png"]
+							,"description": []
+                        }
+                    ]
+                },
+                {
+                    "subModuleName": "Glass Curtain Wall",
+                    "thumbnail": "data/media/thumbnail_glass_curtain_wall.png",
+					 "description": [
+						{ 	"title":"",
+							"text": "A glass curtain wall is a nonload-bearing external wall that is supported by the structural frame of the building. The most common association is with fully glazed building envelopes, but curtain walls may also be made of metal, stone, concrete or other materials. Standard glazed curtain wall systems typically use aluminum frames because they are lightweight and strong, can be easily formed into complex shapes by the process of extrusion, and readily accept a wide range of finishes. Glazed curtain wall systems are designed to be glazed either from the outside or the inside."
+						},
+						{
+							"title":"MULLIONS",
+							"text":"These complex extruded box sections of aluminum  incorporate housings for either screw or snap-on fixings. Vertical  mullions are typically continuous from floor to floor and support  discontinuous horizontal mullions. In standard systems, vertical  and horizontal mullions have the same depth. However, depths  may differ for structural, thermal, visual or aesthetic reasons. "
+						},
+						{
+							"title":"SETTING BLOCKS",
+							"text":"Made of synthetic rubber, setting blocks carry  the weight of the glass on the horizontal mullions, isolate the glass  from the frame on both horizontal and vertical mullions, and enable the glass to expand and contract within the frame. "
+						},
+						{
+							"title":"THERMAL BREAK",
+							"text":"Made of extruded plastic, the thermal break fits  into the screw slot on the mullion. It separates the external metal  components of the frame from the mullion to prevent hot and cold  bridging."
+						},
+						{
+							"title":"GLAZING GASKETS",
+							"text":"Made of rubber or neoprene, glazing gaskets  fit into housings on the mullion and the pressure plate. Glazing  gaskets are attached prior to placing the glass. They isolate the  glass from the frame and make a weather-tight seal. "
+						},
+						{
+							"title":"GLAZING",
+							"text":"Prefabricated units of single, double or triple glazing  are connected to the aluminum frame from the exterior. "
+						},
+						{
+							"title":"PRESSURE PLATE",
+							"text":"The pressure plate, an aluminum extrusion, is  screwed to the projecting spines on the mullions to hold the glass  in place."
+						},
+						{
+							"title":"SNAP CAP",
+							"text":" The snap cap, an aluminum extrusion, which snaps  into housings in the pressure plate, covers the screw fixings. It  provides the external profile of the curtain wall framing and can  vary in depth for visual or aesthetic purposes."
+						},
+						{
+							"title":"CONSTRUCTION  ANd  SUSTAINABILITY",
+							"text":"Standard glazed curtain wall  systems are typically stick-built or are prefabricated panels. In  stick-built systems, metal frame components are assembled and  glazed on-site. Prefabricated panels are more costly to purchase  and transport, but they are typically of very high quality. Because  prefabricated panels can be quickly placed on-site with comparatively little site labor, using them can shorten the construction  time. In addition to glass, curtain walls can incorporate louvers,  vents and solid infill panels of metal, wood, translucent thermal  insulation, air collectors, and photovoltaics or other materials.  Enhanced thermal performance of curtain walls can be achieved  by combining single- and double-glazed leaves with an air space  in between that may vary from several inches to several feet, depending on the servicing strategy for the building. Materials used  in the construction of curtain walls (i.e., metal and glass) tend to  have high embodied energy."
+						}
+					]
+                    ,
+                    "mediaList": [
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_glass_curtain_wall.png"
+                            ,
+                            "mediaImage": "data/media/media_glass_curtain_wall.png"
+							,"aoiData":{"imageName":"media_glass_curtain_wall.png","width":1066,"height":1241,"aoiItemList":[{"name":"full","x":0,"y":0,"width":1066,"height":1241},{"name":"Reinforced Concrete Floor","x":488,"y":66,"width":408,"height":277},{"name":"Insulation","x":393,"y":136,"width":308,"height":200},{"name":"Aluminum Window Frame","x":406,"y":226,"width":296,"height":600},{"name":"Glazing Gasket","x":267,"y":275,"width":305,"height":644},{"name":"Spandrel Glass","x":121,"y":262,"width":319,"height":290},{"name":"Double Glazed Window System","x":28,"y":395,"width":418,"height":585},{"name":"Texts","x":652,"y":1014,"width":488,"height":197}]}
+                            ,
+                            "additionalMedia": ["data/media/media_glass_curtain_wall_barchart.png", "data/media/media_glass_curtain_wall_table.png"]
+							,"description": []
+                        },
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_glass_curtain_wall_section.png"
+                            ,
+                            "mediaImage": "data/media/media_glass_curtain_wall_section.png"
+							,"aoiData":{"imageName":"media_glass_curtain_wall_section.png","width":463,"height":986,"aoiItemList":[{"name":"full","x":0,"y":0,"width":463,"height":986},{"name":"Reinforced Concrete Floor","x":49,"y":4,"width":287,"height":141},{"name":"Insulation","x":257,"y":707,"width":37,"height":129},{"name":"Aluminum Window Frame","x":240,"y":158,"width":52,"height":257},{"name":"Glazing Gasket","x":247,"y":140,"width":85,"height":31},{"name":"Spandrel Glass","x":299,"y":719,"width":7,"height":123},{"name":"Double Glazed Window System","x":291,"y":471,"width":9,"height":225},{"name":"Texts","x":24,"y":840,"width":529,"height":202}]}
+                            ,
+                            "additionalMedia": ["data/media/media_glass_curtain_wall_barchart.png", "data/media/media_glass_curtain_wall_table.png"]
+							,"description": []
+                        }
+                    ]
+                },
+                {
+                    "subModuleName": "Concrete Masonry Unit Wall",
+                    "thumbnail": "data/media/thumbnail_cmu_wall.png",
+					 "description": [
+						{ 	"title":"",
+							"text": "The concrete masonry unit (CMU) wall is a prevalent building component that is both simple to construct and durable over time. It is composed of hollow elements that allow for expediency and alterability during and after assembly. The voids of the CMUs serve as forms for cast-in-place reinforced concrete columns and beams and can accommodate other building systems such as insulation, plumbing and conduits."
+						},
+						{
+							"title":"CMU",
+							"text":"The CMU is a factory-produced item. Although there are a  variety of shapes available to address particular wall conditions,  the standard American CMU block is 8 in x 8 in x 16 in (20.3 cm x  20.3 cm x 40.6 cm). The standard block is hollowed out with two  vertical cells. "
+						},
+						{
+							"title":"MORTAR",
+							"text":"The mortar or grout of CMU walls unifies the individual  masonry units into a monolithic system. Because the concrete  masonry units are hollow, the mortar is applied only to the outer  edges of the block. The mortar used in a CMU wall has more  water in it than typical concrete because the mortar needs to be a  workable material capable of being easily modified on-site. "
+						},
+						{
+							"title":"HORIZONTAL JOINT  REINFORCEMENT",
+							"text":"  Horizontal joint reinforcement  provides lateral strength to the CMU wall. The size and frequency  of horizontal joint reinforcement depends on the structural loads  on the wall. Typically, joint reinforcement is placed at every other  horizontal joint line. This reinforcement is composed of \"ladder  types\" or \"truss types\" that span from the center lines of the block  faces."
+						},
+						{
+							"title":"VERTICAL REINFORCEMENT",
+							"text":" Vertical reinforcement provides the CMU  wall with the required compressive strength. This reinforcement is  composed of reinforcing steel bars sized to the structural design  loads. The reinforcement, combined with grout-filled cells, forms  load-bearing columns embedded in the wall. "
+						},
+						{
+							"title":"STUCCO",
+							"text":"Because a concrete masonry unit is porous, a waterproofing surface is needed. Stucco serves as an inexpensive  material that waterproofs a CMU wall and hides imperfections.  The surface of the stucco can be smooth or textured and can be  scored. For stucco to serve as an effective waterproofing agent,  its surface ought not to be pierced or disrupted."
+						},
+						{
+							"title":"CONSTRUCTION AND SUSTAINABILITY",
+							"text":"  The CMU wall has been a prevalent building enclosure because of its forgiving nature and adaptability. Because it is hollow, a CMU wall is easy to cut and break  to conform to specific dimensional requirements. If errors occur  on-site, it is a system that can be easily modified and rebuilt. This  malleability makes it cost effective and requires a moderate skill  level. In addition, the hollow cells can absorb a variety of building  complements and adapt to a wide range of structural capacities.  CMU walls are quite durable. Their weakness is porosity, therefore  waterproofing this building system requires special attention. If left unprotected, the CMUs can act like sponges and absorb a great  deal of water. In addition, because the CMU is an intensely sitebuilt system, the assembly of a CMU wall is exposed to human  error and the realities of weather and site conditions.  Concrete is a tremendously energy-consumptive material. Although CMU blocks are made quickly, additional energy is required to speed up the curing process. In spite of this, CMU walls  require little maintenance over time."
+						}
+					]
+                    ,
+                    "mediaList": [
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_cmu_wall.png"
+                            ,
+                            "mediaImage": "data/media/media_cmu_wall.png"
+							,"aoiData":{"imageName":"media_cmu_wall.png","width":1119,"height":1280,"aoiItemList":[{"name":"full","x":0,"y":0,"width":1119,"height":1280},{"name":"Reinforced Concrete Floor System","x":772,"y":287,"width":34,"height":69},{"name":"Insulation","x":753,"y":368,"width":39,"height":112},{"name":"Horizontal Steel Reinforcement","x":682,"y":386,"width":86,"height":74},{"name":"Vertical Steel Reinforcement","x":697,"y":362,"width":25,"height":174},{"name":"CMU Grout","x":600,"y":526,"width":105,"height":74},{"name":"CMU","x":561,"y":562,"width":80,"height":101},{"name":"Mortar","x":533,"y":636,"width":93,"height":75},{"name":"Reveal","x":391,"y":603,"width":75,"height":113},{"name":"Stucco","x":298,"y":714,"width":102,"height":175},{"name":"Texts","x":701,"y":1082,"width":301,"height":197}]}
+							,"description":[]
+                            
+                        },
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_cmu_wall_section.png"
+                            ,
+                            "mediaImage": "data/media/media_cmu_wall_section.png"
+							,"aoiData":{"imageName":"media_cmu_wall_section.png","width":378,"height":950,"aoiItemList":[{"name":"Reinforced Concrete Floor System","x":48,"y":5,"width":188,"height":98},{"name":"Insulation","x":121,"y":402,"width":39,"height":362},{"name":"Horizontal Steel Reinforcement","x":124,"y":185,"width":107,"height":55},{"name":"Vertical Steel Reinforcement","x":177,"y":417,"width":29,"height":280},{"name":"CMU Grout","x":158,"y":521,"width":40,"height":64},{"name":"CMU block","x":197,"y":93,"width":20,"height":289},{"name":"Mortar","x":213,"y":410,"width":9,"height":284},{"name":"Gypsum Board","x":127,"y":98,"width":26,"height":282},{"name":"Stucco","x":210,"y":249,"width":27,"height":61},{"name":"Texts","x":80,"y":771,"width":319,"height":213},{"name":"full","x":0,"y":0,"width":378,"height":950}]}
+                            ,"description":[]
+                        },
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_cmu_wall_punched_window.png"
+                            ,
+                            "mediaImage": "data/media/media_cmu_wall_punched_window.png"
+							,"aoiData":{"imageName":"media_cmu_wall_punched_window.png","width":1161,"height":1110,"aoiItemList":[{"name":"full","x":0,"y":0,"width":1161,"height":1110},{"name":"Reinforced Concrete Floor System","x":580,"y":156,"width":295,"height":170},{"name":"Insulation","x":701,"y":121,"width":258,"height":543},{"name":"Aluminum Flashing","x":679,"y":532,"width":134,"height":106},{"name":"Gypsum Board","x":443,"y":283,"width":245,"height":547},{"name":"Window Casing","x":273,"y":448,"width":268,"height":398},{"name":"CMU","x":550,"y":164,"width":326,"height":569},{"name":"Aluminum Window Frame","x":175,"y":524,"width":222,"height":372},{"name":"Double Glazed Window System","x":73,"y":596,"width":208,"height":360},{"name":"Stucco","x":398,"y":303,"width":232,"height":567},{"name":"Texts","x":605,"y":890,"width":350,"height":216},{"name":"Gypsum Board","x":767,"y":90,"width":244,"height":537}]}
+                            ,
+                            "additionalMedia": ["data/media/media_cmu_wall_punched_window_barchart.png", "data/media/media_cmu_wall_punched_window_table.png"]
+							,"description":[]
+                        }
+                    ]
+                },
+                {
+                    "subModuleName": "Concrete Wall",
+                    "thumbnail": "data/media/thumbnail_concrete_wall.png",
+					"description": [
+						{ 	"title":"",
+							"text": "Concrete has been used since the times of the Romans and continues to be a major building material. Concrete is a durable enclosure material and once it has been properly installed, it lasts for many years. Its nature as a fluid that becomes a solid allows for limitless spatial possibilities, ranging from simple cubic forms to complex curves."
+						},
+						{
+							"title":"CONCRETE",
+							"text":"Concrete is a mixture of water, Portland cement, aggregate and sand. Upon adding water, the mixture undergoes a  process of hydration (curing), which transforms the liquid material into a solid mass. This is not a drying process, rather it is a  process in which water combines with cement to form concrete.  Concrete has tremendous compressive strength, but very small  tensile strength. "
+						},
+						{
+							"title":"STEEL REINFORCEMENT",
+							"text":" Steel reinforcement provides concrete with  tensile strength, allowing it to span distances without an arch form.  Standard reinforcing takes the form of hot-rolled steel bars. These  bars are ribbed to allow the steel to grip the surrounding concrete.  Steel reinforcement can also be in form of wires or strands and be  pulled in tension to squeeze concrete into compression to produce more efficient spans. The tension force applied to strands  can occur before the concrete has cured (pretensioned) or after it  has cured (posttensioned). "
+						},
+						{
+							"title":"FORMWORK",
+							"text":" Formwork is required to create the shape of the final  concrete element. Typically, formwork is a temporary structure that  is assembled to support the weight of concrete while it cures and  is removed once the concrete has reached sufficient strength.  The inside of a formwork surface can be manipulated to produce  patterns, lines and reveals on the exterior of the finished concrete  wall. Due to the weight of concrete, engineering of the structure of  the formwork is often required."
+						},
+						{
+							"title":"FORM TIES",
+							"text":"Form ties are used to hold the walls of formwork at a  specified distance from one another. When the concrete is poured  into the cavity of the formwork, the form ties prevent the walls from  separating and failing. "
+						},
+						{
+							"title":"CONSTRUCTION ANd SUSTAINABILITY",
+							"text":"When concrete is in its wet state,  great care is required in assembling the formwork to prevent leaks  and failures. The water-to-cement ratio must be managed and  checked to ensure correct mixture. Concrete is a heavy material.  During the curing process, engineered shoring for formwork is  required. Once concrete has cured, it is quite labor intensive to  correct errors. Concrete is tremendously energy consumptive and  produces CO2  gas emissions in its production process. In spite  of this, concrete walls are durable and require little maintenance  over time. "
+						}
+					]
+                    ,
+                    "mediaList": [
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_concrete_wall.png"
+                            ,
+                            "mediaImage": "data/media/media_concrete_wall.png"
+							,"aoiData":{"imageName":"media_concrete_wall.png","width":1170,"height":1311,"aoiItemList":[{"name":"full","x":0,"y":0,"width":1170,"height":1311},{"name":"Reinforced Concrete Floor","x":315,"y":261,"width":422,"height":279},{"name":"Insulation","x":536,"y":209,"width":337,"height":746},{"name":"Gypsum Board","x":669,"y":132,"width":338,"height":751},{"name":"Metal Furring","x":385,"y":404,"width":310,"height":629},{"name":"Reinforced Concrete Panel","x":480,"y":591,"width":84,"height":495},{"name":"Form Tile","x":159,"y":661,"width":371,"height":363},{"name":"Cold Joint","x":547,"y":967,"width":202,"height":116},{"name":"Reveal","x":159,"y":572,"width":355,"height":216},{"name":"Texts","x":724,"y":1137,"width":245,"height":176}]}
+							,"description":[]
+                           
+                        },
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_concrete_wall_section.png"
+                            ,
+                            "mediaImage": "data/media/media_concrete_wall_section.png"
+							,"aoiData":{"imageName":"media_concrete_wall_section.png","width":387,"height":978,"aoiItemList":[{"name":"full","x":0,"y":0,"width":387,"height":978},{"name":"Reinforced Concrete Floor","x":35,"y":-3,"width":198,"height":107},{"name":"Insulation","x":108,"y":90,"width":32,"height":320},{"name":"Gypsum Board","x":64,"y":91,"width":49,"height":311},{"name":"Metal Furring","x":123,"y":97,"width":12,"height":308},{"name":"Concrete Panel","x":138,"y":288,"width":87,"height":130},{"name":"Form Tile","x":144,"y":512,"width":83,"height":101},{"name":"Cold Joint","x":132,"y":722,"width":74,"height":98},{"name":"Reveal","x":147,"y":460,"width":87,"height":70},{"name":"Texts","x":47,"y":820,"width":283,"height":187}]}
+                           ,"description":[]
+                        },
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_concrete_wall_punched_window.png"
+                            ,
+                            "mediaImage": "data/media/media_concrete_wall_punched_window.png"
+							,"aoiData":{"imageName":"media_concrete_wall_punched_window.png","width":1104,"height":1137,"aoiItemList":[{"name":"full","x":0,"y":0,"width":1104,"height":1137},{"name":"Reinforced Concrete Floor","x":420,"y":199,"width":321,"height":203},{"name":"Insulation","x":571,"y":149,"width":287,"height":555},{"name":"Gypsum Board","x":689,"y":99,"width":267,"height":580},{"name":"Metal Furring","x":667,"y":402,"width":58,"height":392},{"name":"Reinforced Concrete Panel Reveal","x":500,"y":528,"width":74,"height":132},{"name":"Form Tile","x":279,"y":640,"width":295,"height":271},{"name":"Window casing","x":439,"y":338,"width":250,"height":371},{"name":"Aluminum Window Frame","x":150,"y":489,"width":267,"height":403},{"name":"Texts","x":524,"y":933,"width":318,"height":226},{"name":"Double Glazed Window System","x":9,"y":574,"width":258,"height":397}]}
+                            ,
+                            "additionalMedia": ["data/media/media_concrete_wall_punched_window_barchart.png", "data/media/media_concrete_wall_punched_window_table.png"]
+							,"description":[]
+                        }
+                    ]
+                },
+                {
+                    "subModuleName": "Metal Veneer Wall",
+                    "thumbnail": "data/media/thumbnail_metal_veneer_wall.png",
+					"description": [
+						{ 	"title":"",
+							"text": "A metal veneer wall is a nonload-bearing curtain wall that is supported by the building's primary structure. Different metals used for cladding systems include aluminum, steel, lead, copper, leadcoated copper, bronze, stainless steel and titanium. As with all building systems, the evolution of metal cladding has focused on reducing the amount of metal in order to reduce the cost, not only of the cladding itself, but also of the supporting structure. The most common metal cladding assemblies are metal sheet panels and composite panels."
+						},
+						{
+							"title":"METAL CLADDING",
+							"text":" The appearance of the building is determined by  the metal sheets or panels. These may be flat or corrugated or  be composite panels in which metal is bonded to another material. Sheet metal requires a continuous substrate of support, while  corrugated metal and composite metal panels can span between  supports. "
+						},
+						{
+							"title":"SUPPORT STRUCTURE",
+							"text":" Metal cladding is fixed to a support structure,  comprising vertical and/or horizontal framework. This framing  spans floor to floor and is fixed to the building's primary support  structure by cleats bolted to fixings cast into the edge or face of  the concrete slab."
+						},
+						{
+							"title":"JOINTS",
+							"text":"Metal cladding may be joined by overlapping, interlocking or the incorporation of a jointing material such as silicone or a  neoprene gasket."
+						},
+						{
+							"title":"THERMAL INSULATION",
+							"text":"There are several methods of incorporating  thermal insulation into a metal cladding system. Insulation may  be (a) loose laid on the rear of the panel, either in the factory or  on-site, (b) bonded to the metal in a composite panel, and/or (c)  incorporated in a separate backup wall."
+						},
+						{
+							"title":"BACKUP WALL",
+							"text":"A backup wall is a nonstructural wall constructed  on-site that spans from slab to slab. The most typical construction is light-gauge metal studs with insulation between the studs  and a gypsum board, wood or veneered plywood interior finish.  A backup wall also carries and conceals pipework and electrical  services."
+						},
+						{
+							"title":"METAL CLADDING ASSEMBLIES",
+							"text":" A flat metal sheet is thin, has no stiffness, and therefore requires a continuous supporting substrate  (plywood, etc.). A flat metal sheet that spans without support, is  typically at least 1/4 inch (6.4 mm) thick and therefore is heavier  and requires a more robust support structure. Alternatively, thin  sheet metal can be corrugated to enable it to span. Typically, a  corrugated sheet of 2-3 inches (51-67 mm) deep can span 5-8  feet (1.5-2.4 m). Thin sheet metal panels are typically joined by  interlocking standing or flat seams for flat sheets or overlapping  joints for corrugated sheets."
+						},
+						{
+							"title":"CONSTRUCTION ISSUES SUSTAINABILITY",
+							"text":"Metal cladding systems range  from very inexpensive, such as thin steel sheet that is printed with  a texture to simulate wood and vinyl coated, to very expensive,  such as titanium. Less costly systems are entirely factory made,  whereas custom or variable systems typically require a high level  of skilled labor on-site. Metal extraction from the earth typically causes environmental damage, including erosion and pollution of groundwater.  Metal manufacturing has high embodied energy, requiring large  amounts of water and heat; however, transportation of metal cladding components to site is not as expensive as concrete or masonry systems because metal cladding is typically much lighter in  weight. Metal cladding does not have any inherent fire resistance  (unlike concrete or masonry cladding for example); therefore, if  fire resistance is required, it must be achieved through a backup  wall."
+						}
+					]
+                    ,
+                    "mediaList": [
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_metal_veneer_wall.png"
+                            ,
+                            "mediaImage": "data/media/media_metal_veneer_wall.png"
+							,"aoiData":{"imageName":"media_metal_veneer_wall.png","width":991,"height":1305,"aoiItemList":[{"name":"full","x":0,"y":0,"width":991,"height":1305},{"name":"Reinforced Concrete Floor","x":279,"y":200,"width":403,"height":238},{"name":"Insulation","x":474,"y":160,"width":357,"height":705},{"name":"Gypsum Board","x":586,"y":99,"width":328,"height":712},{"name":"Steel Angle","x":290,"y":262,"width":329,"height":204},{"name":"Compressible Foam Filter","x":580,"y":440,"width":62,"height":62},{"name":"Lightweight Steel Framing System","x":572,"y":427,"width":52,"height":496},{"name":"Aluminum Mounting Profile","x":554,"y":609,"width":41,"height":34},{"name":"Aluminum Channel System","x":429,"y":485,"width":99,"height":546},{"name":"Texts","x":604,"y":1063,"width":319,"height":286},{"name":"Air Space","x":382,"y":668,"width":54,"height":282},{"name":"Vapor Barrier","x":735,"y":763,"width":111,"height":95},{"name":"Channel Bolted with Bolt and Washer","x":203,"y":770,"width":181,"height":158},{"name":"Corrugated Aluminum","x":214,"y":869,"width":151,"height":115},{"name":"Ventilation Screen","x":372,"y":1037,"width":72,"height":71}]}
+							,"description":[]                          
+                        },
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_metal_veneer_wall_section.png"
+                            ,
+                            "mediaImage": "data/media/media_metal_veneer_wall_section.png"
+							,"aoiData":{"imageName":"media_metal_veneer_wall_section.png","width":422,"height":1006,"aoiItemList":[{"name":"full","x":0,"y":0,"width":422,"height":1006},{"name":"Reinforced Concrete Floor","x":29,"y":23,"width":188,"height":81},{"name":"Insulation","x":190,"y":379,"width":43,"height":266},{"name":"Gypsum Board","x":176,"y":399,"width":22,"height":246},{"name":"Steel Angle","x":226,"y":72,"width":48,"height":42},{"name":"Compressible Foam Filter","x":163,"y":90,"width":86,"height":37},{"name":"Lightweight Steel Framing System","x":224,"y":92,"width":28,"height":258},{"name":"Aluminum Mounting Profile","x":231,"y":410,"width":44,"height":220},{"name":"Aluminum Channel System","x":259,"y":64,"width":30,"height":284},{"name":"Texts","x":64,"y":737,"width":328,"height":276},{"name":"Air Space","x":238,"y":438,"width":26,"height":211},{"name":"Vapor Barrier","x":195,"y":401,"width":17,"height":244},{"name":"Channel Bolted with Bolt and Washer","x":270,"y":63,"width":12,"height":271},{"name":"Corrugated Aluminum","x":235,"y":645,"width":43,"height":30},{"name":"Ventilation Screen","x":199,"y":638,"width":40,"height":91}]}
+							,"description":[]	
+                        },
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_metal_veneer_wall_punched_window.png"
+                            ,
+                            "mediaImage": "data/media/media_metal_veneer_wall_punched_window.png"
+							,"aoiData":{"imageName":"media_metal_veneer_wall_punched_window.png","width":1052,"height":1082,"aoiItemList":[{"name":"full","x":0,"y":0,"width":1052,"height":1082},{"name":"Reinforced Concrete Floor","x":469,"y":133,"width":308,"height":206},{"name":"Insulation","x":613,"y":80,"width":288,"height":579},{"name":"Gypsum Board","x":671,"y":76,"width":278,"height":542},{"name":"Window Casing","x":476,"y":272,"width":235,"height":365},{"name":"Compressible Foam Filter","x":676,"y":284,"width":48,"height":45},{"name":"Double Glazed Window System","x":58,"y":546,"width":212,"height":344},{"name":"Aluminum Window Frame","x":146,"y":448,"width":249,"height":378},{"name":"Aluminum Framing System","x":407,"y":166,"width":310,"height":238},{"name":"Texts","x":509,"y":868,"width":314,"height":221},{"name":"Vapor Barrier","x":849,"y":214,"width":36,"height":451},{"name":"Channel Bolted with Bolt and Washer","x":474,"y":557,"width":58,"height":175},{"name":"Corrugated Aluminum","x":303,"y":606,"width":265,"height":208}]}
+                            ,
+                            "additionalMedia": ["data/media/media_metal_veneer_wall_punched_window_barchart.png", "data/media/media_metal_veneer_wall_punched_window_table.png"]
+							,"description":[]
+                        }
+                    ]
+                },
+                {
+                    "subModuleName": "Precast Concrete Wall",
+                    "thumbnail": "data/media/thumbnail_precast_concrete_wall.png",
+					"description": [
+						{ 	"title":"",
+							"text": "Precast concrete cladding for large scale buildings is typically a nonload-bearing curtain wall that is supported by the structural frame of the building. Precast concrete cladding panel sizes are governed by the 10-12 foot (3.0-3.6 m) width of typical factory casting beds and by the limited dimensions of road, rail or ship transportation from factory to site. Precast concrete cladding can achieve a variety of textures and colors by varying the concrete mix, particularly the aggregate. A wide range of finishes may also be developed through (a) manipulation of the formwork, (b) incorporation of other facing materials such as ceramic tiles, thin bricks or thin stone, either by incorporation in the formwork or application to the surface of the precast panel, and (c) manual manipulation of the surface either during or after the curing process."
+						},
+						{
+							"title":"PRECAST CONCRETE PANELS",
+							"text":" Precast concrete panels are fabricated in factories with high-quality, reusable formwork. Panels  are typically 3-6 inches (76-152 mm) thick, 10-12 feet (3.0  -3.6m) wide and 1-2 stories high. "
+						},
+						{
+							"title":"PANEL FIXINGS",
+							"text":" Made of stainless steel, panel fixings transfer  the weight of the panel into the building's primary structural  frame. Panels are typically fixed at the top and bottom edges  to angles bolted to a steel frame or to anchors cast into the  edge or face of a concrete slab. The anchors, which have  slotted holes to allow for adjustment, carry bolts that slot into  holes cast into the back face of the precast panels."
+						},
+						{
+							"title":"PANEL JOINTS",
+							"text":"Precast cladding is typically used to create a  sealed building envelope in which joints are made weathertight by the insertion of a compressible backer for mastic sealant."
+						},
+						{
+							"title":"THERMAL INSULATION",
+							"text":" There are several methods of incorporating thermal insulation into a precast cladding system. Insulation may be (a) sandwiched between layers of concrete  during the casting process, (b) fixed to the rear face of the  panel, either in the factory or on-site, and/or (c) incorporated  in a separate backup wall."
+						},
+						{
+							"title":"BACKUP WALL",
+							"text":"A nonstructural backup wall is constructed onsite and spans from slab to slab. The most typical construction  is light-gauge metal studs with insulation between the studs  and a gypsum board, wood or veneered plywood interior finish. The backup wall also carries and conceals pipe work and  electrical services."
+						},
+						{
+							"title":"CONSTRUCTION AND SUSTAINABILITY ",
+							"text":"The advantages of using  pre-casting include high quality, reduced time on-site and  economy. Factory production, which is independent of weather conditions, enables the concrete mix and curing conditions to be highly controlled. Precasting has typically benefited from an  economy of scale, that is, it is most economical when there is a  high degree of repetition of elements. Concrete, after aluminum and steel, has high levels of embodied energy and produces CO2  gas emission, both in its manufacturing and its transport. Concrete is a huge consumer of natural  resources, whose extraction causes environmental degradation  and requires large amounts of water and heat in the process of  manufacturing. These factors can be mitigated by using flyash or  other forms of industrial waste in place of Portland cement or by  using ground up concrete or other durable recycled materials as  aggregate. Reusable formwork also helps to minimize the considerable resources needed for concrete construction. Precast cladding units are typically large and very heavy and  therefore are costly to transport. The most sustainable strategy is  to minimize the transportation distance from factory to site. Welldetailed concrete cladding is a long-life material that requires little  maintenance"
+						}
+					]
+                    ,
+                    "mediaList": [
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_precast_concrete_wall.png"
+                            ,
+                            "mediaImage": "data/media/media_precast_concrete_wall.png"
+							,"aoiData":{"imageName":"media_precast_concrete_wall.png","width":1151,"height":1298,"aoiItemList":[{"name":"full","x":0,"y":0,"width":1151,"height":1298},{"name":"Reinforced Concrete Floor","x":417,"y":241,"width":390,"height":249},{"name":"Insulation","x":544,"y":227,"width":347,"height":682},{"name":"Gypsum Board","x":639,"y":230,"width":321,"height":641},{"name":"Steel Angle","x":415,"y":292,"width":344,"height":225},{"name":"Metal Stud","x":438,"y":355,"width":307,"height":609},{"name":"Wedge Anchor Insert","x":56,"y":516,"width":339,"height":201},{"name":"Precast Concrete Wall Panel","x":9,"y":524,"width":386,"height":668},{"name":"Fire Thermal Acoustic Stop","x":545,"y":802,"width":339,"height":213},{"name":"Texts","x":677,"y":1081,"width":297,"height":210},{"name":"Steel Nut and Bolt","x":672,"y":930,"width":87,"height":51},{"name":"Steel Angle cast into Concrete","x":689,"y":961,"width":53,"height":57}]}
+							,"description":[]
+                        },
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_precast_concrete_wall_section.png"
+                            ,
+                            "mediaImage": "data/media/media_precast_concrete_wall_section.png"
+							,"aoiData":{"imageName":"media_precast_concrete_wall_section.png","width":411,"height":994,"aoiItemList":[{"name":"Reinforced Concrete Floor","x":71,"y":53,"width":140,"height":85},{"name":"Insulation","x":183,"y":446,"width":33,"height":257},{"name":"Gypsum Board","x":162,"y":137,"width":28,"height":263},{"name":"Sealant","x":213,"y":47,"width":57,"height":50},{"name":"Metal Stud","x":205,"y":135,"width":20,"height":267},{"name":"Wedge Anchor Insert","x":199,"y":123,"width":40,"height":64},{"name":"Precast Concrete Wall Panel","x":221,"y":105,"width":64,"height":326},{"name":"Fire Thermal Acoustic Stop","x":189,"y":713,"width":57,"height":90},{"name":"Texts","x":49,"y":806,"width":291,"height":198},{"name":"Steel Nut and Bolt","x":194,"y":652,"width":56,"height":63},{"name":"full","x":0,"y":0,"width":411,"height":994}]}
+                            ,"description":[]
+                        },
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_precast_concrete_wall_punched_window.png"
+                            ,
+                            "mediaImage": "data/media/media_precast_concrete_wall_punched_window.png"
+							,"aoiData":{"imageName":"media_precast_concrete_wall_punched_window.png","width":1089,"height":1168,"aoiItemList":[{"name":"full","x":0,"y":0,"width":1089,"height":1168},{"name":"Reinforced Concrete Floor","x":414,"y":254,"width":343,"height":178},{"name":"Insulation","x":543,"y":225,"width":302,"height":560},{"name":"Gypsum Board","x":624,"y":187,"width":273,"height":558},{"name":"Window Casing","x":443,"y":398,"width":238,"height":360},{"name":"Metal Stud","x":670,"y":440,"width":34,"height":364},{"name":"Wedge Anchor Insert","x":257,"y":385,"width":268,"height":171},{"name":"Precast Concrete Wall Panel","x":237,"y":428,"width":296,"height":528},{"name":"Fire Thermal Acoustic Stop","x":520,"y":683,"width":313,"height":196},{"name":"Texts","x":535,"y":971,"width":285,"height":199},{"name":"Aluminum Window Frame","x":92,"y":542,"width":318,"height":426}]}
+                            ,
+                            "additionalMedia": ["data/media/media_precast_concrete_wall_punched_window_barchart.png", "data/media/media_precast_concrete_wall_punched_window_table.png"]
+							,"description":[]
+                        }
+                    ]
+                },
+                {
+                    "subModuleName": "Stone Panel Wall",
+                    "thumbnail": "data/media/thumbnail_stone_panel_wall.png",
+					"description": [
+						{ 	"title":"",
+							"text": "Stone cladding for large-scale buildings is typically a nonloadbearing curtain wall that is supported by the structural frame of the building. Because of their appearance, durability and weather resistance, granite, limestone and marble are the most widely used types of stone for external cladding."
+						},
+						{
+							"title":"STONE PANELS",
+							"text":"The thickness of stone cladding panels is governed by the panel size and the type of stone. Smaller stone panels are usually supported by a steel subframe that spans vertically  from floor to floor. The larger story-height panels are fixed directly  to the building's primary structure. The recommended minimum  thickness for panels of up to 20 square feet (6 square meters) is 1 1/4 inches (31.7 mm) for granite and 2 inches (50.8 mm) for limestone or marble. The type of stone determines the color and patterning of the cladding. A wide range of textures can be achieved,  including sawn, honed, polished, flame cut, bush-hammered and  split-face finishes. "
+						},
+						{
+							"title":"PANEL FIXINGS",
+							"text":"Stainless steel fixings transfer the dead load of  the stone panel and lateral wind loads into the building's primary  structural frame. The simplest fixings are combined dead-load  and tie-back anchors. Story-height panels are typically fixed to  angles bolted to a steel frame or to anchors cast into the edge or  face of a concrete slab. Smaller panels are fixed to a steel subframe that spans vertically from floor to floor. The anchors, which  have slotted holes to allow for adjustment, fit into kerfs (grooves)  cut into the top and bottom edges of each stone panel. Panel  joints for a sealed building envelope are made weather-tight by  the insertion of a compressible backer for mastic sealant"
+						},
+						{
+							"title":"THERMAL INSULATION",
+							"text":"Thermal insulation is incorporated in a separate backup wall."
+						},
+						{
+							"title":"BACKUP WALL",
+							"text":"A nonstructural backup wall is constructed on-site  and spans from slab to slab. The most typical construction is lightgauge metal studs with insulation between the studs and a gypsum board, wood or veneered plywood interior finish. The backup  wall also carries and conceals pipe work and electrical services"
+						},
+						{
+							"title":"CONSTRUCTION SUSTAINABILITY",
+							"text":"Stone cladding is expensive relative  to many other materials. The detailing of stone cladding and its  highly specialized fixings is typically done by the stone subcontractor, who provides shop drawings for approval by the design  team. Fabrication and installation are carried out by highly skilled  labor. Each piece of stone is prefabricated in a shop and marked  with a code to identify its precise location in the building envelope.  Because stone is robust and durable, it typically requires minimal  protective measures, such as wrapping, either in the shop or on  the building site. Stone has low levels of embodied energy in its manufacture.  Large blocks of stone are quarried and transported to workshops  where the stone is cut and finished. Although water is required  continuously during cutting and finishing to cool the equipment,  the amount of this water is minimal relative to other materials such  as concrete. However, stone quarries disfigure the landscape.  The embodied energy in stone, related to transportation, is significant because stone is transported globally. In some cases, international shipping and foreign labor add up to less than domestic  labor and transportation by truck. Well-detailed stone cladding is  a long-life material that requires little maintenance."
+						}
+					]
+                    ,
+                    "mediaList": [
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_stone_panel_wall.png"
+                            ,
+                            "mediaImage": "data/media/media_stone_panel_wall.png"
+                            ,"aoiData":{"imageName":"media_stone_panel_wall.png","width":1091,"height":1260,"aoiItemList":[{"name":"full","x":0,"y":0,"width":1091,"height":1260},{"name":"Reinforced Concrete Floor","x":467,"y":227,"width":356,"height":249},{"name":"Insulation","x":573,"y":231,"width":347,"height":647},{"name":"Gypsum Board","x":642,"y":192,"width":327,"height":640},{"name":"Compressible Foam Filter","x":433,"y":295,"width":347,"height":200},{"name":"Metal Ties","x":262,"y":535,"width":326,"height":220},{"name":"Lightweight Steell Framing System","x":459,"y":315,"width":321,"height":626},{"name":"Steel bolt and Nuts","x":527,"y":536,"width":62,"height":60},{"name":"Caulk","x":69,"y":636,"width":332,"height":214},{"name":"Texts","x":708,"y":1036,"width":315,"height":218},{"name":"Stone Veneer System","x":44,"y":474,"width":372,"height":714},{"name":"Fire Thermal Acoustic Stop","x":555,"y":751,"width":364,"height":230},{"name":"Steel Tubes","x":521,"y":540,"width":107,"height":563}]}
+							,"description":[]
+                        },
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_stone_panel_wall_section.png"
+                            ,
+                            "mediaImage": "data/media/media_stone_panel_wall_section.png"
+                            ,"aoiData":{"imageName":"media_stone_panel_wall_section.png","width":380,"height":1068,"aoiItemList":[{"name":"full","x":0,"y":0,"width":380,"height":1068},{"name":"Reinforced Concrete Floor","x":49,"y":35,"width":139,"height":84},{"name":"Insulation","x":158,"y":131,"width":49,"height":139},{"name":"Gypsum Board","x":130,"y":301,"width":38,"height":220},{"name":"Compressible Foam Filter","x":209,"y":89,"width":35,"height":37},{"name":"Metal Ties","x":205,"y":717,"width":43,"height":34},{"name":"Lightweight Steell Framing System","x":198,"y":121,"width":11,"height":151},{"name":"Steel bolt and Nuts","x":160,"y":111,"width":44,"height":24},{"name":"Caulk","x":203,"y":404,"width":39,"height":32},{"name":"Texts","x":61,"y":796,"width":309,"height":277},{"name":"Stone Veneer System","x":222,"y":297,"width":23,"height":228},{"name":"Fire Thermal Acoustic Stop","x":180,"y":711,"width":27,"height":70},{"name":"Steel Tubes","x":205,"y":297,"width":17,"height":227}]}
+							,"description":[]
+                        },
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_stone_panel_wall_punched_window.png"
+                            ,
+                            "mediaImage": "data/media/media_stone_panel_wall_punched_window.png"
+							,"aoiData":{"imageName":"media_stone_panel_wall_punched_window.png","width":1111,"height":1074,"aoiItemList":[{"name":"full","x":0,"y":0,"width":1111,"height":1074},{"name":"Reinforced Concrete Floor","x":503,"y":96,"width":312,"height":228},{"name":"Insulation","x":602,"y":111,"width":280,"height":553},{"name":"Gypsum Board","x":685,"y":104,"width":241,"height":532},{"name":"Compressible Foam Filter","x":526,"y":201,"width":254,"height":144},{"name":"Window Casing","x":524,"y":288,"width":233,"height":336},{"name":"Lightweight Steell Framing System","x":737,"y":323,"width":58,"height":386},{"name":"Aluminum Window Frame","x":104,"y":494,"width":243,"height":385},{"name":"Double Glazed Window System","x":-23,"y":619,"width":243,"height":317},{"name":"Texts","x":644,"y":856,"width":335,"height":222},{"name":"Stone Veneer System","x":212,"y":348,"width":273,"height":551},{"name":"Fire Thermal Acoustic Stop","x":615,"y":546,"width":275,"height":186},{"name":"Steel Tubes","x":560,"y":366,"width":73,"height":449}]}
+                            ,
+                            "additionalMedia": ["data/media/media_stone_panel_wall_punched_window_barchart.png", "data/media/media_stone_panel_wall_punched_window_table.png"]
+							,"description":[]
+                        }
+                    ]
+                }
+            ]
+}

@@ -1,0 +1,376 @@
+{
+    "moduleName": "Envelope Concepts",
+    "id":"c0m0",
+    "welcomeMessageImage": "images/envelope_concepts_message.jpg",
+    "description":
+    {
+        "title":"Building Envelope Concepts",
+        "text":"An informed process of selecting materials utilized in building envelopes can lead to significant improvements and reduce the environmental impact of buildings. An investigation of a material in  terms of natural resource extraction and properties such as thermal resistance, thermal transmittance and insulation capabilities  can be a useful vehicle for gauging various enclosure alternatives.  The following sections describe some of the critical concepts required for understanding building enclosure materials, function,  performance and sustainability"
+    },    
+    "submodule":
+            [
+                {
+                    "subModuleName": "Environmental Impact",
+                    "thumbnail": "data/media/thumbnail_environmental_impact.png",
+                    "description": [
+						{ 	"title":"",
+							"text":"The use of materials for building construction causes major impacts on the environment, including significant water consumption and resource and energy usage as well as greenhouse gas emissions. These materials consume energy and water in their removal, manufacturing, transportation, maintenance and recycling and produce hazardous emissions during these processes. Approximate indicators of a material's environmental impact are embodied energy, embodied water and carbon footprint. Designing buildings with improved environmental performance should go beyond decreasing the operational energy and aim at reducing embodied energy, embodied water and carbon footprint during the life cycle of building materials."
+						},
+						{
+							"title":"EMBODIED ENERGY", 
+							"text":" Embodied energy is the amount of energy  used to extract, produce, and distribute a material to the location  of use. In general, the embodied energy of building materials contributes about 15 to 20 percent to the energy used by a building  over a 50-year period. 1  This percentage is expected to increase as  buildings become more energy efficient. The units for embodied  energy may be expressed as Mega Joules (MJ) or Btu per unit of  weight (kg or lb) or per unit area (square meter or square foot).  The embodied energy for an enclosure system can be arrived at  by the summation of the embodied energy values of each individual material used in the system or the assembly. Although the  use of different methodologies and data sets for calculating embodied energy can result in different measurements, these measurements still provide an indication of resource depletion and  energy utilization in the construction of a building.  The strategies and recommendations below provide a framework  for selecting materials and construction methods for the design of  building envelopes: * Investigate the embodied energy values of materials prior to  construction to select materials with lower embodied energy.  * When possible, use salvaged materials with high recycled content to reduce embodied energy, construction waste and air pollution to save water. *When possible, use regional construction materials to decrease  the transportation distances in order to reduce embodied energy."
+						},
+						{
+							"title":"EMBODIED WATER", 
+							"text":" Although the demand for water consumption  has increased significantly over the last century, the infrastructure  capacity to harvest adequate water to serve the Earth's growing  population has not grown accordingly, and in many parts of the  world, water scarcity is becoming a critical issue. In addition to  the daily operation of buildings, water is used in the production of  building materials. The amount of water used to manufacture and  deliver materials to their final destination is called embodied water. There is a growing body of research using various methodologies to estimate the embodied water values for various materials.  Based on a study conducted by the Royal Institute of Australian  Architects, there is a close relationship between embodied water  and embodied energy. As a result, the study concludes the strategies used to reduce the embodied energy will be effective for  reducing the embodied water in buildings."
+						},
+						{
+							"title":"CARBON FOOTPRINT", 
+							"text":"Carbon footprint refers to the amount of carbon dioxide and other greenhouse gas emissions associated  with an activity, a process or a product. Building materials cause greenhouse emissions throughout their life cycles because they  require energy for their production and disposal. Building materials with high embodied energy generate considerable amounts  of greenhouse gas emissions. Steel generates 26 percent more  greenhouse gases and concrete 31 percent more, than wood. 3   Reducing a material’s carbon footprint will minimize embodied  energy and mitigate its environmental impact."
+						}
+					]
+                    ,
+                    "mediaList": [
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_embodied_energy.png"
+                            ,
+                            "mediaImage": "data/media/media_embodied_energy.png"
+                            ,"aoiData":{"imageName":"media_embodied_energy.png","width":505,"height":378,"aoiItemList":[{"name":"Titles","x":21,"y":16,"width":155,"height":298},{"name":"full","x":0,"y":0,"width":505,"height":378},{"name":"bars","x":181,"y":24,"width":297,"height":313}]}
+                            ,
+                            "additionalMedia": ["data/media/media_embodied_energy_table.png"]
+							,"description":[]
+                        },
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_embodied_water.png"
+                            ,
+                            "mediaImage": "data/media/media_embodied_water.png"
+                            ,"aoiData":{"imageName":"media_embodied_water.png","width":1251,"height":1371,"aoiItemList":[{"name":"full","x":0,"y":0,"width":1251,"height":1371},{"name":"Title","x":10,"y":51,"width":278,"height":63},{"name":"Copper","x":846,"y":161,"width":233,"height":111},{"name":"Aluminum","x":1032,"y":369,"width":157,"height":92},{"name":"Timber","x":603,"y":379,"width":226,"height":143},{"name":"Steel","x":928,"y":437,"width":167,"height":111},{"name":"Cement","x":799,"y":548,"width":255,"height":80},{"name":"Carpet","x":577,"y":528,"width":139,"height":107},{"name":"Clear Float Glass","x":388,"y":556,"width":284,"height":125},{"name":"Concrete","x":724,"y":630,"width":363,"height":125},{"name":"Vinyl Flooring","x":293,"y":635,"width":336,"height":94},{"name":"Fiberglass batts","x":299,"y":733,"width":304,"height":87},{"name":"Paint","x":335,"y":808,"width":147,"height":102},{"name":"Brick","x":571,"y":784,"width":256,"height":106},{"name":"X-axis","x":136,"y":1005,"width":1086,"height":143},{"name":"Y-axis","x":75,"y":131,"width":230,"height":1001},{"name":"Plastic","x":744,"y":276,"width":286,"height":81}]}
+                            ,
+                            "additionalMedia": ["data/media/media_embodied_energy_table.png"]
+							,"description":[]
+                        }
+                    ]
+                },
+                {
+                    "subModuleName": "Material Thermal Properties",
+                    "thumbnail": "data/media/thumbnail_material_thermal_properties.png",
+					"description": [
+						{ 	"title":"",
+							"text":"Designing efficient building envelopes requires an understanding of the thermal performance of utilized materials. Reducing the envelope energy loss is critical, particularly where significant heating or cooling is required to provide thermal comfort. In general, thermal transmittance and thermal resistance are the two most important properties for understanding the conductive performance of building materials."
+						},
+						{
+							"title":"THERMAL RESISTANCE (R-VALUE)",
+							"text":" Thermal resistance is the capacity  of a material to resist heat transfer through conduction, convection, and radiation. It is a measure of insulation value and is largely  a function of the number and size of cavity spaces in a material.  Thermal resistance is expressed as R-value which has units of  ft 2 .°F.h/Btu (square feet-Fahrenheit hour per Btu), m2 .K/W (square  meter—kelvin per watt), or m².°C/W (square meter—Celsius per  watt). To show the thermal resistance of a material, the symbol R  is usually placed before the numerical value, as in R-20. The R- value for building assemblies composed of various elements can  be found by the summation of all individual element’s R-values."
+						},
+						{
+							"title":"THERMAL TRANSMITTANCE (U-VALUE)",
+							"text":" Thermal transmittance is the rate  of heat loss or heat transfer through a material and is expressed  by the U-value. Thermal transmittance measures the capacity of a  material with a certain thickness to transmit heat through conduction, convection and radiation. The units of U-value are Btu/hr.ft².  °F (Btu per hour per square foot per degree Fahrenheit) or W/m²K  (watts per square meter per kelvin). The U-value of a building assembly, such as a wall system, is calculated from the reciprocal  of the combined thermal resistances of the materials in the wall  assembly (U=1/R)"
+						},
+						{
+							"title":"THERMAL CONDUCTIVITY",
+							"text":" Thermal conductivity is the ability of a material to transmit heat. Conductivity is a result of direct molecular  interaction for transferring heat when there is a temperature difference in the material. Thermal conductivity is express by k or ?  and is measured as Btu/ hr°F. ft (Btu per hour per foot per degree  Fahrenheit) or W/m.K (watts per meter per kelvin). Thermal conductivity and thermal transmittance are closely related. However,  thermal conductivity does not take into account heat transfer due  to radiation and convection or the material thickness."
+						},
+						{
+							"title":"THERMAL BRIDGING",
+							"text":"A thermal bridge is a part of the building  envelope at which heat transfer occurs at a significantly higher  rate than the surrounding areas of the envelope. Thermal bridging and air leakages happen when relatively highly thermal conductive materials (such as steel and concrete) are used without  airtight insulation in transitional spaces, thus creating vulnerable  locations for heat loss or heat transfer. These locations include the  periphery of windows and doors and connection areas between  the envelope components and structural elements.  Thermal bridges are more critical in cold climates or in hot and  humid climates when the indoor-outdoor temperature differences  are the greatest. Without adequate insulation, the cool air and  the warm air meet through thermal bridges on the surface of the  envelope, creating condensation and built-up moisture. Moisture  decreases the envelope’s R-value, creates water leakage and  deteriorates the building envelope. Thermal bridging is best addressed during the design process for new buildings. For existing  buildings with mandatory energy saving ordinances, various testing methods can determine the exact location and to some extent  the magnitude of thermal bridges. The U.S. ENERGY STAR Qualified Homes Thermal Bypass Inspection Checklist includes two  methods of infrared thermography (thermal imaging) and blower  door test inspections."
+						},
+						{
+							"title":"SOLAR HEAT GAIN COEFFICIENT & SHADING COEFFICIENT",
+							"text":" Glazed openings on buildings can be a major source of heat gain by solar  radiation. Solar heat gain is a function of glazing material properties and is measured by the shading coefficient (SC). SC is the  ratio between the solar heat gain for a particular type of glass and  that of a single clear float glass. SC is expressed as a number  between 0.0 and 1.0. A lower SC indicates a lower heat gain value  and a better capacity to block solar radiation. Clear glass has a  SC of 1.0.   Shading coefficient is being replaced by the solar heat gain coefficient (SHGC). The SHGC is a measure of how well glass blocks  heat from sunlight. The SHGC is the fraction of solar radiation that  is admitted through glass and is expressed as a number between  0.0 and 0.87. Typical values range from 0.25 to 0.80."
+						}
+					]
+                    ,
+                    "mediaList": [
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_solar_heat_gain.png"
+                            ,
+                            "mediaImage": "data/media/media_solar_heat_gain.png"
+							,"aoiData":{"imageName":"media_solar_heat_gain.png","width":1317,"height":1286,"aoiItemList":[{"name":"full","x":0,"y":0,"width":1317,"height":1286},{"name":"Title","x":2,"y":27,"width":917,"height":100},{"name":"Solar heatgain coeff 86","x":11,"y":160,"width":696,"height":1120},{"name":"Solar heatgain coeff 29","x":683,"y":154,"width":657,"height":1130}]}
+							,"description":[]
+                        },
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_low_e_glass.png"
+                            ,
+                            "mediaImage": "data/media/media_low_e_glass.png"
+							,"aoiData":{"imageName":"media_low_e_glass.png","width":498,"height":893,"aoiItemList":[{"name":"full","x":0,"y":0,"width":498,"height":893},{"name":"Thick Clear Window Glass Text","x":25,"y":751,"width":271,"height":20},{"name":"Air Gap Text","x":28,"y":767,"width":175,"height":18},{"name":"Low Emissivity Coating layer text","x":21,"y":789,"width":210,"height":12},{"name":"Thick Clear Window Glass Text","x":31,"y":801,"width":194,"height":15},{"name":"Spectrally Selectic Tint Film Text","x":26,"y":818,"width":274,"height":15},{"name":"Solar heat gain coefficient","x":275,"y":526,"width":149,"height":46},{"name":"Visual Light Transmitted","x":278,"y":582,"width":159,"height":43},{"name":"Thick Clear Window Glass","x":91,"y":23,"width":202,"height":119},{"name":"Air Gap","x":82,"y":57,"width":147,"height":89},{"name":"Low Emissivity Coating layer","x":194,"y":127,"width":72,"height":53},{"name":"Spectrally Selectic Tint Film","x":160,"y":153,"width":99,"height":75},{"name":"Thick Clear Window Glass","x":106,"y":204,"width":107,"height":58}]}
+							,"description":[]
+                        }
+                    ]
+                },
+                {
+                    "subModuleName": "Enclosure Materials",
+                    "thumbnail": "data/media/thumbnail_enclosure_materials.png",
+					"description": [
+						{ 	"title":"",
+							"text":"Building enclosures serve a multitude of critical functions by providing thermal comfort, natural lighting, air movement, humidity and moisture control, views, sound insulation, pollution and fire resistance. In addition, building enclosures can function as loadbearing walls or roof systems that provide lateral resistance to wind and seismic loads. Selecting enclosure materials that can best integrate these functions is a substantial step to reducing resource and energy demand and the carbon footprint of buildings throughout their life cycle."		
+						},
+						{
+							"title":"Wood",
+							"text":"  Due to the extensive availability and ease of fabrication, wood has  been widely used as a building enclosure material. Although wood  is often considered renewable, unsustainable forest management  causes soil erosion and biodiversity loss. However, when wood resources are managed and certified properly, the benefits of using  wood in construction may exceed that of concrete and metals.  In order to ensure long-life service, a number of factors must be  considered when using wood in buildings. Moisture control is one  of the most critical concerns because a high level of moisture content will lead to decay. Termite and fire control are also important  factors when designing with wood. Wood can be recycled and,  when designed properly, is a durable construction material. Wood  has a low embodied energy, is biodegradable and has a better  thermal efficiency when compared to most metals."
+						},
+						{
+							"title":"ENGINEERED WOOD PRODUCTS",
+							"text":"   Almost all enclosure applications require engineered wood products. These are composite elements  manufactured with precise design specifications to produce wood  components with consistent properties, better efficiency, and improved performance.  Engineered wood products utilize smaller trees that can grow  and be replaced faster. However, the manufacturing process consumes more energy, and some of the adhesives used are toxic.  In addition, recycling engineered wood is more difficult than sawn  lumber. Engineered wood products are used for stiffening and  covering floors, walls, partitions and sheathings and for backings  for special veneers and coatings.   Plywood  Plywood is composed of thin sheets or plies of wood veneers oriented at cross-grain and bonded together under heat and pressure. Oriented Strand Board (OSB)  OSB is composed of wood strands aligned at 90 degrees and  glued together with waterproof adhesives.  Laminated Veneer Lumber (LVL)  Laminated veneer lumber is manufactured from thin peeled layers  of wood veneer that are aligned with the length of the member and  glued with a strong adhesive."
+						},
+						{
+							"title":"Masonry Products",
+							"text":" Masonry products are commonly used in building construction  because of their modular nature. Traditionally, these products  have been used as a load-bearing element. However, due to  increased cost, most masonry products (with the exception of  concrete masonry units) are currently used as cladding materials  only. Masonry building materials are easy to produce, transport  and assemble. They require low maintenance and can be recycled at the end of their use. In addition, masonry products have good thermal properties: they  can store solar energy during the winter for passive heating and  store cool energy in the summer to provide passive cooling. Masonry products can be classified into natural units which consist  of stones and man-made units, including clay bricks and concrete  masonry units."
+						},
+						{
+							"title":"NATURAL UNIT: STONE",
+							"text":"  Stone masonry is one of the oldest materials utilized in building construction. Stone products are currently  used as cladding materials only because their construction methods are not efficient when compared to other available structural  materials. Stone products require extremely labor-intensive processes that are harmful to the site of their extraction. They are  also expensive to transport and manipulate, thus having a high  embodied energy. For building enclosure applications, the most  commonly used stones are granite, an igneous rock created from  deposits in molten state; limestone, a sedimentary rock transformed by the action of water; and marble, a metamorphic rock  which can be either sedimentary or igneous rock transformed by  heat and pressure."
+						},
+						{
+							"title":"MAN-MADE UNITS: CLAY BRICK AND CONCRETE MASONRY UNITS (CMUS)",
+							"text":"  Manmade masonry products are among the most commonly used  materials in building construction. They have low embodied energy because they are fabricated under a controlled environment,  reducing time and material use effectively. They are durable and  can be recycled for other uses. Unused, broken units can be returned to the manufacturing process to produce new ones. Manmade units are formed and shaped by the action of steam and  pressure. They can be made of clay, shale, soft slate, calcium  silicate and concrete. Some manufacturers fabricate masonry  units for cladding applications made of sludge or petroleum-contaminated soil, thus further reducing embodied energy and water.  Clay Bricks  Clay bricks are generally utilized in cladding applications for aesthetic purposes and ease of fabrication. Brick walls can be constructed off-site in a metal frame system and assembled on the  construction-site, where they are welded together into place.  Concrete Masonry Units (CMUs)  CMUs are utilized for both structural and cladding applications.  When used as load bearing walls, the hollow space within the  units are utilized for placing steel reinforcing bars and are filled  with concrete. The hollow space in CMUs can also be used to  hold electrical or plumbing elements."
+						},
+						{
+							"title":"Reinforced Concrete",
+							"text":" Concrete is composed of cement, aggregate, water, and a number of additives to control properties such as strength, workability,  curing time, etc. Cement production accounts for 7 percent of  worldwide CO2  annual emissions. These emissions can be reduced by replacing a portion of cement in the mix with waste byproducts from power plants, steel mills, and other manufacturing  facilities. In addition, using recycled concrete, recycled glass, tire  scraps and other materials as aggregate can reduce concrete's  embodied energy significantly. Concrete has many applications  for building enclosures, including architectural panels, bearing  walls and shear walls."
+						},
+						{
+							"title":"STEEL-REINFORCED CONCRETE ",
+							"text":"Because concrete is brittle and has a  very low capacity to carry tension forces, almost all elements used  in building construction include reinforcing steel bars or wires. Architectural precast wall panels, commonly used for building enclosures, include steel reinforcement to increase the concrete's  capacity in tension. However, when reinforced concrete is used  for structural purposes, a much larger percentage of steel reinforcement must be included."
+						},
+						{
+							"title":"FIBER-REINFORCED CONCRETE",
+							"text":"In nonstructural applications of concrete, reinforcement to increase concrete's compressive capacity  can be added in the form of discrete fiber particles of glass, steel  or plastic. The addition of these fibers creates a lightweight concrete with improved moisture resistance, energy absorption and  fire resistance"
+						},
+						{
+							"title":"LIGHTWEIGHT CONCRETE ",
+							"text":"Lightweight concrete also known as  foamed concrete or cellular concrete, is composed of lightweight  concrete with improved thermal efficiency. Adding stable foam to  the concrete mix introduces small air bubbles, making it lighter.  This type of concrete can be used in nonstructural wall and floor  panels."
+						},
+						{
+							"title":"Metals",
+							"text":"Metals that are widely used as building enclosure materials include steel, stainless steel, copper, titanium, zinc, brass, and  aluminum. Metals offer a long lasting and lightweight alternative  for cladding buildings. Most metals are highly recyclable without  any loss in property or performance, and on-site metal construction often leaves little waste. However, metals in general have  high embodied energy and embodied water and do not provide  adequate thermal insulation. In addition, because the production  of metals requires significant input of raw materials and energy, it  often results in output of hazardous emission, water pollution and  solid waste."
+						}
+						,
+						{
+							"title":"STEEL",
+							"text":"Steel is a high strength metal, but it is vulnerable to moisture and corrodes easily. Steel must be covered with a protective  layer when exposed to the environment. Using COR-TEN steel or  weathering steel can provide an alternative to the application of  rust-proofing material. This type of steel forms a stable outer layer  of brown/orange rust when exposed to air. This layer protects the  steel from further rusting."
+						}
+						,
+						{
+							"title":"STAINLESS STEEL",
+							"text":"Stainless steel is an iron alloy that contains  chromium which is a corrosion-resistant element, making stainless steel an extremely durable cladding material. It can be 100  percent recycled with a high scrap value, eliminating much of the  construction waste. However, stainless steel is an expensive construction material with high embodied energy"
+						},
+						{
+							"title":"ALUMINUM",
+							"text":" Aluminum is relatively useful because it is long lasting, corrosion resistant, lightweight and 100 percent recyclable.  However, aluminum has a negative impact on the environment  because its manufacturing processes, including extraction, refinement, smelting and modeling, require a large amount of energy. Aluminum’s embodied energy is 126 times higher than that  of wood."
+						}
+						,
+						{
+							"title":"ZINC",
+							"text":"Zinc is a long-lasting, flexible material that can be used  for building enclosure applications. It generally contains a large  percentage of recycled content and has little to no maintenance  requirements. Zinc’s carbon footprint is lower than that of other  metals."
+						}
+						,
+						{
+							"title":"TITANIUM",
+							"text":" Titanium is a long-lasting, lightweight metal. It is mostly  used in automotive, motorcycle and sporting applications because of its light weight and its high strength and rigidity. Titanium   does not corrode and as a result does not release toxic materials  generated by corrosion. Titanium has a long life cycle and a large  percentage of recycled content. It has a smaller thermal expansion and shrinkage than stainless steel."
+						},
+						{
+							"title":"Glass",
+							"text":"Glass is composed of a mixture of sand, soda ash (hydroxide or  sodium carbonate) and added heat. When glass was first used in  architecture and construction, it had many limitations, including  cost and labor-intensive fabrication processes. Today, architectural glass has become a favored building material because it  is relatively inexpensive and it offers versatility. When utilized for  cladding purposes, glass has a profound impact in the aesthetics  and energy efficiency of a building. Glass can be reflective, refractive, transparent, translucent and opaque. It can control glare as it  filters light and  can provide sound and fire protection. Glass has  been the focus of intensive research and development among  scientists and engineers to enhance its two most efficient traits,  the ability to transmit natural light and block excessive heat."
+						},
+						{
+							"title":"ANNEALED GLASS",
+							"text":"is the most common type of window glass;  however, it can break into large, sharp pieces causing, serious  injuries."
+						},
+						{
+							"title":"TEMPERED GLASS",
+							"text":" has increased strength; if it breaks, it will usually  shatter in small pieces. "
+						},
+						{
+							"title":"LAMINATED GLASS",
+							"text":" is impact proof because it is composed of two  layers of temperate glass sandwiched together with an invisible  mesh of polyvinyl butyral. "
+						},
+						{
+							"title":"SPANDREL GLASS ",
+							"text":" is a portion of opaque glass used in exterior  curtain wall systems to hide the mechanical system between floor  slabs"
+						},
+						{
+							"title":"FRITTED GLASS",
+							"text":"is used as a light-diffusing element in buildings.  It can be used as an energy-saving strategy to maximize daylight  penetration while reducing heat gain."
+						},
+						{
+							"title":"TINTED GLASS",
+							"text":" is a type of tempered glass that has been treated  with a film or coating to reduce the transmission of light and heat  into a space."
+						},
+						{
+							"title":"INSULATED GLASS",
+							"text":"is composed of two or three separate layers  of glass with air space in between. These layers provide good  thermal insulation to minimize heat gain or heat loss through the  building envelope. Insulated glass is required by law for cladding  applications in many countries."
+						},
+						{
+							"title":"SOUND INSULATION",
+							"text":"glass consists of multiple glass panes that prevent sound waves from entering interior spaces"
+						},
+						{
+							"title":"FIRE PROTECTION GLASS",
+							"text":"consists of multiple glass layers with wire  mesh or special fireproofing foil in between. Utilizing this type of  glass provides adequate time for evacuation before damage by  fire."
+						},
+						{
+							"title":"PHOTOVOLTAIC GLASS",
+							"text":" consists of two glass layers embedded with  solar cells that collect and convert solar energy into electricity. The  energy generation is dependent on the enclosure orientation and  the amount of solar exposure."
+						},
+						{
+							"title":"SMART GLASS ",
+							"text":"  also known as E-glass or switchable glass is a  type of glass that can control the amount of light transmitted into  a space. It can also block UV rays by transforming its appearance  from a transparent surface to a translucent surface. "
+						},
+						{
+							"title":"ELECTROCHROMIC GLASS",
+							"text":"consists of glass treated with an electrochromic layer to control the amount of light passing through. It is  an energy-saving device because it changes opacity and color  when exposed to solar radiation to reduce heat gain. "
+						}
+					]
+                    ,
+                    "mediaList": [
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_wood_enclosure_materials.png"
+                            ,
+                            "mediaImage": "data/media/media_wood_enclosure_materials.png"
+							,"aoiData":{"imageName":"media_wood_enclosure_materials.png","width":1296,"height":1677,"aoiItemList":[{"name":"full","x":0,"y":0,"width":1296,"height":1677},{"name":"Plywood","x":72,"y":168,"width":1149,"height":215},{"name":"Oriented Strand Board","x":80,"y":421,"width":1151,"height":196},{"name":"Laminated Vaneer Lumber","x":86,"y":669,"width":1152,"height":235},{"name":"Example Model","x":53,"y":1063,"width":1185,"height":563}]}
+							,"description":[]
+                        },
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_masonry_enclosure_materials.png"
+                            ,
+                            "mediaImage": "data/media/media_masonry_enclosure_materials.png"
+							,"aoiData":{"imageName":"media_masonry_enclosure_materials.png","width":521,"height":1043,"aoiItemList":[{"name":"full","x":0,"y":0,"width":521,"height":1043},{"name":"Stone","x":6,"y":58,"width":496,"height":154},{"name":"Clay Bricks","x":12,"y":232,"width":465,"height":129},{"name":"Concrete masonry unit","x":26,"y":403,"width":434,"height":127},{"name":"Example Model","x":4,"y":624,"width":485,"height":364}]}
+							,"description":[]
+                        },
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_concrete_enclosure_material.png"
+                            ,
+                            "mediaImage": "data/media/media_concrete_enclosure_material.png"
+							,"aoiData":{"imageName":"media_concrete_enclosure_material.png","width":492,"height":1156,"aoiItemList":[{"name":"full","x":0,"y":0,"width":492,"height":1156},{"name":"steel reinforced concrete image","x":21,"y":56,"width":184,"height":167},{"name":"steel reinforced concrete description","x":225,"y":78,"width":245,"height":111},{"name":"Fiber reinforced concrete image","x":26,"y":227,"width":175,"height":158},{"name":"Fiber reinforced concrete description","x":223,"y":233,"width":251,"height":140},{"name":"Lightweight concrete image","x":17,"y":397,"width":186,"height":149},{"name":"Lightweight concrete description","x":224,"y":420,"width":235,"height":102},{"name":"example model","x":2,"y":602,"width":489,"height":480}]}
+							,"description":[]
+                        },
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_metals_enclosure_materials.png"
+                            ,
+                            "mediaImage": "data/media/media_metals_enclosure_materials.png"
+							,"aoiData":{"imageName":"media_metals_enclosure_materials.png","width":485,"height":929,"aoiItemList":[{"name":"full","x":0,"y":0,"width":485,"height":929},{"name":"Steel","x":13,"y":54,"width":461,"height":160},{"name":"Stainless Steel","x":22,"y":221,"width":437,"height":160},{"name":"Aluminum","x":13,"y":390,"width":456,"height":156},{"name":"Zinc","x":19,"y":559,"width":449,"height":155},{"name":"Titanium","x":18,"y":730,"width":447,"height":166}]}
+							,"description":[]
+                        },
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_glass_enclosure_materials.png"
+                            ,
+                            "mediaImage": "data/media/media_glass_enclosure_materials.png"
+							,"aoiData":{"imageName":"media_glass_enclosure_materials.png","width":1054,"height":1062,"aoiItemList":[{"name":"full","x":0,"y":0,"width":1054,"height":1062},{"name":"Tempered or safety glass","x":24,"y":212,"width":466,"height":150},{"name":"Annealed Glass","x":22,"y":53,"width":470,"height":149},{"name":"Insulated Glass","x":544,"y":53,"width":458,"height":145},{"name":"Sound Insulation or Acoustic Glass","x":545,"y":209,"width":453,"height":150},{"name":"Laminated Glass","x":29,"y":372,"width":463,"height":144},{"name":"Fire Protection Glass","x":553,"y":375,"width":432,"height":140},{"name":"Spandrel Glass","x":36,"y":537,"width":444,"height":146},{"name":"Photovoltaic Glass","x":549,"y":532,"width":434,"height":144},{"name":"Fritted Glass","x":34,"y":695,"width":453,"height":148},{"name":"Smart Glass","x":553,"y":695,"width":439,"height":147},{"name":"Tinted Glass","x":34,"y":855,"width":452,"height":137},{"name":"Electrochromic Glass","x":548,"y":856,"width":448,"height":136},{"name":"header","x":10,"y":12,"width":1018,"height":35},{"name":"footer","x":9,"y":1015,"width":271,"height":23}]}
+							,"description":[]
+                        }
+                    ]
+                },
+                {
+                    "subModuleName": "Insulation Materials",
+                    "thumbnail": "data/media/thumbnail_insulation_materials.png",
+					"description": [
+						{ 	"title":"",
+							"text":"The insulation of a building envelope consists of many layers of materials that are critical in meeting thermal, acoustical and fireresistant requirements. Insulation materials can be either organic, which refers to raw materials such as cork, mineral fiber, cotton, etc., or inorganic, which refers to synthetic materials such as polyurethane rigid foam or polystyrene. Thermal insulation is used to reduce the rate of heat transfer through the building enclosure and protects against moisturerelated damage. Thermal insulation plays a critical role in the energy efficiency of buildings because it mitigates energy exchange between the interior of the building and the exterior environment. The thermal energy transfer through a material is dependent on its thermal conductivity. A material with less conductivity will have smaller energy exchange with the external environment, therefore creating a better insulation. In addition, materials with less density have a better insulation quality because they have higher air content. Air and some inert gases such as xenon, krypton and argon are good insulators and are often used as insulation between glass panels."	
+						},
+						{
+							"title":"RIGID INSULATION",
+							"text":"  Rigid Insulation is a lightweight material used  to provide thermal insulation for the building envelope. It is composed of extruded plastic foam (polystyrene or polyurethane) or  a fibrous material such as fiberglass, rock, and slag wool. Rigid  insulation is most effective in reducing heat exchange by conduction. There are three types of rigid insulation: polystyrene, bead  board and polyisocyanurate."
+						},
+						{
+							"title":"STRUCTURAL INSULATED PANELS",
+							"text":" Structural insulated panels (SIP) are  composed of rigid foam core insulation (polystyrene or polyurethane) laminated by structurally oriented strand boards on either side. These panels can act as a structural system in lightweight  construction where the building loads are relatively low, thus functioning as both structure and insulation. SIP provide high R-values  and have significantly reduced levels of air infiltration. They are  commonly available in panels 4 feet (1.2 m) wide by 8–24 feet  (2.4–7.3 m) long and a thickness range of 2–12 inches (3.5–5 cm)."
+						},
+						{
+							"title":"VACUUM INSULATION PANELS",
+							"text":" Vacuum insulation panels (VIPs) provide higher thermal resistance than conventional insulation materials by utilizing the insulating effect of a vacuum because no  convection can occur in a vacuum. VIPs are generally composed  of a porous core material such as polystyrene which could be  evacuated and sealed with an airtight metal foil skin.   Although the thermal resistance of VIPs is five to ten times better than conventional insulation of the same thickness, 5  the longterm performance of VIPs is based on adequate protection of the  skin against damage and puncture that could lead to loss of the  vacuum. VIP have been used as refrigerator insulation for a long  time, but they are becoming increasingly available for building  construction, replacing conventional insulation materials."
+						},
+						{
+							"title":"SOUND INSULATION",
+							"text":"Sound insulation is an important aspect of  building performance. Sound insulation can be achieved by using a wide range of materials that can be used for both sound  and thermal insulation. Sound insulation is measured based on  how well the building envelope attenuates airborne sound. Sound  transmission class (STC) is widely used in the United States to  evaluate the insulation’s effectiveness. The higher the STC number is, the more effective the material is in providing adequate  sound insulation."
+						},
+						{
+							"title":"OTHER  INSULATION MATERIALS",
+							"text":"Building construction uses a wide  range of synthetic or natural and organic or inorganic insulation  materials manufactured from fossil fuel by-products or silica and  plant cellulose material. Almost all synthetic insulation products  provide good resistance to water permeability. Natural insulation  materials contain continuous air gaps and require a special vapor  barrier for water protection."
+						}
+					]
+                    ,
+                    "mediaList": [
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_rigid_insulation_materials.png"
+                            ,
+                            "mediaImage": "data/media/media_rigid_insulation_materials.png"
+							,"aoiData":{"imageName":"media_rigid_insulation_materials.png","width":1228,"height":1555,"aoiItemList":[{"name":"full","x":0,"y":0,"width":1228,"height":1555},{"name":"Title","x":35,"y":67,"width":335,"height":77},{"name":"Fiberglass Insulation","x":632,"y":500,"width":167,"height":83},{"name":"Wood Framing","x":741,"y":596,"width":97,"height":129},{"name":"Wood Sheathing","x":553,"y":575,"width":151,"height":194},{"name":"Water Resistant","x":581,"y":754,"width":49,"height":123},{"name":"Rigid insulation with taped joints","x":513,"y":841,"width":53,"height":148},{"name":"Metal Lath","x":621,"y":1062,"width":116,"height":-312},{"name":"Mortar","x":345,"y":1119,"width":85,"height":85},{"name":"Exterior Cladding","x":147,"y":1139,"width":191,"height":187},{"name":"Fiberglass Insulation text","x":885,"y":514,"width":164,"height":73},{"name":"Wood Framing Text","x":887,"y":622,"width":183,"height":60},{"name":"Wood Sheathing Text","x":882,"y":716,"width":206,"height":60},{"name":"Water Resistant Text","x":879,"y":801,"width":237,"height":84},{"name":"Rigid insulation with taped joints text","x":879,"y":895,"width":246,"height":69},{"name":"Metal Lath text","x":871,"y":987,"width":155,"height":58},{"name":"Mortar text","x":891,"y":1124,"width":117,"height":45},{"name":"Exterior Cladding text","x":874,"y":1223,"width":246,"height":30}]}
+							,"description":[]
+                        },
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_structural_insulated_panels.png"
+                            ,
+                            "mediaImage": "data/media/media_structural_insulated_panels.png"
+							,"aoiData":{"imageName":"media_structural_insulated_panels.png","width":499,"height":796,"aoiItemList":[{"name":"full","x":0,"y":0,"width":499,"height":796},{"name":"Top Plates","x":139,"y":39,"width":158,"height":109},{"name":"Interior Wall Panels","x":308,"y":153,"width":89,"height":138},{"name":"Sealant","x":142,"y":163,"width":158,"height":92},{"name":"Panel Connectors","x":353,"y":211,"width":23,"height":247},{"name":"Rigid Foam","x":243,"y":310,"width":57,"height":119},{"name":"Spline Cuts in Foam","x":272,"y":393,"width":35,"height":75},{"name":"Exterior Wall Panels","x":102,"y":426,"width":94,"height":101},{"name":"Floor Sheathing","x":217,"y":532,"width":93,"height":43},{"name":"Floor Joists","x":212,"y":557,"width":44,"height":22},{"name":"Nailer","x":246,"y":580,"width":27,"height":27},{"name":"Sill Treated Plate","x":271,"y":597,"width":57,"height":30},{"name":"Foundation","x":207,"y":593,"width":127,"height":70},{"name":"Texts","x":-10,"y":584,"width":195,"height":209}]}
+							,"description":[]
+                        },
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_vacuum_insulated_panels.png"
+                            ,
+                            "mediaImage": "data/media/media_vacuum_insulated_panels.png"
+							,"aoiData":{"imageName":"media_vacuum_insulated_panels.png","width":474,"height":730,"aoiItemList":[{"name":"full","x":0,"y":0,"width":474,"height":730},{"name":"Interior Gypsum Board","x":294,"y":89,"width":91,"height":119},{"name":"Foam Core","x":214,"y":188,"width":73,"height":149},{"name":"Airtight Metal fol skin","x":309,"y":174,"width":59,"height":106},{"name":"Exterior Wall","x":0,"y":210,"width":161,"height":280},{"name":"Texts","x":-19,"y":584,"width":434,"height":145}]}
+							,"description":[]
+                        },
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_sound_insulation.png"
+                            ,
+                            "mediaImage": "data/media/media_sound_insulation.png"
+							,"aoiData":{"imageName":"media_sound_insulation.png","width":954,"height":952,"aoiItemList":[{"name":"full","x":0,"y":0,"width":954,"height":952},{"name":"CMU block","x":639,"y":145,"width":104,"height":85},{"name":"Wood Framing","x":457,"y":226,"width":40,"height":32},{"name":"Acoustic Mineral Wool","x":526,"y":397,"width":50,"height":136},{"name":"Plasterboard","x":484,"y":548,"width":43,"height":64},{"name":"Soundproofing","x":412,"y":619,"width":57,"height":79},{"name":"Wood Sheathing","x":607,"y":305,"width":85,"height":96},{"name":"Texts","x":6,"y":815,"width":163,"height":135}]}
+							,"description":[]
+                        },
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_other_insulation_materials.png"
+                            ,
+                            "mediaImage": "data/media/media_other_insulation_materials.png"
+							,"aoiData":{"imageName":"media_other_insulation_materials.png","width":965,"height":1255,"aoiItemList":[{"name":"full","x":0,"y":0,"width":965,"height":1255},{"name":"Cellulose Fiber","x":51,"y":76,"width":877,"height":141},{"name":"Cork","x":51,"y":222,"width":883,"height":139},{"name":"Expanded Polystyrene","x":49,"y":408,"width":895,"height":136},{"name":"Extruded Polystyrene","x":49,"y":553,"width":886,"height":144},{"name":"Expanded Clay","x":48,"y":750,"width":883,"height":123},{"name":"Cellular Glass","x":45,"y":928,"width":871,"height":132},{"name":"Glass mineral wool","x":45,"y":1068,"width":867,"height":135}]}
+							,"description":[]
+                        }
+                    ]
+                },
+                {
+                    "subModuleName": "Thermal Materials",
+                    "thumbnail": "data/media/thumbnail_thermal_materials.png",
+					"description": [
+						{ 	"title":"",
+							"text":"Building materials with significant mass such as concrete can act as a thermal storage areas in climates where there is a significant difference between the day and nighttime temperatures. A number of newly developed materials can store energy without requiring a great mass. Because these materials are being further developed, tested and improved, their use in building construction is becoming more prevalent."
+						},
+						{
+							"title":"THERMAL MASS",
+							"text":" Concrete, masonry, and stone are good thermal  materials. When properly used, they can absorb excess energy  deep into their mass during high thermal loads and gradually release it from their surface when the thermal loads are low. Materials such as wood and steel are not thermal materials. Wood does  not have adequate emissive quality. The location of the thermal  mass in a building is critical to its performance. To effectively mitigate the interior temperatures, the thermal mass should be well  insulated on the exterior. "
+						},
+						{
+							"title":"PHASE CHANGE MATERIALS",
+							"text":" Like thermal mass, phase-change materials (PCMs) have the capacity to store energy and release it at a  later time. PCMs can be incorporated in wallboards, roofs, ceiling,  and floors to cool or heat buildings passively. When utilized for  passive heating, PCMs absorb surplus heat energy during the day  and release the stored heat when the ambient temperature drops  at night. PCMs are also utilized for space cooling in hot climates  to reduce the energy requirement for mechanical air conditioning  systems."
+						},
+						{
+							"title":"TRANSPARENT  THERMAL  INSULATION",
+							"text":"Transparent insulation (TI) can  transform the heat loss of massive building walls to solar heating  elements. TI is composed of small transparent plastic or glass  honeycomb tubes with small openings. TI is usually installed in  front of a dark, and preferably matt surface, backed by a highdensity concrete wall. The insulation is then protected from the  outside with a single glass pane. When facing sunlight, the solar radiation passes through the TI and is absorbed by the dark  material, warming up the concrete and storing heat in the wall’s  mass.  The stored heat is then gradually emitted for space heating. In overcast skies, the insulation capacity of TI prevents heat  loss through the wall, creating a superior thermal mass.  Some TI  systems have integrated shading systems to avoid overheating  of the dark absorbering material during the hot summer season."
+						}
+					]
+                    ,
+                    "mediaList": [
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_thermal_mass.png"
+                            ,
+                            "mediaImage": "data/media/media_thermal_mass.png"
+							,"aoiData":{"imageName":"media_thermal_mass.png","width":1310,"height":1000,"aoiItemList":[{"name":"full","x":0,"y":0,"width":1310,"height":1000},{"name":"Concrete wall","x":355,"y":557,"width":194,"height":346},{"name":"Floor","x":518,"y":685,"width":430,"height":113},{"name":"Texts","x":144,"y":758,"width":232,"height":183}]}
+							,"description":[]
+                        },
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_phase_change_material.png"
+                            ,
+                            "mediaImage": "data/media/media_phase_change_material.png"
+							,"aoiData":{"imageName":"media_phase_change_material.png","width":498,"height":834,"aoiItemList":[{"name":"full","x":0,"y":0,"width":498,"height":834},{"name":"Aluminum Channel System","x":133,"y":150,"width":32,"height":147},{"name":"Lightweight steel framing system","x":147,"y":158,"width":37,"height":342},{"name":"Insulation","x":209,"y":136,"width":50,"height":294},{"name":"Gypsum Board","x":269,"y":123,"width":125,"height":312},{"name":"Corrugated Aluminum","x":103,"y":111,"width":43,"height":107},{"name":"Microscopic view of PCM embedded gypsum board","x":169,"y":544,"width":249,"height":196},{"name":"Corrugated Aluminum Text","x":39,"y":716,"width":189,"height":18},{"name":"Aluminum Channel System Text","x":26,"y":735,"width":231,"height":19},{"name":"Lightweight steel framing system text","x":31,"y":751,"width":268,"height":20},{"name":"Insulation text","x":40,"y":779,"width":109,"height":11},{"name":"Gypsum Board Text","x":32,"y":791,"width":148,"height":17},{"name":"Microscopic view of PCM embedded gypsum board text","x":39,"y":811,"width":438,"height":14}]}
+							,"description":[]
+                        },
+                        {
+                            "mediaThumbnail": "data/media/media_thumbnail_transparent_thermal_insulation.png"
+                            ,
+                            "mediaImage": "data/media/media_transparent_thermal_insulation.png"
+							,"aoiData":{"imageName":"media_transparent_thermal_insulation.png","width":912,"height":944,"aoiItemList":[{"name":"full","x":0,"y":0,"width":912,"height":944},{"name":"Concrete","x":486,"y":49,"width":259,"height":50},{"name":"Absorbent Plaster or Paint","x":436,"y":86,"width":155,"height":129},{"name":"Air Gap","x":414,"y":120,"width":73,"height":59},{"name":"Transparent Insulation","x":331,"y":143,"width":150,"height":97},{"name":"Single pane glass","x":259,"y":181,"width":193,"height":108},{"name":"Transparent Cylindrical Tubes","x":555,"y":627,"width":296,"height":322},{"name":"Texts","x":28,"y":797,"width":304,"height":170}]}
+							,"description":[]
+                        }
+                    ]
+                }
+            ]
+}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <servlet>
+        <servlet-name>DataServlet</servlet-name>
+        <servlet-class>ada.DataServlet</servlet-class>
+    </servlet>
+   
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+     <env-entry> 
+            <env-entry-name>db.mysql.host</env-entry-name> 
+            <env-entry-type>java.lang.String</env-entry-type> 
+            <env-entry-value>localhost</env-entry-value>         
+    </env-entry>
+    <env-entry> 
+            <env-entry-name>db.mysql.port</env-entry-name> 
+            <env-entry-type>java.lang.String</env-entry-type> 
+            <env-entry-value>3306</env-entry-value>        
+    </env-entry>
+    <env-entry> 
+            <env-entry-name>db.mysql.databasename</env-entry-name> 
+            <env-entry-type>java.lang.String</env-entry-type> 
+            <env-entry-value>ada</env-entry-value>         
+    </env-entry>
+    <env-entry> 
+            <env-entry-name>db.mysql.username</env-entry-name> 
+             <env-entry-type>java.lang.String</env-entry-type> 
+            <env-entry-value>root</env-entry-value>        
+    </env-entry>
+    <env-entry> 
+            <env-entry-name>db.mysql.password</env-entry-name> 
+            <env-entry-type>java.lang.String</env-entry-type> 
+            <env-entry-value>rajin</env-entry-value>        
+    </env-entry>
+</web-app>
