@@ -29,7 +29,7 @@ function loadData()
 	{
 		for(var i=0;i<data.length;i++)
 		{
-			var item = data[i].item;
+			var item = data[i].item.trim();
 			
 			var image = data[i].image;
 			
@@ -51,8 +51,9 @@ function getTimestamp(timeString)
 
 function render()
 {
+	
 	var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 960 - margin.left - margin.right,
+    width = 1200 - margin.left - margin.right,
     height = 320 - margin.top - margin.bottom;
 
 	var svg =d3.select('svg');
@@ -93,18 +94,22 @@ function render()
 //    .text("Rajin");
 	var keyData = Object.keys(mainData);
 	
+	
 	var imageGroup = svg.append("g")
-	.attr('class', 'image-area');
-	var timestampGroup= imageGroup.selectAll('g');
-	timestampGroup.data(keyData).enter()
+	.attr('class', 'image-area')
+	//.attr("transform", "translate(-"+margin.left+"," + 0 + ")")
+	;
+	var timestampGroup= imageGroup.selectAll('g')
+		.data(keyData).enter()
 		.append('g')
 		.attr('id', function(d){ return 'T-'+getTimestamp(d);});
 	
-	timestampGroup.selectAll('image')
+	
+	var imageWidth =32;
+	var imageHeight = 32;
+	timestampGroup.selectAll('image')		
 		.data(function(key){			
-			var items = JSON.parse('{"items":'+mainData[key]+'}');
-			
-			
+			var items = JSON.parse(mainData[key]);
 			return items;
 		}).enter()
 		.append('image')
@@ -112,15 +117,29 @@ function render()
 				{
 					return imageData[d.name];
 				})
-		.attr('width', 32)
-		.attr('height', 32)
+		.attr('width', imageWidth)
+		.attr('height', imageHeight)
 		.attr('x', function(d)
 				{
-					var viewed = parseFloat(d.viewed);
-					var id = d3.select(this).node().parentNode.attr('id');
-					console.log('id:'+id);
-					return 0;
+					var viewed = parseFloat(d.viewed)/1000;
+					var timeString = d3.select(this.parentNode).datum();
+					var timestamp = getTimestamp(timeString);
+					
+					var viewedTimestamp = timestamp+viewed;
+					var x = ( width*viewedTimestamp / maxTime)
+					
+					return x-imageWidth/2;
 				})
+		.attr('y', function(d)
+		{
+			var cameraDistance = parseFloat(d.cameraDistance)/100;
+			
+			
+			var y = ( height*cameraDistance )
+			console.log('Hi:'+cameraDistance);
+			
+			return y+imageHeight/2;
+		})
 		;
 		
 	
