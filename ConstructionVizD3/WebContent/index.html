@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Construction Viz</title>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script type="text/javascript" src="js/myscript.js"></script>
+<link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+<button id="checkData">Check</button>
+<div id="status"></div>
+<svg></svg>
+<script type="text/javascript">
+loadData();
+
+d3.select('#checkData').on('click', function(){
+	var dataLength = Object.keys(mainData).length;
+	
+	if(dataLength > 0)
+	{
+		d3.select('#status').text('OK');
+		render();
+	}
+	else
+	{
+		d3.select('#status').text('Try Again');
+	}
+	
+});
+
+
+
+
+</script>
+
+
+</body>
+</html>
