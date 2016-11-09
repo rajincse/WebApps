@@ -13,9 +13,8 @@ function loadData()
 				
 				mainData[key]=value;
 				
-				var timeKeyValue = key.split('||');
-				var timeSplit = timeKeyValue[0].split('=');
-				var timeStamp = parseFloat(timeSplit[1]);
+				
+				var timeStamp = getTimestamp(key);
 				
 				if(timeStamp > maxTime)
 				{
@@ -40,6 +39,15 @@ function loadData()
 
 	});
 }
+
+function getTimestamp(timeString)
+{
+	var timeKeyValue = timeString.split('||');
+	var timeSplit = timeKeyValue[0].split('=');
+	var timestamp = parseFloat(timeSplit[1]);
+	return timestamp;
+}
+
 
 function render()
 {
@@ -83,4 +91,37 @@ function render()
 //    .attr("dy", ".71em")
 //    .style("text-anchor", "end")
 //    .text("Rajin");
+	var keyData = Object.keys(mainData);
+	
+	var imageGroup = svg.append("g")
+	.attr('class', 'image-area');
+	var timestampGroup= imageGroup.selectAll('g');
+	timestampGroup.data(keyData).enter()
+		.append('g')
+		.attr('id', function(d){ return 'T-'+getTimestamp(d);});
+	
+	timestampGroup.selectAll('image')
+		.data(function(key){			
+			var items = JSON.parse('{"items":'+mainData[key]+'}');
+			
+			
+			return items;
+		}).enter()
+		.append('image')
+		.attr('href', function(d)
+				{
+					return imageData[d.name];
+				})
+		.attr('width', 32)
+		.attr('height', 32)
+		.attr('x', function(d)
+				{
+					var viewed = parseFloat(d.viewed);
+					var id = d3.select(this).node().parentNode.attr('id');
+					console.log('id:'+id);
+					return 0;
+				})
+		;
+		
+	
 }
