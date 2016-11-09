@@ -8,13 +8,13 @@
 <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
-<button id="checkData">Check</button>
+<button id="render">Rende</button>
 <div id="status"></div>
 <svg></svg>
 <script type="text/javascript">
 loadData();
 
-d3.select('#checkData').on('click', function(){
+d3.select('#render').on('click', function(){
 	var dataLength = Object.keys(mainData).length;
 	
 	if(dataLength > 0)
