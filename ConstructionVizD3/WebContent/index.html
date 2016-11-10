@@ -5,6 +5,7 @@
 <title>Construction Viz</title>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script type="text/javascript" src="js/myscript.js"></script>
+<script type="text/javascript" src="js/contextRendering.js"></script>
 <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
@@ -23,7 +24,7 @@ d3.select('#render').on('click', function(){
 	if(dataLength > 0)
 	{
 		d3.select('#status').text('OK');
-		render();
+		contextRendering();
 	}
 	else
 	{
