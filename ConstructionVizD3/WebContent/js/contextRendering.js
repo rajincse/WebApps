@@ -52,8 +52,8 @@ function contextRendering()
 						return getTimestamp(key);
 					})
 		);
-	
-	yScaleFocus.domain([0,1000]);
+	var maxY = 1000;
+	yScaleFocus.domain([maxY,0]);
 	
 	xScaleContext.domain(xScaleFocus.domain());
 	yScaleContext.domain(yScaleFocus.domain());
@@ -83,10 +83,114 @@ function contextRendering()
      .attr("transform", "translate(" + marginFocus.left + "," + marginFocus.top + ")")
      .call(zoomFocus);
 	 
+	 
+	 var imageWidth =32;
+	 var imageHeight = 32;
+	 var padding = 8;
+	 var imageAreaWidth = imageWidth+padding;
+	 var imageAreaHeight =imageHeight+padding;
+	 
 	 //Focus Region 
+	 function renderFocus()
+	 {
+		 console.log('Rendering focus');
+	 }
 	 
 	 //Context Region
 	 
+	 var tickInterval = xScaleContext.ticks()[1] -xScaleContext.ticks()[0];
+	 var maxXContext = xScaleContext.range()[1];
+	 var maxTimeContext = xScaleContext.domain()[1];
+	 var timeInterval = imageAreaWidth* maxTimeContext/ maxXContext;
+	 var mashedData=getMashedupData(mainData, timeInterval);
+	 
+	 var averageCameraDistanceData ={};
+	 for(var i = 0; i< Object.keys(mashedData).length;i++)
+	 {
+		 var key = Object.keys(mashedData)[i];
+		 var value = mashedData[key];
+ 		var nameMap={};
+ 		for(var j=0;j<value.length;j++)
+ 		{
+ 			var viewedObject = value[j];
+ 			var name = viewedObject.name;
+ 			if(!nameMap[name])
+			{
+ 				nameMap[name] = [0, 0];
+			}
+ 			var cameraDistance = parseFloat(viewedObject.cameraDistance);
+ 			nameMap[name][0] += cameraDistance;
+ 			nameMap[name][1]++;
+ 		}
+ 		var maxOccurredName ="";
+ 		var maxOccurrence=0;
+ 		for(var k=0;k< Object.keys(nameMap).length;k++)
+ 		{
+ 			var name = Object.keys(nameMap)[k];
+ 			var occurrence = nameMap[name][1];
+ 			if(occurrence> maxOccurrence && nameMap[name][0] > 0)
+ 			{
+ 				maxOccurrence = occurrence;
+ 				maxOccurredName = name;
+ 			}
+ 		}
+ 		averageCameraDistanceData[key]={};
+ 		averageCameraDistanceData[key][maxOccurredName]=nameMap[maxOccurredName];
+	 }
+			 
+	 
+	 var averageCameraDistanceKeys = Object.keys(averageCameraDistanceData);
+	 
+	 
+	 var imageGroup = context.append("g")
+		.attr('class', 'image-area');
+	 
+	 var timestampGroup= imageGroup.selectAll('g')
+		.data(averageCameraDistanceKeys).enter()
+		.append('g')
+		.attr('id', function(key){ return 'T-'+key;});
+	
+	 timestampGroup.selectAll('image')		
+		.data(function(key){ return Object.keys(averageCameraDistanceData[key]);})
+	 .enter()
+		.append('image')
+		.attr('id', function(name){
+			var timestamp = d3.select(this.parentNode).datum();
+			var cameraDistanceData = averageCameraDistanceData[timestamp][name];
+			var average = cameraDistanceData[0]/ cameraDistanceData[1];
+			return "c-"+average;
+		})
+		.attr('href', function(name)
+				{						
+					return imageData[name];
+				})
+				.attr('width', imageWidth)
+		.attr('height', imageHeight)
+		.attr('x', function(name)
+				{
+					var timestamp = d3.select(this.parentNode).datum();
+					var x =( timestamp*maxXContext / maxTimeContext);
+					
+					return x;
+				})
+		.attr('y', function(name)
+		{
+			var timestamp = d3.select(this.parentNode).datum();
+			var cameraDistanceData = averageCameraDistanceData[timestamp][name];
+			
+			
+			var y = (cameraDistanceData[0]/ cameraDistanceData[1])*heightContext /maxY;
+			
+			
+			return heightContext - y-imageAreaHeight/2;
+		})
+		.append('title')
+			.text(function(name)
+					{
+						return "name:"+name;
+					})
+					
+		;
 	
 	function brushed() {
 		  if (d3.event.sourceEvent && d3.event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
@@ -103,8 +207,33 @@ function contextRendering()
 	  if (d3.event.sourceEvent && d3.event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
 	  var t = d3.event.transform;
 	  xScaleFocus.domain(t.rescaleX(xScaleContext).domain());
+	  renderFocus();
 //	  focus.select(".area").attr("d", area);
 	  focus.select(".axis--x").call(xAxisFocus);
 	  context.select(".brush").call(brushContext.move, xScaleFocus.range().map(t.invertX, t));
+	}
+	
+	function getMashedupData(data, interval)
+	{
+		var keys = Object.keys(data);
+		var mashedData={};
+		for(var i =0;i< keys.length; i++)
+		 {
+			 var key = keys[i];
+			 var timestamp = getTimestamp(key);
+			 var dataArray =  JSON.parse(data[key]);
+			 var mashedKey = Math.floor(timestamp/interval) * interval;
+			 
+			 if(mashedData[mashedKey])
+			 {
+				 var previousArray =mashedData[mashedKey];
+				 previousArray.push(dataArray);
+			 }
+			 else
+			 {
+				 mashedData[mashedKey]= dataArray;
+			 }
+		 }
+		return mashedData;
 	}
 }
