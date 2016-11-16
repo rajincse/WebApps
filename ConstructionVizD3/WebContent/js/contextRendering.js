@@ -36,6 +36,13 @@ function contextRendering()
     .extent([[0, 0], [width, heightFocus]])
     .on("zoom", zoomed);
 	
+	svg.append("rect")
+    .attr("class", "zoom")
+    .attr("width", width)
+    .attr("height", heightFocus)
+    .attr("transform", "translate(" + marginFocus.left + "," + marginFocus.top + ")")
+    .call(zoomFocus);
+	
 	var focus = svg.append("g")
     .attr("class", "focus")
     .attr("transform", "translate(" + marginFocus.left + "," + marginFocus.top + ")");
@@ -77,17 +84,24 @@ function contextRendering()
       .call(brushContext)
       .call(brushContext.move, xScaleFocus.range());
 	 
-	 svg.append("rect")
-     .attr("class", "zoom")
-     .attr("width", width)
-     .attr("height", heightFocus)
-     .attr("transform", "translate(" + marginFocus.left + "," + marginFocus.top + ")")
-     .call(zoomFocus);
 	 
 	 
+	 svg.append('text')
+      .attr("class", "label")      
+      .attr("x", -heightFocus/2)
+      .attr("y", 12)
+      .attr("transform", "rotate(-90)")
+      .style("text-anchor", "end")
+      .text("Camera Distance");
 	 
+	 svg.append('text')
+     .attr("class", "label")      
+     .attr("x", width+10 )
+     .attr("y", heightFocus+10)
+     .style("text-anchor", "end")
+     .text("Time");
 	 
-	 //Focus Region 
+	 // Focus Region
 	 function renderFocus()
 	 {
 		 d3.select(focus).node().selectAll('g.image-area').remove();
@@ -121,8 +135,8 @@ function contextRendering()
 	 			nameMap[name][0] += cameraDistance;
 	 			nameMap[name][1]++;
 	 		}
-	 		averageCameraDistanceData[key]=nameMap;
-	 		///*
+	 		//averageCameraDistanceData[key]=nameMap;
+	 		// /*
 	 		var maxOccurredName ="";
 	 		var maxOccurrence=0;
 	 		for(var k=0;k< Object.keys(nameMap).length;k++)
@@ -137,7 +151,7 @@ function contextRendering()
 	 		}
 	 		averageCameraDistanceData[key]={};
 	 		averageCameraDistanceData[key][maxOccurredName]=nameMap[maxOccurredName];
-	 		//*/
+	 		// */
 		 }
 				 
 		 
@@ -200,7 +214,7 @@ function contextRendering()
 			;
 	 }
 	 
-	 //Context Region
+	 // Context Region
 	 
 	 
 	 var maxXContext = xScaleContext.range()[1];
@@ -297,7 +311,8 @@ function contextRendering()
 		;
 	renderFocus();
 	function brushed() {
-		  if (d3.event.sourceEvent && d3.event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
+		  if (d3.event.sourceEvent && d3.event.sourceEvent.type === "zoom") return; // ignore
+																					// brush-by-zoom
 		  var s = d3.event.selection || xScaleContext.range();
 		  xScaleFocus.domain(s.map(xScaleContext.invert, xScaleContext));
 		 // focus.select(".area").attr("d", area);
@@ -308,11 +323,12 @@ function contextRendering()
 		}
 
 	function zoomed() {
-	  if (d3.event.sourceEvent && d3.event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
+	  if (d3.event.sourceEvent && d3.event.sourceEvent.type === "brush") return; // ignore
+																					// zoom-by-brush
 	  var t = d3.event.transform;
 	  xScaleFocus.domain(t.rescaleX(xScaleContext).domain());
 	  renderFocus();
-//	  focus.select(".area").attr("d", area);
+// focus.select(".area").attr("d", area);
 	  focus.select(".axis--x").call(xAxisFocus);
 	  context.select(".brush").call(brushContext.move, xScaleFocus.range().map(t.invertX, t));
 	}
@@ -331,7 +347,7 @@ function contextRendering()
 			 if(mashedData[mashedKey])
 			 {
 				 var previousArray =mashedData[mashedKey];
-				 previousArray.push(dataArray);
+				 previousArray.concat(dataArray);
 			 }
 			 else
 			 {
@@ -363,7 +379,7 @@ function contextRendering()
 			 if(mashedData[mashedKey])
 			 {
 				 var previousArray =mashedData[mashedKey];
-				 previousArray.push(dataArray);
+				 previousArray.concat(dataArray);
 			 }
 			 else
 			 {
@@ -372,5 +388,21 @@ function contextRendering()
 		 }
 		return mashedData;
 	}
+	d3.select('#zoomIn')
+	.on('click', onZoomIn);
+	d3.select('#zoomOut')
+	.on('click', onZoomOut);
+	function onZoomIn()
+	{
+		var rect = d3.select('rect.zoom');
+		zoomFocus.scaleBy(rect, 1.1);
+	}
+
+	function onZoomOut()
+	{
+		var rect = d3.select('rect.zoom');
+		zoomFocus.scaleBy(rect, 0.9);
+	}
+	
 	
 }
