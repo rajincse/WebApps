@@ -1,11 +1,12 @@
 function contextRendering()
 {
-	var svgWidth =960;
-	var svgHeight = 550;
+	
 	var svg =d3.select('svg');
 	
 	svg.attr('width',svgWidth);
 	svg.attr('height',svgHeight);
+	
+
 	
 	var marginFocus = {top: 20, right: 20, bottom: 160, left: 40},
     marginContext = {top: 430, right: 20, bottom: 30, left: 40},
@@ -84,17 +85,13 @@ function contextRendering()
      .call(zoomFocus);
 	 
 	 
-	 var imageWidth =16;
-	 var imageHeight = 16;
-	 var padding = 0;
-	 var imageAreaWidth = imageWidth+padding;
-	 var imageAreaHeight =imageHeight+padding;
+	 
 	 
 	 //Focus Region 
 	 function renderFocus()
 	 {
-		 d3.select(focus).node().selectAll('.image-area').remove();
-		 console.log('Rendering focus');
+		 d3.select(focus).node().selectAll('g.image-area').remove();
+		 
 		 var minXFocus = xScaleFocus.range()[0];
 		 var maxXFocus = xScaleFocus.range()[1];
 		 
@@ -124,6 +121,8 @@ function contextRendering()
 	 			nameMap[name][0] += cameraDistance;
 	 			nameMap[name][1]++;
 	 		}
+	 		averageCameraDistanceData[key]=nameMap;
+	 		///*
 	 		var maxOccurredName ="";
 	 		var maxOccurrence=0;
 	 		for(var k=0;k< Object.keys(nameMap).length;k++)
@@ -138,6 +137,7 @@ function contextRendering()
 	 		}
 	 		averageCameraDistanceData[key]={};
 	 		averageCameraDistanceData[key][maxOccurredName]=nameMap[maxOccurredName];
+	 		//*/
 		 }
 				 
 		 
@@ -172,9 +172,12 @@ function contextRendering()
 			.attr('x', function(name)
 					{
 						var timestamp = d3.select(this.parentNode).datum();
-						var x =( timestamp*maxXContext / maxTimeContext);
+						
+						var x =(timestamp-minTimeFocus)*(maxXFocus - minXFocus) / ( maxTimeFocus - minTimeFocus);
 						
 						return x-imageAreaWidth/2;
+						
+
 					})
 			.attr('y', function(name)
 			{
@@ -182,10 +185,11 @@ function contextRendering()
 				var cameraDistanceData = averageCameraDistanceData[timestamp][name];
 				
 				
-				var y = (cameraDistanceData[0]/ cameraDistanceData[1])*heightContext /maxY;
+				var y = (cameraDistanceData[0]/ cameraDistanceData[1])*heightFocus /maxY;
 				
 				
-				return  heightContext - y-imageAreaHeight/2;
+				return  heightFocus - y-imageAreaHeight/2;
+
 			})
 			.append('title')
 				.text(function(name)
@@ -291,7 +295,7 @@ function contextRendering()
 					})
 					
 		;
-	
+	renderFocus();
 	function brushed() {
 		  if (d3.event.sourceEvent && d3.event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
 		  var s = d3.event.selection || xScaleContext.range();

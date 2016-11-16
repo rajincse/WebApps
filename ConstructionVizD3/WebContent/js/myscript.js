@@ -3,7 +3,7 @@ var imageData={};
 var maxTime =0.0;
 function loadData()
 {
-	d3.tsv("data/smallVisible.txt", function(data) {
+	d3.tsv(dataFile, function(data) {
 		  
 			for(var i=0;i<data.length;i++)
 			{
