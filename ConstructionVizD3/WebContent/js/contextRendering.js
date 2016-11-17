@@ -167,51 +167,64 @@ function contextRendering()
 			.append('g')
 			.attr('id', function(key){ return 'T-'+key;});
 		
-		 timestampGroup.selectAll('image')		
+		 var glyphGroup = timestampGroup.selectAll('g')		
 			.data(function(key){ return Object.keys(averageCameraDistanceData[key]);})
 		 .enter()
-			.append('image')
-			.attr('id', function(name){
+		 	.append('g')
+		 	.attr('class', function(name){
 				var timestamp = d3.select(this.parentNode).datum();
 				var cameraDistanceData = averageCameraDistanceData[timestamp][name];
 				var average = cameraDistanceData[0]/ cameraDistanceData[1];
-				return "c-"+average;
+				return "glyph-"+average;
 			})
+			.attr('transform',  function(name){
+			var timestamp = d3.select(this.parentNode).datum();
+			
+			var x =(timestamp-minTimeFocus)*(maxXFocus - minXFocus) / ( maxTimeFocus - minTimeFocus);
+			
+			var cameraDistanceData = averageCameraDistanceData[timestamp][name];
+			
+			
+			var y = heightFocus -(cameraDistanceData[0]/ cameraDistanceData[1])*heightFocus /maxY;
+			
+			var translateText = 'translate('+x+', '+y+')';
+			return translateText;
+		});
+		 
+		 glyphGroup
+			.append('image')
+			
 			.attr('href', function(name)
 					{						
 						return imageData[name];
 					})
 					.attr('width', imageWidth)
 			.attr('height', imageHeight)
-			.attr('x', function(name)
-					{
-						var timestamp = d3.select(this.parentNode).datum();
-						
-						var x =(timestamp-minTimeFocus)*(maxXFocus - minXFocus) / ( maxTimeFocus - minTimeFocus);
-						
-						return x-imageAreaWidth/2;
-						
-
-					})
-			.attr('y', function(name)
-			{
-				var timestamp = d3.select(this.parentNode).datum();
-				var cameraDistanceData = averageCameraDistanceData[timestamp][name];
-				
-				
-				var y = (cameraDistanceData[0]/ cameraDistanceData[1])*heightFocus /maxY;
-				
-				
-				return  heightFocus - y-imageAreaHeight/2;
-
-			})
+			.attr('x',-imageAreaWidth/2)
+			.attr('y', -imageAreaHeight/2);
+		 
+		 glyphGroup
 			.append('title')
-				.text(function(name)
-						{
-							return "name:"+name;
-						})
-						
+			.text(function(name){
+				return "name:"+name;
+			})		
 			;
+		 glyphGroup
+			.append('circle')
+			.attr('class', 'red-circle')
+			.attr('cx', imageAreaWidth/2)
+			.attr('cy', -imageAreaHeight/2)
+			.attr('r', 5);
+		glyphGroup
+			.append('text')
+			.attr('class', 'badge-text')
+			.attr('x', 5)
+			.attr('y', -5)
+			.text(function(name){
+				var timestamp = d3.select(this.parentNode.parentNode).datum();
+				var cameraDistanceData = averageCameraDistanceData[timestamp][name];
+				return cameraDistanceData[1]; 
+			});
 	 }
 	 
 	 // Context Region
@@ -236,6 +249,10 @@ function contextRendering()
 			{
  				nameMap[name] = [0, 0];
 			}
+ 			else
+			{
+ 				console.log('Hi'+", "+name+", "+key);	
+			}
  			var cameraDistance = parseFloat(viewedObject.cameraDistance);
  			nameMap[name][0] += cameraDistance;
  			nameMap[name][1]++;
@@ -251,7 +268,10 @@ function contextRendering()
  				maxOccurrence = occurrence;
  				maxOccurredName = name;
  			}
+ 			
  		}
+ 		
+ 		
  		averageCameraDistanceData[key]={};
  		averageCameraDistanceData[key][maxOccurredName]=nameMap[maxOccurredName];
 	 }
@@ -268,16 +288,34 @@ function contextRendering()
 		.append('g')
 		.attr('id', function(key){ return 'T-'+key;});
 	
-	 timestampGroup.selectAll('image')		
+	 var glyphGroup = timestampGroup.selectAll('g')		
 		.data(function(key){ return Object.keys(averageCameraDistanceData[key]);})
 	 .enter()
-		.append('image')
-		.attr('id', function(name){
+	 	.append('g')
+	 	.attr('id', function(name){
 			var timestamp = d3.select(this.parentNode).datum();
 			var cameraDistanceData = averageCameraDistanceData[timestamp][name];
 			var average = cameraDistanceData[0]/ cameraDistanceData[1];
-			return "c-"+average;
+			return "g-"+average;
 		})
+		.attr('transform', function(name)
+				{
+			var timestamp = d3.select(this.parentNode).datum();
+			var x =( timestamp*maxXContext / maxTimeContext);
+			
+			
+			var cameraDistanceData = averageCameraDistanceData[timestamp][name];
+			
+			
+			var y = heightContext  -(cameraDistanceData[0]/ cameraDistanceData[1])*heightContext /maxY;
+			
+			
+			var translateText ='translate('+x+','+y+')';
+			return translateText;
+		});
+	glyphGroup
+		.append('image')
+		
 		.attr('href', function(name)
 				{						
 					return imageData[name];
@@ -285,23 +323,16 @@ function contextRendering()
 				.attr('width', imageWidth)
 		.attr('height', imageHeight)
 		.attr('x', function(name)
-				{
-					var timestamp = d3.select(this.parentNode).datum();
-					var x =( timestamp*maxXContext / maxTimeContext);
-					
-					return x-imageAreaWidth/2;
+				{					
+					return -imageAreaWidth/2;
 				})
 		.attr('y', function(name)
 		{
-			var timestamp = d3.select(this.parentNode).datum();
-			var cameraDistanceData = averageCameraDistanceData[timestamp][name];
 			
-			
-			var y = (cameraDistanceData[0]/ cameraDistanceData[1])*heightContext /maxY;
-			
-			
-			return  heightContext - y-imageAreaHeight/2;
-		})
+			return -imageAreaHeight/2;
+		});
+	
+	glyphGroup		
 		.append('title')
 			.text(function(name)
 					{
@@ -309,13 +340,34 @@ function contextRendering()
 					})
 					
 		;
+	
+	glyphGroup
+		.append('circle')
+		.attr('class', 'red-circle')
+		.attr('cx', imageAreaWidth/2)
+		.attr('cy', -imageAreaHeight/2)
+		.attr('r', 5);
+	glyphGroup
+		.append('text')
+		.attr('class', 'badge-text')
+		.attr('x', 5)
+		.attr('y', -5)
+		.text(function(name){
+			var timestamp = d3.select(this.parentNode.parentNode).datum();
+			var cameraDistanceData = averageCameraDistanceData[timestamp][name];
+			return cameraDistanceData[1]; 
+		});
+	
+	
 	renderFocus();
+	
+	
 	function brushed() {
 		  if (d3.event.sourceEvent && d3.event.sourceEvent.type === "zoom") return; // ignore
 																					// brush-by-zoom
 		  var s = d3.event.selection || xScaleContext.range();
 		  xScaleFocus.domain(s.map(xScaleContext.invert, xScaleContext));
-		 // focus.select(".area").attr("d", area);
+
 		  focus.select(".axis--x").call(xAxisFocus);
 		  svg.select(".zoom").call(zoomFocus.transform, d3.zoomIdentity
 		      .scale(width / (s[1] - s[0]))
@@ -328,7 +380,6 @@ function contextRendering()
 	  var t = d3.event.transform;
 	  xScaleFocus.domain(t.rescaleX(xScaleContext).domain());
 	  renderFocus();
-// focus.select(".area").attr("d", area);
 	  focus.select(".axis--x").call(xAxisFocus);
 	  context.select(".brush").call(brushContext.move, xScaleFocus.range().map(t.invertX, t));
 	}
@@ -347,11 +398,12 @@ function contextRendering()
 			 if(mashedData[mashedKey])
 			 {
 				 var previousArray =mashedData[mashedKey];
-				 previousArray.concat(dataArray);
+				 mashedData[mashedKey]= previousArray.concat(dataArray);
 			 }
 			 else
 			 {
 				 mashedData[mashedKey]= dataArray;
+				 
 			 }
 		 }
 		return mashedData;
@@ -379,7 +431,8 @@ function contextRendering()
 			 if(mashedData[mashedKey])
 			 {
 				 var previousArray =mashedData[mashedKey];
-				 previousArray.concat(dataArray);
+				 mashedData[mashedKey]= previousArray.concat(dataArray);
+				 
 			 }
 			 else
 			 {
