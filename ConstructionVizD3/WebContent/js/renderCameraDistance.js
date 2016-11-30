@@ -5,47 +5,8 @@ function renderContext(context, xScaleContext, heightContext,maxY)
 	 var timeInterval = imageAreaWidth* maxTimeContext/ maxXContext;
 	 var mashedData=getMashedupData(mainData, timeInterval);
 	 
-	 var averageCameraDistanceData ={};
-	 for(var i = 0; i< Object.keys(mashedData).length;i++)
-	 {
-		 var key = Object.keys(mashedData)[i];
-		 var value = mashedData[key];
- 		var nameMap={};
- 		for(var j=0;j<value.length;j++)
- 		{
- 			var viewedObject = value[j];
- 			var name = viewedObject.name;
- 			if(!nameMap[name])
-			{
- 				nameMap[name] = [0, 0];
-			}
- 			else
-			{
- 				console.log('Hi'+", "+name+", "+key);	
-			}
- 			var cameraDistance = parseFloat(viewedObject.cameraDistance);
- 			nameMap[name][0] += cameraDistance;
- 			nameMap[name][1]++;
- 		}
- 		var maxOccurredName ="";
- 		var maxOccurrence=0;
- 		for(var k=0;k< Object.keys(nameMap).length;k++)
- 		{
- 			var name = Object.keys(nameMap)[k];
- 			var occurrence = nameMap[name][1];
- 			if(occurrence> maxOccurrence && nameMap[name][0] > 0)
- 			{
- 				maxOccurrence = occurrence;
- 				maxOccurredName = name;
- 			}
- 			
- 		}
- 		
- 		
- 		averageCameraDistanceData[key]={};
- 		averageCameraDistanceData[key][maxOccurredName]=nameMap[maxOccurredName];
-	 }
-	var averageCameraDistanceKeys = Object.keys(averageCameraDistanceData);
+	 var averageCameraDistanceData = getAverageData(mashedData, 'cameraDistance', true);
+	 var averageCameraDistanceKeys = Object.keys(averageCameraDistanceData);
 	 
 	 
 	 var imageGroup = context.append("g")
@@ -141,44 +102,7 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY)
 	 
 	 var mashedData=getMashedupDataRange(mainData, timeInterval,xScaleFocus.domain() );
 	 
-	 var averageCameraDistanceData ={};
-	 
-	 for(var i = 0; i< Object.keys(mashedData).length;i++)
-	 {
-		 var key = Object.keys(mashedData)[i];
-		 var value = mashedData[key];
-		var nameMap={};
-		for(var j=0;j<value.length;j++)
-		{
-			var viewedObject = value[j];
-			var name = viewedObject.name;
-			if(!nameMap[name])
-			{
-				nameMap[name] = [0, 0];
-			}
-			var cameraDistance = parseFloat(viewedObject.cameraDistance);
-			nameMap[name][0] += cameraDistance;
-			nameMap[name][1]++;
-		}
-		//averageCameraDistanceData[key]=nameMap;
-		// /*
-		var maxOccurredName ="";
-		var maxOccurrence=0;
-		for(var k=0;k< Object.keys(nameMap).length;k++)
-		{
-			var name = Object.keys(nameMap)[k];
-			var occurrence = nameMap[name][1];
-			if(occurrence> maxOccurrence && nameMap[name][0] > 0)
-			{
-				maxOccurrence = occurrence;
-				maxOccurredName = name;
-			}
-		}
-		averageCameraDistanceData[key]={};
-		averageCameraDistanceData[key][maxOccurredName]=nameMap[maxOccurredName];
-		// */
-	 }
-			 
+	 var averageCameraDistanceData =getAverageData(mashedData, 'cameraDistance', true);
 	 
 	 var averageCameraDistanceKeys = Object.keys(averageCameraDistanceData);
 	 
@@ -250,61 +174,4 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY)
 			var cameraDistanceData = averageCameraDistanceData[timestamp][name];
 			return cameraDistanceData[1]; 
 		});
-}
-function getMashedupData(data, interval)
-{
-	var keys = Object.keys(data);
-	var mashedData={};
-	for(var i =0;i< keys.length; i++)
-	 {
-		 var key = keys[i];
-		 var timestamp = getTimestamp(key);
-		 var dataArray =  JSON.parse(data[key]);
-		 var mashedKey = Math.floor(timestamp/interval) * interval;
-		 
-		 if(mashedData[mashedKey])
-		 {
-			 var previousArray =mashedData[mashedKey];
-			 mashedData[mashedKey]= previousArray.concat(dataArray);
-		 }
-		 else
-		 {
-			 mashedData[mashedKey]= dataArray;
-			 
-		 }
-	 }
-	return mashedData;
-}
-
-function getMashedupDataRange(data, interval, range)
-{
-	var keys = Object.keys(data);
-	var mashedData={};
-	for(var i =0;i< keys.length; i++)
-	 {
-		 var key = keys[i];
-		 var timestamp = getTimestamp(key);
-		 
-		 if(range)
-		 {
-			 if(timestamp < range[0]) continue;
-			 if(timestamp > range[1]) break;
-		 }
-		 
-		 
-		 var dataArray =  JSON.parse(data[key]);
-		 var mashedKey = Math.floor(timestamp/interval) * interval;
-		 
-		 if(mashedData[mashedKey])
-		 {
-			 var previousArray =mashedData[mashedKey];
-			 mashedData[mashedKey]= previousArray.concat(dataArray);
-			 
-		 }
-		 else
-		 {
-			 mashedData[mashedKey]= dataArray;
-		 }
-	 }
-	return mashedData;
 }
