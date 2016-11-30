@@ -5,7 +5,7 @@ function renderContext(context, xScaleContext, heightContext,maxY)
 	 var timeInterval = imageAreaWidth* maxTimeContext/ maxXContext;
 	 var mashedData=getMashedupData(mainData, timeInterval);
 	 
-	 var averageCameraDistanceData = getAverageData(mashedData, 'cameraDistance', true);
+	 var averageCameraDistanceData = getAverageData(mashedData, true, 'cameraDistance');
 	 var averageCameraDistanceKeys = Object.keys(averageCameraDistanceData);
 	 
 	 
@@ -102,7 +102,7 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY)
 	 
 	 var mashedData=getMashedupDataRange(mainData, timeInterval,xScaleFocus.domain() );
 	 
-	 var averageCameraDistanceData =getAverageData(mashedData, 'cameraDistance', true);
+	 var averageCameraDistanceData =getAverageData(mashedData, true, 'cameraDistance');
 	 
 	 var averageCameraDistanceKeys = Object.keys(averageCameraDistanceData);
 	 

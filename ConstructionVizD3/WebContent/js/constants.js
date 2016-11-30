@@ -4,8 +4,8 @@ var dataFile = "data/smallVisible.txt";
 var svgWidth =960;
 var svgHeight = 550;
 
-var imageWidth =16;
-var imageHeight = 16;
+var imageWidth =32;
+var imageHeight = 32;
 var padding = 0;
 var imageAreaWidth = imageWidth+padding;
 var imageAreaHeight =imageHeight+padding;

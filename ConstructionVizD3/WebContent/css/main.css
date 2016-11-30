@@ -57,5 +57,10 @@ svg
 {
 	fill:white;
 	font-family: Times New Roman;
-    font-size: 10px;
+    font-size: 8px;
+    fill-opacity:1;
+}
+.glyph-rect
+{
+	fill-opacity: 0.25;
 }

@@ -1,5 +1,6 @@
 var mainData={};
 var imageData={};
+var colorData={};
 var maxTime =0.0;
 function loadData()
 {
@@ -34,7 +35,7 @@ function loadData()
 			var image = data[i].image;
 			
 			imageData[item]=image;
-			
+			colorData[item] = colores_google(i);
 		}
 
 	});

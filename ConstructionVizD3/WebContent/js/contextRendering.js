@@ -75,14 +75,7 @@ function contextRendering()
     .attr("class", "axis axis--y")
     .call(yAxisFocus);
 	
-	context.append("g")
-    .attr("class", "axis axis--x")
-    .attr("transform", "translate(0," + heightContext + ")")
-    .call(xAxisContext);
-	 context.append("g")
-      .attr("class", "brush")
-      .call(brushContext)
-      .call(brushContext.move, xScaleFocus.range());
+	
 	 
 	 
 	 
@@ -106,6 +99,14 @@ function contextRendering()
 	 
 	 // Context Region 
 	 renderContext(context, xScaleContext, heightContext, maxY);
+	 context.append("g")
+	    .attr("class", "axis axis--x")
+	    .attr("transform", "translate(0," + heightContext + ")")
+	    .call(xAxisContext);
+		 context.append("g")
+	      .attr("class", "brush")
+	      .call(brushContext)
+	      .call(brushContext.move, xScaleFocus.range());
 	
 	 // Focus Region
 	 renderFocus(focus, xScaleFocus, heightFocus, maxY);
