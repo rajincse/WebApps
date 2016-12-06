@@ -60,7 +60,7 @@ function getMashedupDataRange(data, interval, range)
  * returns aggregatedData ={ <timeStamp>:{items:{<name>:[averagePropertyData, occurrence ]}
  * , aggregate:[<aggregatedPropertyValue>, <aggregatedOccurrenceValue]}
  * */
-function getAggregatedData(mashedData,itemCount, propertyName )
+function getAggregatedData(mashedData,itemCount, sortAscending, propertyName , additionalProperties)
 {
 	var aggregatedData ={};
 	 for(var i = 0; i< Object.keys(mashedData).length;i++)
@@ -68,25 +68,59 @@ function getAggregatedData(mashedData,itemCount, propertyName )
 		 var key = Object.keys(mashedData)[i];
 		 var value = mashedData[key];
 		var nameMap={};
-		var aggregate =[0,0];
+		var aggregate ={};
 		for(var j=0;j<value.length;j++)
 		{
 			var viewedObject = value[j];
 			var name = viewedObject.name;
 			if(!nameMap[name])
 			{
-				nameMap[name] = [0, 0];
+				nameMap[name] = {'count':0};
+				aggregate[propertyName] ={'count':0};
+				if(propertyName)
+				{
+					nameMap[name][propertyName] =0;
+					aggregate[propertyName] =0;				
+				}
+				if(additionalProperties)
+				{
+					for(var additionalPropertyIndex=0
+							;additionalPropertyIndex<additionalProperties.length 
+							;additionalPropertyIndex++) 
+					{
+						var additionalPropertyName = additionalProperties[additionalPropertyIndex];
+						nameMap[name][additionalPropertyName] =0;
+						aggregate[additionalPropertyName] =0;	
+					}
+				}
 			}
 			if(propertyName)
 			{
 				var propertyValue = parseFloat(viewedObject[propertyName]);
-				nameMap[name][0] += propertyValue;
-				aggregate[0]+=propertyValue;
-			}			
+				
+				nameMap[name][propertyName] += propertyValue;
+				aggregate[propertyName]+=propertyValue;
+			}
+			
+			if(additionalProperties)
+			{
+				for(var additionalPropertyIndex=0
+						;additionalPropertyIndex<additionalProperties.length 
+						;additionalPropertyIndex++) 
+				{
+					var additionalPropertyName = additionalProperties[additionalPropertyIndex];
+					var propertyValue = parseFloat(viewedObject[additionalPropertyName]);
+					
+					nameMap[name][additionalPropertyName] += propertyValue;
+					aggregate[additionalPropertyName]+=propertyValue;
+				}
+				
+			}
 			
 			
-			nameMap[name][1]++;
-			aggregate[1]++;
+			
+			nameMap[name].count++;
+			aggregate.count++;
 		}	
 		
 		if(itemCount && itemCount > 0)
@@ -94,8 +128,25 @@ function getAggregatedData(mashedData,itemCount, propertyName )
 			var sortedNameMapKeys = Object.keys(nameMap);
 			sortedNameMapKeys.sort(function(a,b){
 					if(nameMap[a] && nameMap[b])
-					{
-						return nameMap[b][1] - nameMap[a][1];
+					{	
+						var itemA = nameMap[a]['count'];
+						var itemB = nameMap[b]['count'];
+						if(propertyName)
+						{
+							itemA = nameMap[a][propertyName];
+							itemB = nameMap[b][propertyName];
+						}
+						if(!sortAscending)
+						{
+							return itemB - itemA;
+						}
+						else
+						{
+							return itemA - itemB;
+						}
+						
+												
+						
 					}
 					else 
 					{
@@ -106,13 +157,24 @@ function getAggregatedData(mashedData,itemCount, propertyName )
 			sortedNameMapKeys = sortedNameMapKeys.slice(0, Math.min(sortedNameMapKeys.length,itemCount ))
 			
 			aggregatedData[key]={items:{}, aggregate:{}};
-			aggregatedData[key].aggregate=[0,0];
+			aggregatedData[key].aggregate={};
+			
 			for(var k =0;k<sortedNameMapKeys.length;k++)
 			{
 				name = sortedNameMapKeys[k];
 				aggregatedData[key].items[name]=nameMap[name];
-				aggregatedData[key].aggregate[0]+=nameMap[name][0];
-				aggregatedData[key].aggregate[1]+=nameMap[name][1];
+				var properties = Object.keys(nameMap[name]);
+				for(var l =0;l<properties.length;l++)
+				{
+					if(!aggregatedData[key].aggregate[properties[l]])
+					{
+						aggregatedData[key].aggregate[properties[l]] =0;
+					}
+					
+					aggregatedData[key].aggregate[properties[l]]+=nameMap[name][properties[l]];					
+				}
+				
+				
 			}
 
 		}
@@ -185,6 +247,24 @@ function getAverageData(mashedData, singleItem, propertyName )
 	 }
 	 
 	 return averageData;
+}
+function getPropertyValue(data, propertyName)
+{
+	if(propertyName ==='cameraDistance')
+	{
+		return parseFloat(data[propertyName]);
+	}
+	else if (propertyName ==='size')
+	{
+		var width = 10;
+		var height =10;
+		
+		return width * height;
+	}
+}
+function getShare(data, itemName, propertyName)
+{
+	return data.items[itemName][propertyName] /data.aggregate[propertyName] ;
 }
 function colores_google(n) {
 	  var colores_g = [

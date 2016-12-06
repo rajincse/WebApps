@@ -1,4 +1,5 @@
 var itemCount =10;
+var sortingProperty = 'cameraDistance';
 function renderContext(context, xScaleContext, heightContext,maxY)
 {
 	 var maxXContext = xScaleContext.range()[1];
@@ -6,7 +7,7 @@ function renderContext(context, xScaleContext, heightContext,maxY)
 	 var timeInterval = imageAreaWidth* maxTimeContext/ maxXContext;
 	 var mashedData=getMashedupData(mainData, timeInterval);
 	 
-	 var aggregated = getAggregatedData(mashedData,itemCount);
+	 var aggregated = getAggregatedData(mashedData,itemCount, true, sortingProperty);
 	 var aggregatedKeys = Object.keys(aggregated);
 	 
 	 
@@ -25,17 +26,14 @@ function renderContext(context, xScaleContext, heightContext,maxY)
 	 .enter()
 	 	.append('g')
 	 	.attr('id', function(name){
-			var timestamp = d3.select(this.parentNode).datum();
-			var aggredatedDataOccurrence = aggregated[timestamp].items[name][1];
-			var share = 100*aggredatedDataOccurrence/ aggregated[timestamp].aggregate[1];
+			var timestamp = d3.select(this.parentNode).datum();			
+			var share = 100*getShare(aggregated[timestamp], name, sortingProperty);
 			return "g-"+share;
-		})
-		.attr('class', 'glyph')
-		.attr('transform', function(name)
-				{
+		})		
+		.attr('transform', function(name){
 			var timestamp = d3.select(this.parentNode).datum();
-			var aggredatedDataOccurrence = aggregated[timestamp].items[name][1];
-			var height = heightContext*aggredatedDataOccurrence/ aggregated[timestamp].aggregate[1];
+			
+			var height = heightContext*getShare(aggregated[timestamp], name, sortingProperty);
 			
 			var x =( timestamp*maxXContext / maxTimeContext);
 			
@@ -43,16 +41,16 @@ function renderContext(context, xScaleContext, heightContext,maxY)
 			if(timestamp > lastTime)
 			{
 				lastTime = timestamp;
-				lastY =-height;
+				lastY =0;
 			}
 			
 			
-			
+			var translateText ='translate('+x+','+lastY+')';
 			var y = lastY+height;
 			lastY = y;
 			
 			
-			var translateText ='translate('+x+','+y+')';
+			
 			return translateText;
 		});
 	glyphGroup
@@ -61,9 +59,8 @@ function renderContext(context, xScaleContext, heightContext,maxY)
 		.attr('width', imageWidth)
 		.attr('height', function(name)
 				{
-					var timestamp = d3.select(this.parentNode.parentNode).datum();
-					var aggredatedDataOccurrence = aggregated[timestamp].items[name][1];
-					var h = heightContext * aggredatedDataOccurrence/ aggregated[timestamp].aggregate[1];
+					var timestamp = d3.select(this.parentNode.parentNode).datum();					
+					var h = heightContext * getShare(aggregated[timestamp], name, sortingProperty);
 					return h; 
 				})				
 		.attr('x',0)
@@ -75,7 +72,10 @@ function renderContext(context, xScaleContext, heightContext,maxY)
 		.append('title')
 			.text(function(name)
 					{
-						return "name:"+name;
+						var timestamp = d3.select(this.parentNode.parentNode).datum();						
+						var share = 100*getShare(aggregated[timestamp], name, sortingProperty);
+				
+						return "name:"+name+', share:'+share.toFixed(2)+'%';
 					})
 					
 		;
@@ -112,7 +112,7 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY)
 	 
 	 var mashedData=getMashedupDataRange(mainData, timeInterval,xScaleFocus.domain() );
 	 
-	 var aggregated = getAggregatedData(mashedData,itemCount);
+	 var aggregated = getAggregatedData(mashedData,itemCount, true, sortingProperty);
 	 var aggregatedKeys = Object.keys(aggregated);
 	 
 	 
@@ -127,23 +127,22 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY)
 	
 	 var lastY =-1;
 	 var lastTime =-1;
-	
+	 
 	 var glyphGroup = timestampGroup.selectAll('g')		
 	 .data(function(key){ return Object.keys(aggregated[key].items);})
 	 .enter()
 	 	.append('g')
 	 	.attr('id', function(name){
 			var timestamp = d3.select(this.parentNode).datum();
-			var aggredatedDataOccurrence = aggregated[timestamp].items[name][1];
-			var share = 100*aggredatedDataOccurrence/ aggregated[timestamp].aggregate[1];
-			return "g-"+share;
-		})
-		
+			
+			var share = 100*getShare(aggregated[timestamp], name, sortingProperty);
+			return "g-"+share.toFixed(2)+'%';
+		})		
 		.attr('transform', function(name)
 				{
 			var timestamp = d3.select(this.parentNode).datum();
-			var aggredatedDataOccurrence = aggregated[timestamp].items[name][1];
-			var height = heightFocus*aggredatedDataOccurrence/ aggregated[timestamp].aggregate[1];
+			
+			var height = heightFocus*getShare(aggregated[timestamp], name, sortingProperty);
 			
 			var x =(timestamp-minTimeFocus)*(maxXFocus - minXFocus) / ( maxTimeFocus - minTimeFocus);
 			
@@ -151,16 +150,16 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY)
 			if(timestamp > lastTime)
 			{
 				lastTime = timestamp;	
-				lastY = -height;
+				lastY = 0;
 			}
 			
-			
+			var translateText ='translate('+x+','+lastY+')';
 			
 			var y = lastY+height;
 			lastY = y;
 			
 			
-			var translateText ='translate('+x+','+y+')';
+			
 			return translateText;
 		});
 	glyphGroup
@@ -170,8 +169,7 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY)
 		.attr('height', function(name)
 				{
 					var timestamp = d3.select(this.parentNode.parentNode).datum();
-					var aggredatedDataOccurrence = aggregated[timestamp].items[name][1];
-					var h = heightFocus * aggredatedDataOccurrence/ aggregated[timestamp].aggregate[1];
+					var h = heightFocus * getShare(aggregated[timestamp], name, sortingProperty);
 					return h; 
 				})				
 		.attr('x',0)
@@ -183,11 +181,23 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY)
 		.append('title')
 			.text(function(name)
 					{
-						return "name:"+name;
+						var timestamp = d3.select(this.parentNode.parentNode).datum();						
+						var share = 100*getShare(aggregated[timestamp], name, sortingProperty);
+				
+						return "name:"+name+', share:'+share.toFixed(2)+'%';
 					})
 					
 		;
-	glyphGroup
+	var icon = glyphGroup.append('g')
+					.attr('class','icon')
+					.attr('transform', function(name)
+							{
+								var timestamp = d3.select(this.parentNode.parentNode).datum();
+								var share = 7*getShare(aggregated[timestamp], name, sortingProperty);
+								return 'scale('+share+')';
+							});
+							
+	icon	
 		.append('image')
 		
 		.attr('href', function(name)
@@ -198,20 +208,20 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY)
 		.attr('height', imageHeight/2)
 		.attr('x',imageAreaWidth/4)
 		.attr('y', imageAreaHeight/4);
-	glyphGroup
+	icon
 		.append('circle')
 		.attr('class', 'red-circle')
 		.attr('cx', 3* imageAreaWidth/4)
 		.attr('cy', imageAreaHeight/4)
 		.attr('r', 5);
-	glyphGroup
+	icon
 		.append('text')
 		.attr('class', 'badge-text')
 		.attr('x', 3* imageAreaWidth/4-3)
 		.attr('y',10)
 		.text(function(name){
-			var timestamp = d3.select(this.parentNode.parentNode).datum();
-			var aggredatedDataOccurrence = aggregated[timestamp].items[name][1];
+			var timestamp = d3.select(this.parentNode.parentNode.parentNode).datum();
+			var aggredatedDataOccurrence = aggregated[timestamp].items[name].count;
 			return aggredatedDataOccurrence; 
 		});
 }
