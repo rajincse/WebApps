@@ -58,7 +58,7 @@ function getMashedupDataRange(data, interval, range)
 
 /*
  * returns aggregatedData ={ <timeStamp>:{items:{<name>:{count, prop1: , prop2: ... }}
- * , aggregate:[<aggregatedPropertyValue>, <aggregatedOccurrenceValue]}
+ * , aggregate:{count, prop1: , prop2: ... }}
  * */
 function getAggregatedData(mashedData,itemCount, sortAscending, propertyName , additionalProperties)
 {
