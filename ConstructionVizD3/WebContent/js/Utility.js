@@ -109,7 +109,7 @@ function getAggregatedData(mashedData,itemCount, sortAscending, propertyName , a
 						;additionalPropertyIndex++) 
 				{
 					var additionalPropertyName = additionalProperties[additionalPropertyIndex];
-					var propertyValue = parseFloat(viewedObject[additionalPropertyName]);
+					var propertyValue = getPropertyValue(viewedObject, additionalPropertyName);
 					
 					nameMap[name][additionalPropertyName] += propertyValue;
 					aggregate[additionalPropertyName]+=propertyValue;
@@ -256,10 +256,23 @@ function getPropertyValue(data, propertyName)
 	}
 	else if (propertyName ==='size')
 	{
-		var width = 10;
-		var height =10;
+		var textData = data[propertyName];
+		var regExp = /\((\d*),\s*(\d*)\)/;
+		var parseData = regExp.exec(textData);
 		
-		return width * height;
+		if(parseData && parseData.length > 2)
+		{
+			var width = parseData[1];
+			var height =parseData[2];
+			return width * height;
+		}
+		else
+		{
+			return 0;
+		}
+		
+		
+	
 	}
 }
 function getShare(data, itemName, propertyName)

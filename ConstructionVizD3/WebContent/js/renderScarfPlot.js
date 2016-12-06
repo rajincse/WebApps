@@ -112,7 +112,7 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY)
 	 
 	 var mashedData=getMashedupDataRange(mainData, timeInterval,xScaleFocus.domain() );
 	 
-	 var aggregated = getAggregatedData(mashedData,itemCount, true, sortingProperty);
+	 var aggregated = getAggregatedData(mashedData,itemCount, true, sortingProperty,['size']);
 	 var aggregatedKeys = Object.keys(aggregated);
 	 
 	 
@@ -190,12 +190,7 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY)
 		;
 	var icon = glyphGroup.append('g')
 					.attr('class','icon')
-					.attr('transform', function(name)
-							{
-								var timestamp = d3.select(this.parentNode.parentNode).datum();
-								var share = 7*getShare(aggregated[timestamp], name, sortingProperty);
-								return 'scale('+share+')';
-							});
+					
 							
 	icon	
 		.append('image')
@@ -204,10 +199,19 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY)
 				{						
 					return imageData[name];
 				})
-				.attr('width', imageWidth/2)
-		.attr('height', imageHeight/2)
+		.attr('width', 3*imageWidth/4)
+		.attr('height', function(name)
+				{
+					var timestamp = d3.select(this.parentNode.parentNode.parentNode).datum();
+					var h = heightFocus * getShare(aggregated[timestamp], name, sortingProperty);
+					var averageSize = aggregated[timestamp].items[name]['size']/aggregated[timestamp].items[name].count;
+					var sizeShare =averageSize * aggregated[timestamp].aggregate.count /  aggregated[timestamp].aggregate['size'];
+					return (h/2)+(h* sizeShare/2);
+				})
 		.attr('x',imageAreaWidth/4)
-		.attr('y', imageAreaHeight/4);
+		.attr('y', imageAreaHeight/4)
+		.attr('preserveAspectRatio','none')
+		;
 	icon
 		.append('circle')
 		.attr('class', 'red-circle')
