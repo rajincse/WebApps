@@ -2,6 +2,10 @@ var mainData={};
 var imageData={};
 var colorData={};
 var maxTime =0.0;
+
+var propertyMax = {};
+var propertyMin ={};
+
 function loadData()
 {
 	d3.tsv(dataFile, function(data) {
@@ -21,7 +25,7 @@ function loadData()
 				{
 					maxTime = timeStamp;
 				}
-				
+				checkForMinMax(value);
 			}
 			
 		});
@@ -48,7 +52,32 @@ function getTimestamp(timeString)
 	var timestamp = parseFloat(timeSplit[1]);
 	return timestamp;
 }
-
+function checkForMinMax(jsonText)
+{
+	var dataArray = JSON.parse(jsonText);
+	for(var i=0;i<dataArray.length;i++)
+	{
+		var data = dataArray[i];
+		var properties = Object.keys(data);
+		for(var j=0;j< properties.length;j++)
+		{
+			var property = properties[j]
+			var value = getPropertyValue(data, property);
+			if(!propertyMax[property] || value > propertyMax[property])
+			{
+				propertyMax[property] = value;
+			}
+			
+			if(!propertyMin[property] || data[property] < propertyMin[property])
+			{
+				propertyMin[property] = value;
+			}
+			
+			
+		}
+	}
+	
+}
 
 function render()
 {

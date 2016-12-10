@@ -64,3 +64,16 @@ svg
 {
 	fill-opacity: 0.25;
 }
+.starplot-value
+{
+	stroke: black;
+	stroke-width: 1;
+	fill: yellow;
+	fill-opacity: 0.75
+}
+.starplot-axes
+{
+	stroke: red;
+	stroke-width: 1;
+	
+}

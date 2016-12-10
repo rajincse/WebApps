@@ -1,12 +1,13 @@
-var itemCount =10;
+//var itemCount =10;
 var sortingProperty = 'cameraDistance';
+var additionalProperties =['size', 'center', 'viewed', 'rotationSpeed', 'translationSpeed'];
 function renderContext(context, xScaleContext, heightContext,maxY)
 {
 	 var maxXContext = xScaleContext.range()[1];
 	 var maxTimeContext = xScaleContext.domain()[1];
 	 var timeInterval = imageAreaWidth* maxTimeContext/ maxXContext;
 	 var mashedData=getMashedupData(mainData, timeInterval);
-	 
+	 var itemCount =  Math.floor(heightContext/ imageAreaHeight);
 	 var aggregated = getAggregatedData(mashedData,itemCount, true, sortingProperty);
 	 var aggregatedKeys = Object.keys(aggregated);
 	 
@@ -33,8 +34,8 @@ function renderContext(context, xScaleContext, heightContext,maxY)
 		.attr('transform', function(name){
 			var timestamp = d3.select(this.parentNode).datum();
 			
-			var height = heightContext*getShare(aggregated[timestamp], name, sortingProperty);
-			
+//			var height = heightContext*getShare(aggregated[timestamp], name, sortingProperty);
+			var height = heightContext / itemCount;
 			var x =( timestamp*maxXContext / maxTimeContext);
 			
 			
@@ -56,12 +57,12 @@ function renderContext(context, xScaleContext, heightContext,maxY)
 	glyphGroup
 		.append('rect')
 		.attr('class', 'glyph-rect')
-		.attr('width', imageWidth)
+		.attr('width', imageAreaWidth)
 		.attr('height', function(name)
 				{
 					var timestamp = d3.select(this.parentNode.parentNode).datum();					
 					var h = heightContext * getShare(aggregated[timestamp], name, sortingProperty);
-					return h; 
+					return heightContext / itemCount; 
 				})				
 		.attr('x',0)
 		.attr('y', 0)
@@ -111,8 +112,8 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY)
 	 var timeInterval = imageAreaWidth*( maxTimeFocus - minTimeFocus)/ (maxXFocus - minXFocus);
 	 
 	 var mashedData=getMashedupDataRange(mainData, timeInterval,xScaleFocus.domain() );
-	 
-	 var aggregated = getAggregatedData(mashedData,itemCount, true, sortingProperty,['size']);
+	 var itemCount = Math.floor(heightFocus/ imageAreaHeight);
+	 var aggregated = getAggregatedData(mashedData,itemCount, true, sortingProperty,additionalProperties);
 	 var aggregatedKeys = Object.keys(aggregated);
 	 
 	 
@@ -142,8 +143,8 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY)
 				{
 			var timestamp = d3.select(this.parentNode).datum();
 			
-			var height = heightFocus*getShare(aggregated[timestamp], name, sortingProperty);
-			
+//			var height = heightFocus*getShare(aggregated[timestamp], name, sortingProperty);
+			var height = heightFocus / itemCount;
 			var x =(timestamp-minTimeFocus)*(maxXFocus - minXFocus) / ( maxTimeFocus - minTimeFocus);
 			
 			
@@ -165,12 +166,12 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY)
 	glyphGroup
 		.append('rect')
 		.attr('class', 'glyph-rect')
-		.attr('width', imageWidth)
+		.attr('width', imageAreaWidth)
 		.attr('height', function(name)
 				{
-					var timestamp = d3.select(this.parentNode.parentNode).datum();
-					var h = heightFocus * getShare(aggregated[timestamp], name, sortingProperty);
-					return h; 
+//					var timestamp = d3.select(this.parentNode.parentNode).datum();
+//					var h = heightFocus * getShare(aggregated[timestamp], name, sortingProperty);
+					return heightFocus / itemCount;
 				})				
 		.attr('x',0)
 		.attr('y', 0)
@@ -182,50 +183,136 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY)
 			.text(function(name)
 					{
 						var timestamp = d3.select(this.parentNode.parentNode).datum();						
-						var share = 100*getShare(aggregated[timestamp], name, sortingProperty);
-				
-						return "name:"+name+', share:'+share.toFixed(2)+'%';
+						var data =aggregated[timestamp].items[name];
+						var showData = {};
+						var properties = Object.keys(data); 
+						for(var i= 0;i<properties.length;i++)
+						{
+							if(properties[i] != 'count')
+							{
+								showData[properties[i]] = (data[properties[i]] / data.count / getMax(properties[i])).toFixed(2); 
+							}
+						}
+						
+						var jsonData = JSON.stringify(showData);
+						
+						return "name:"+name+', data:'+jsonData;
 					})
 					
 		;
 	var icon = glyphGroup.append('g')
-					.attr('class','icon')
-					
-							
-	icon	
-		.append('image')
-		
-		.attr('href', function(name)
-				{						
-					return imageData[name];
-				})
-		.attr('width', 3*imageWidth/4)
-		.attr('height', function(name)
+					.attr('class','icon');
+	icon
+	.append('path')
+	.attr('class', 'starplot-axes')
+	.attr('d', function(name)
+		{
+			var timestamp = d3.select(this.parentNode.parentNode.parentNode).datum();
+			var item = aggregated[timestamp].items[name];
+			var data = '';
+			
+			var centerX = imageAreaWidth /2;
+			var centerY = imageAreaHeight /2;
+			var radiusX =imageAreaWidth /2;
+			var radiusY =imageAreaHeight /2;
+			
+			
+			var attributes = Object.keys(item);
+			attributes.splice(0,1);
+			var thetaDiff =Math.PI * 2 / attributes.length;
+			
+			for(var i=0;i< attributes.length;i++)
+			{
+				var theta = thetaDiff * i;
+				var x = centerX+radiusX * Math.cos(theta);
+				var y = centerY + radiusY * Math.sin(theta);
+				data+= 'M '+centerX+' '+centerY+' L '+x+' '+ y+' ';
+			}
+			data+= 'Z';
+			return data;
+		}
+	);
+	icon
+		.append('path')
+		.attr('class', 'starplot-value')
+		.attr('d', function(name)
 				{
 					var timestamp = d3.select(this.parentNode.parentNode.parentNode).datum();
-					var h = heightFocus * getShare(aggregated[timestamp], name, sortingProperty);
-					var averageSize = aggregated[timestamp].items[name]['size']/aggregated[timestamp].items[name].count;
-					var sizeShare =averageSize * aggregated[timestamp].aggregate.count /  aggregated[timestamp].aggregate['size'];
-					return (h/2)+(h* sizeShare/2);
+					var item = aggregated[timestamp].items[name];
+					var data = '';
+					
+					var centerX = imageAreaWidth /2;
+					var centerY = imageAreaHeight /2;
+					var radiusX =imageAreaWidth /2;
+					var radiusY =imageAreaHeight /2;
+					
+					
+					var attributes = Object.keys(item);
+					attributes.splice(0,1);
+					var thetaDiff =Math.PI * 2 / attributes.length;
+					
+				
+					for(var i =0;i<attributes.length;i++)
+					{
+						var attributeName =attributes[i];						
+						
+						var avgValue = item[attributeName]	/item.count;
+						var maxValue= getMax(attributeName);
+						var value = 	avgValue /maxValue; //normalized		
+						
+						if(!value) value =0;
+						var theta = thetaDiff * i;
+						
+						if( i==0)
+						{
+							var x = centerX+radiusX *value;
+							var y = centerY;
+							data+= 'M '+x+' '+y+' ';
+						}
+						else
+						{
+							var x = centerX+radiusX *value * Math.cos(theta);
+							var y = centerY + radiusY *value * Math.sin(theta);
+							data+= 'L '+x+' '+y+' ';
+						}
+						
+					}
+					
+					return data;
 				})
-		.attr('x',imageAreaWidth/4)
-		.attr('y', imageAreaHeight/4)
-		.attr('preserveAspectRatio','none')
-		;
-	icon
-		.append('circle')
-		.attr('class', 'red-circle')
-		.attr('cx', 3* imageAreaWidth/4)
-		.attr('cy', imageAreaHeight/4)
-		.attr('r', 5);
-	icon
-		.append('text')
-		.attr('class', 'badge-text')
-		.attr('x', 3* imageAreaWidth/4-3)
-		.attr('y',10)
-		.text(function(name){
-			var timestamp = d3.select(this.parentNode.parentNode.parentNode).datum();
-			var aggredatedDataOccurrence = aggregated[timestamp].items[name].count;
-			return aggredatedDataOccurrence; 
-		});
+				;
+		
+	
+	
+	
+							
+//	icon	
+//		.append('image')
+//		
+//		.attr('href', function(name)
+//				{						
+//					return imageData[name];
+//				})
+//		.attr('width', imageWidth/2)
+//		.attr('height', imageHeight/2)
+//		.attr('x',imageAreaWidth/4)
+//		.attr('y', imageAreaHeight/4)
+//		.attr('preserveAspectRatio','none')
+//		;
+//	icon
+//		.append('circle')
+//		.attr('class', 'red-circle')
+//		.attr('cx', 3* imageAreaWidth/4)
+//		.attr('cy', imageAreaHeight/4)
+//		.attr('r', 5);
+//	icon
+//		.append('text')
+//		.attr('class', 'badge-text')
+//		.attr('x', 3* imageAreaWidth/4-3)
+//		.attr('y',10)
+//		.text(function(name){
+//			var timestamp = d3.select(this.parentNode.parentNode.parentNode).datum();
+//			var aggredatedDataOccurrence = aggregated[timestamp].items[name].count;
+//			return aggredatedDataOccurrence; 
+//		});
 }

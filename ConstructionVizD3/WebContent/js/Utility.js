@@ -248,6 +248,15 @@ function getAverageData(mashedData, singleItem, propertyName )
 	 
 	 return averageData;
 }
+function getMax(propertyName)
+{
+	return propertyMax[propertyName];
+}
+function getMin(propertyName)
+{
+	return propertyMin[propertyName];
+}
+
 function getPropertyValue(data, propertyName)
 {
 	if(propertyName ==='cameraDistance')
@@ -270,9 +279,31 @@ function getPropertyValue(data, propertyName)
 		{
 			return 0;
 		}
+	}
+	else if(propertyName ==='center')
+	{
+		var textData = data[propertyName];
+		var regExp = /\((\d*),\s*(\d*)\)/;
+		var parseData = regExp.exec(textData);
 		
-		
-	
+		if(parseData && parseData.length > 2)
+		{
+			var x = parseData[1];
+			var y =parseData[2];
+			var screenCenterX = 960;
+			var screenCenterY = 540;
+			return Math.sqrt(
+					(x-screenCenterX)*(x-screenCenterX) 
+					+ (y-screenCenterY)*(y-screenCenterY));
+		}
+		else
+		{
+			return 2500; // sqrt(960^2+540^2) = 1101
+		}
+	}
+	else
+	{
+		return parseFloat(data[propertyName]);
 	}
 }
 function getShare(data, itemName, propertyName)

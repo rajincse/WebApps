@@ -9,7 +9,7 @@ function contextRendering()
 
 	
 	var marginFocus = {top: 20, right: 20, bottom: 160, left: 40},
-    marginContext = {top: 430, right: 20, bottom: 30, left: 40},
+    marginContext = {top: 430, right: 20, bottom: 20, left: 40},
     width = +svg.attr("width") - marginFocus.left - marginFocus.right,
     heightFocus = +svg.attr("height") - marginFocus.top - marginFocus.bottom,
     heightContext = +svg.attr("height") - marginContext.top - marginContext.bottom;
