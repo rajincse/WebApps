@@ -6,6 +6,7 @@ var svgHeight = 550;
 
 var imageWidth =32;
 var imageHeight = 32;
-var padding = 18;
+var padding = 16;
 var imageAreaWidth = imageWidth+padding;
 var imageAreaHeight =imageHeight+padding;
+

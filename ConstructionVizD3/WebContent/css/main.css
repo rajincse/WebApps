@@ -10,7 +10,14 @@ svg
 .container
 {
 	overflow: auto;
+	float: left;
+	margin-right: 20px;
 }
+.parent-container
+{
+	float: left;
+}
+
 .axis path,
 .axis line {
   fill: none;
@@ -64,6 +71,15 @@ svg
 {
 	fill-opacity: 0.25;
 }
+.glyph-circle
+{
+	fill-opacity: 0.75;
+}
+.glyph-image
+{
+	opacity: 0.5
+}
+
 .starplot-value
 {
 	stroke: black;
@@ -73,7 +89,10 @@ svg
 }
 .starplot-axes
 {
-	stroke: red;
 	stroke-width: 1;
 	
 }
+.attribute-circle{
+	fill-opacity: 0.5;
+}
+

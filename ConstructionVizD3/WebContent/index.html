@@ -18,9 +18,20 @@
 <button id="zoomIn">zoom+</button>
 <button id="zoomOut">zoom-</button>
 <div id="status"></div>
-<div class="container">
-	<svg></svg>
+<div class='parent-container'>
+	<div class="container">
+		<svg id='mainSVG'>
+		</svg>
+	</div>
+	<div class="container">
+		<svg id='legendSVG'>
+			
+		</svg>
+	</div>
 </div>
+
+
+
 
 <script type="text/javascript">
 loadData();
@@ -32,6 +43,7 @@ d3.select('#render').on('click', function(){
 	{
 		d3.select('#status').text('OK');
 		contextRendering();
+		renderGlyphGuide();
 	}
 	else
 	{

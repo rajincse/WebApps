@@ -1,7 +1,7 @@
 function contextRendering()
 {
 	
-	var svg =d3.select('svg');
+	var svg =d3.select('#mainSVG');
 	
 	svg.attr('width',svgWidth);
 	svg.attr('height',svgHeight);
@@ -71,22 +71,22 @@ function contextRendering()
     .attr("transform", "translate(0," + heightFocus + ")")
     .call(xAxisFocus);
 
-	focus.append("g")
-    .attr("class", "axis axis--y")
-    .call(yAxisFocus);
+//	focus.append("g")
+//    .attr("class", "axis axis--y")
+//    .call(yAxisFocus);
 	
 	
 	 
 	 
 	 
-	 svg.append('text')
-      .attr("class", "label")      
-      .attr("x", -heightFocus/2)
-      .attr("y", 12)
-      .attr("transform", "rotate(-90)")
-      .style("text-anchor", "end")
-      .text("Camera Distance");
-	 
+//	 svg.append('text')
+//      .attr("class", "label")      
+//      .attr("x", -heightFocus/2)
+//      .attr("y", 12)
+//      .attr("transform", "rotate(-90)")
+//      .style("text-anchor", "end")
+//      .text("Camera Distance");
+//	 
 	 svg.append('text')
      .attr("class", "label")      
      .attr("x", width+10 )

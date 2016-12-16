@@ -1,3 +1,8 @@
+function getLevitatedValue(value, levitation)
+{
+	return levitation+ value * (1-levitation);
+}
+
 function getMashedupData(data, interval)
 {
 	var keys = Object.keys(data);
