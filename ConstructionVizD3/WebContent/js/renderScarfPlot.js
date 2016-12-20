@@ -1,14 +1,13 @@
-//var itemCount =10;
-var sortingProperty = 'viewed'; // default is count
-var sortAscending = true;
-var additionalProperties =[ 'size', 'center', 'viewed', 'rotationSpeed', 'translationSpeed', 'cameraDistance'];
-var attributeColor ={
-		'size': '#ff0000', 
-		'center':'#00ff00', 
-		'viewed':'#0000ff', 
-		'rotationSpeed':'#58E87F', 
-		'translationSpeed':'#b25221',
-		'cameraDistance': 'ff00ff'
+
+var sortingProperty = 'size'; // default is count
+var sortAscending = false;
+var displayProperties ={
+		'size': { 'color': '#ff0000'}, 
+		'center':{ 'color':'#00ff00'}, 
+		'viewed':{ 'color':'#0000ff'}, 
+		'rotationSpeed':{ 'color':'#58E87F'}, 
+		'translationSpeed':{ 'color':'#b25221'},
+		'cameraDistance': { 'color':'ff00ff'}
 };
 
 function renderGlyphGuide()
@@ -25,7 +24,7 @@ function renderGlyphGuide()
 	var radiusX =width /2;
 	var radiusY =height /2;
 	
-	var attributes = Object.keys(attributeColor);
+	var attributes = Object.keys(displayProperties);
 	var lineData =[];
 	var thetaDiff =Math.PI * 2 / attributes.length;
 	
@@ -51,7 +50,7 @@ function renderGlyphGuide()
 		.attr('y1', function(d){ return d.y1;})
 		.attr('x2', function(d){ return d.x2;})
 		.attr('y2', function(d){ return d.y2;})
-		.style('stroke', function(d){return attributeColor[d.attribute]; })
+		.style('stroke', function(d){return displayProperties[d.attribute].color; })
 	
 	guide
 		.selectAll('text')
@@ -176,7 +175,7 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY)
 	 
 	 var mashedData=getMashedupDataRange(mainData, timeInterval,xScaleFocus.domain() );
 	 var itemCount = Math.floor(heightFocus/ imageAreaHeight);
-	 var aggregated = getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty,additionalProperties);
+	 var aggregated = getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty,Object.keys(displayProperties));
 	 var aggregatedKeys = Object.keys(aggregated);
 	 
 	 
@@ -206,7 +205,6 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY)
 				{
 			var timestamp = d3.select(this.parentNode).datum();
 			
-//			var height = heightFocus*getShare(aggregated[timestamp], name, sortingProperty);
 			var height = heightFocus / itemCount;
 			var x =(timestamp-minTimeFocus)*(maxXFocus - minXFocus) / ( maxTimeFocus - minTimeFocus);
 			
@@ -232,8 +230,6 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY)
 		.attr('width', imageAreaWidth)
 		.attr('height', function(name)
 				{
-//					var timestamp = d3.select(this.parentNode.parentNode).datum();
-//					var h = heightFocus * getShare(aggregated[timestamp], name, sortingProperty);
 					return heightFocus / itemCount;
 				})				
 		.attr('x',0)
@@ -295,7 +291,11 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY)
 				
 				
 				var attributes = Object.keys(item);
-				attributes.splice(0,1);
+				//remove count
+				var countIndex = attributes.indexOf('count');				
+				attributes.splice(countIndex,1);
+				
+				
 				var thetaDiff =Math.PI * 2 / attributes.length;
 				
 			
@@ -384,7 +384,7 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY)
 		.attr('cx', function(d){return d.x;})
 		.attr('cy', function(d){ return d.y;})
 		.style( 'fill',function(d){
-				return attributeColor[d.attribute];
+				return displayProperties[d.attribute];
 			});
 	
 	icon
@@ -424,7 +424,7 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY)
 			.attr('y1', function(d){ return d.y1;})
 			.attr('x2', function(d){ return d.x2;})
 			.attr('y2', function(d){ return d.y2;})
-			.style('stroke', function(d){return attributeColor[d.attribute]; })
+			.style('stroke', function(d){return displayProperties[d.attribute].color; })
 			
 			
 							
