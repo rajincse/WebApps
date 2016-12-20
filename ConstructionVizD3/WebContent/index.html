@@ -14,9 +14,20 @@
 <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
-<button id="render">Render</button>
 <button id="zoomIn">zoom+</button>
-<button id="zoomOut">zoom-</button>
+	<button id="zoomOut">zoom-</button>
+<div id='controlDiv'>
+	
+	
+	<select id='sortingProperties'>
+		
+	</select>
+	<select id='sortingAscending'>
+	 	<option value='true' selected>Ascending</option>
+	 	<option value='false'>Descending</option>
+	</select>
+	<button id="render">Render</button>
+</div>
 <div id="status"></div>
 <div class='parent-container'>
 	<div class="container">
@@ -36,24 +47,53 @@
 <script type="text/javascript">
 loadData();
 
-d3.select('#render').on('click', function(){
+d3.select('#render').on('click', function(){	
+	render();
+});
+
+d3.select('#sortingProperties')
+	.selectAll('option')
+	.data(Object.keys(displayProperties))
+	.enter()
+	.append('option')
+	.attr('value', function(d){ return d;})
+	.text( function(d){ return d;});
+
+function getSelectedProperty()
+{
+	var sortingPropertySelect = document.getElementById('sortingProperties');		
+	var sortingProperty = sortingPropertySelect.options[sortingPropertySelect.selectedIndex].value;
+	return sortingProperty;
+}
+function getSortingOrder()
+{
+	var  sortAscendingSelect = document.getElementById('sortingAscending');
+	var  sortAscendingString= sortAscendingSelect.options[sortAscendingSelect.selectedIndex].value;
+	var sortAscending = (sortAscendingString === 'true');
+	return sortAscending;
+}
+function render()
+{
 	var dataLength = Object.keys(mainData).length;
 	
 	if(dataLength > 0)
 	{
 		d3.select('#status').text('OK');
-		contextRendering();
+		
+		d3.select('#mainSVG').selectAll('*').remove();
+		d3.select('#legendSVG').selectAll('*').remove();		
+				
+		var sortingProperty = getSelectedProperty();		
+		
+		var  sortAscending= getSortingOrder();
+		contextRendering(sortingProperty, sortAscending);
 		renderGlyphGuide();
 	}
 	else
 	{
 		d3.select('#status').text('Try Again');
 	}
-	
-});
-
-
-
+}
 
 
 

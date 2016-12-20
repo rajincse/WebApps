@@ -1,6 +1,4 @@
 
-var sortingProperty = 'size'; // default is count
-var sortAscending = false;
 var displayProperties ={
 		'size': { 'color': '#ff0000'}, 
 		'center':{ 'color':'#00ff00'}, 
@@ -63,7 +61,7 @@ function renderGlyphGuide()
 		.attr('y', function(l) { return (l.y1 * 1+l.y2 * 3)/4;})
 	
 }
-function renderContext(context, xScaleContext, heightContext,maxY)
+function renderContext(context, xScaleContext, heightContext,maxY, sortingProperty, sortAscending)
 {
 	 var maxXContext = xScaleContext.range()[1];
 	 var maxTimeContext = xScaleContext.domain()[1];
@@ -161,7 +159,7 @@ function renderContext(context, xScaleContext, heightContext,maxY)
 //			return aggredatedDataOccurrence; 
 //		});
 }
-function renderFocus(focus, xScaleFocus, heightFocus, maxY)
+function renderFocus(focus, xScaleFocus, heightFocus, maxY, sortingProperty, sortAscending)
 {
 	d3.select(focus).node().selectAll('g.image-area').remove();
 	 

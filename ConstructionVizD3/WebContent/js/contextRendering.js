@@ -1,4 +1,4 @@
-function contextRendering()
+function contextRendering(sortingProperty, sortAscending)
 {
 	
 	var svg =d3.select('#mainSVG');
@@ -98,7 +98,7 @@ function contextRendering()
 	 
 	 
 	 // Context Region 
-	 renderContext(context, xScaleContext, heightContext, maxY);
+	 renderContext(context, xScaleContext, heightContext, maxY,sortingProperty, sortAscending);
 	 context.append("g")
 	    .attr("class", "axis axis--x")
 	    .attr("transform", "translate(0," + heightContext + ")")
@@ -109,7 +109,7 @@ function contextRendering()
 	      .call(brushContext.move, xScaleFocus.range());
 	
 	 // Focus Region
-	 renderFocus(focus, xScaleFocus, heightFocus, maxY);
+	 renderFocus(focus, xScaleFocus, heightFocus, maxY, sortingProperty, sortAscending);
 	
 	
 	function brushed() {
