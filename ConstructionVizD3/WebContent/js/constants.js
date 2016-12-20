@@ -10,3 +10,4 @@ var padding = 16;
 var imageAreaWidth = imageWidth+padding;
 var imageAreaHeight =imageHeight+padding;
 
+var levitation = 0.25;

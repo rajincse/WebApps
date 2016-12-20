@@ -194,65 +194,7 @@ function getAggregatedData(mashedData,itemCount, sortAscending, propertyName , a
 	 return aggregatedData;
 }
 
-/*
- * returns averageData ={ <timeStamp>:{<name>:[averagePropertyData, occurrence ]}}
- * */
-function getAverageData(mashedData, singleItem, propertyName )
-{
-	var averageData ={};
-	 for(var i = 0; i< Object.keys(mashedData).length;i++)
-	 {
-		 var key = Object.keys(mashedData)[i];
-		 var value = mashedData[key];
-		var nameMap={};
-		for(var j=0;j<value.length;j++)
-		{
-			var viewedObject = value[j];
-			var name = viewedObject.name;
-			if(!nameMap[name])
-			{
-				nameMap[name] = [0, 0];
-			}
-			if(propertyName)
-			{
-				var propertyValue = parseFloat(viewedObject[propertyName]);
-				nameMap[name][0] += propertyValue;
-			}			
-			
-			
-			nameMap[name][1]++;
-		}
-		if(singleItem)
-		{
-			var maxOccurredName ="";
-			var maxOccurrence=0;
-			for(var k=0;k< Object.keys(nameMap).length;k++)
-			{
-				var name = Object.keys(nameMap)[k];
-				var occurrence = nameMap[name][1];
-				if(occurrence> maxOccurrence && nameMap[name][0] > 0)
-				{
-					maxOccurrence = occurrence;
-					maxOccurredName = name;
-				}
-				
-			}
-			
-			
-			averageData[key]={};
-			averageData[key][maxOccurredName]=nameMap[maxOccurredName];
-		}
-		else
-		{
-			averageData[key] = nameMap;
-		}
-		
-		
-		
-	 }
-	 
-	 return averageData;
-}
+
 function getMax(propertyName)
 {
 	return propertyMax[propertyName];

@@ -1,6 +1,7 @@
 //var itemCount =10;
-var sortingProperty = 'cameraDistance';
-var additionalProperties =['size', 'center', 'viewed', 'rotationSpeed', 'translationSpeed'];
+var sortingProperty = 'viewed'; // default is count
+var sortAscending = true;
+var additionalProperties =[ 'size', 'center', 'viewed', 'rotationSpeed', 'translationSpeed', 'cameraDistance'];
 var attributeColor ={
 		'size': '#ff0000', 
 		'center':'#00ff00', 
@@ -9,7 +10,7 @@ var attributeColor ={
 		'translationSpeed':'#b25221',
 		'cameraDistance': 'ff00ff'
 };
-var levitation = 0.25;
+
 function renderGlyphGuide()
 {
 	var svg =d3.select('#legendSVG');
@@ -175,7 +176,7 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY)
 	 
 	 var mashedData=getMashedupDataRange(mainData, timeInterval,xScaleFocus.domain() );
 	 var itemCount = Math.floor(heightFocus/ imageAreaHeight);
-	 var aggregated = getAggregatedData(mashedData,itemCount, true, sortingProperty,additionalProperties);
+	 var aggregated = getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty,additionalProperties);
 	 var aggregatedKeys = Object.keys(aggregated);
 	 
 	 
@@ -440,20 +441,20 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY)
 //		})
 //	;
 	
-//	icon
-//		.append('circle')
-//		.attr('class', 'red-circle')
-//		.attr('cx', 3* imageAreaWidth/4)
-//		.attr('cy', imageAreaHeight/4)
-//		.attr('r', 5);
-//	icon
-//		.append('text')
-//		.attr('class', 'badge-text')
-//		.attr('x', 3* imageAreaWidth/4-3)
-//		.attr('y',10)
-//		.text(function(name){
-//			var timestamp = d3.select(this.parentNode.parentNode.parentNode).datum();
-//			var aggredatedDataOccurrence = aggregated[timestamp].items[name].count;
-//			return aggredatedDataOccurrence; 
-//		});
+	icon
+		.append('circle')
+		.attr('class', 'red-circle')
+		.attr('cx', 3* imageAreaWidth/4)
+		.attr('cy', imageAreaHeight/4)
+		.attr('r', 5);
+	icon
+		.append('text')
+		.attr('class', 'badge-text')
+		.attr('x', 3* imageAreaWidth/4-3)
+		.attr('y',10)
+		.text(function(name){
+			var timestamp = d3.select(this.parentNode.parentNode.parentNode).datum();
+			var aggredatedDataOccurrence = aggregated[timestamp].items[name].count;
+			return aggredatedDataOccurrence; 
+		});
 }
