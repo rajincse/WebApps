@@ -66,9 +66,13 @@ function renderContext(context, xScaleContext, heightContext,maxY, sortingProper
 	 var maxXContext = xScaleContext.range()[1];
 	 var maxTimeContext = xScaleContext.domain()[1];
 	 var timeInterval = imageAreaWidth* maxTimeContext/ maxXContext;
+	 
+	 
 	 var mashedData=getMashedupData(mainData, timeInterval);
 	 var itemCount =  Math.floor(heightContext/ imageAreaHeight);
-	 var aggregated = getAggregatedData(mashedData,itemCount, true, sortingProperty);
+	 
+	 var aggregated = getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty,Object.keys(displayProperties));
+	 
 	 var aggregatedKeys = Object.keys(aggregated);
 	 
 	 
@@ -94,7 +98,6 @@ function renderContext(context, xScaleContext, heightContext,maxY, sortingProper
 		.attr('transform', function(name){
 			var timestamp = d3.select(this.parentNode).datum();
 			
-//			var height = heightContext*getShare(aggregated[timestamp], name, sortingProperty);
 			var height = heightContext / itemCount;
 			var x =( timestamp*maxXContext / maxTimeContext);
 			
@@ -119,9 +122,7 @@ function renderContext(context, xScaleContext, heightContext,maxY, sortingProper
 		.attr('class', 'glyph-rect')
 		.attr('width', imageAreaWidth)
 		.attr('height', function(name)
-				{
-					var timestamp = d3.select(this.parentNode.parentNode).datum();					
-					var h = heightContext * getShare(aggregated[timestamp], name, sortingProperty);
+				{	
 					return heightContext / itemCount; 
 				})				
 		.attr('x',0)
@@ -132,32 +133,26 @@ function renderContext(context, xScaleContext, heightContext,maxY, sortingProper
 	glyphGroup		
 		.append('title')
 			.text(function(name)
-					{
+					{						
 						var timestamp = d3.select(this.parentNode.parentNode).datum();						
-						var share = 100*getShare(aggregated[timestamp], name, sortingProperty);
-				
-						return "name:"+name+', share:'+share.toFixed(2)+'%';
+						var data =aggregated[timestamp].items[name];
+						var showData = {};
+						var properties = Object.keys(data); 
+						for(var i= 0;i<properties.length;i++)
+						{
+							if(properties[i] != 'count')
+							{
+								showData[properties[i]] = (data[properties[i]] / data.count / getMax(properties[i])).toFixed(2); 
+							}
+						}
+						
+						var jsonData = JSON.stringify(showData);
+						
+						return "name:"+name+', data:'+jsonData;
 					})
 					
 		;
-	
-	
-//	glyphGroup
-//		.append('circle')
-//		.attr('class', 'red-circle')
-//		.attr('cx', imageAreaWidth/2)
-//		.attr('cy', -imageAreaHeight/2)
-//		.attr('r', 5);
-//	glyphGroup
-//		.append('text')
-//		.attr('class', 'badge-text')
-//		.attr('x', 5)
-//		.attr('y', -5)
-//		.text(function(name){
-//			var timestamp = d3.select(this.parentNode.parentNode).datum();
-//			var aggredatedDataOccurrence = aggregated[timestamp].items[name][1];
-//			return aggredatedDataOccurrence; 
-//		});
+	renderIcon(glyphGroup, aggregated);
 }
 function renderFocus(focus, xScaleFocus, heightFocus, maxY, sortingProperty, sortAscending)
 {
@@ -257,21 +252,27 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY, sortingProperty, sor
 					})
 					
 		;
+	renderIcon(glyphGroup, aggregated);
+
+}
+
+function renderIcon(glyphGroup, aggregated)
+{
 	var icon = glyphGroup.append('g')
-					.attr('class','icon');
-	
+	.attr('class','icon');
+
 	icon	
 	.append('image')
-	.attr('class', 'glyph-image')
-	.attr('href', function(name)
+		.attr('class', 'glyph-image')
+		.attr('href', function(name)
 			{						
-				return imageData[name];
+			return imageData[name];
 			})
-	.attr('width', imageWidth)
-	.attr('height', imageHeight)
-	.attr('x',imageAreaWidth /2 - imageWidth/2)
-	.attr('y', imageAreaHeight/2 - imageHeight/2)
-	.attr('preserveAspectRatio','none')
+		.attr('width', imageWidth)
+		.attr('height', imageHeight)
+		.attr('x',imageAreaWidth /2 - imageWidth/2)
+		.attr('y', imageAreaHeight/2 - imageHeight/2)
+		.attr('preserveAspectRatio','none')
 	;
 	icon
 	.append('path')
@@ -423,21 +424,9 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY, sortingProperty, sor
 			.attr('x2', function(d){ return d.x2;})
 			.attr('y2', function(d){ return d.y2;})
 			.style('stroke', function(d){return displayProperties[d.attribute].color; })
+			;
 			
 			
-							
-	
-
-//	icon
-//		.append('circle')		
-//		.attr('cx',imageAreaWidth /2)
-//		.attr('cy', imageAreaHeight/2)
-//		.attr('r',imageWidth/2)
-//		.attr('class', 'glyph-circle')
-//		.attr('fill', function(name ){						
-//			return colorData[name];
-//		})
-//	;
 	
 	icon
 		.append('circle')

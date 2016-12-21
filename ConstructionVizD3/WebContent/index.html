@@ -20,7 +20,7 @@
 	
 	
 	<select id='sortingProperties'>
-		
+		<option value="none" selected>Count</option>
 	</select>
 	<select id='sortingAscending'>
 	 	<option value='true' selected>Ascending</option>
@@ -63,6 +63,10 @@ function getSelectedProperty()
 {
 	var sortingPropertySelect = document.getElementById('sortingProperties');		
 	var sortingProperty = sortingPropertySelect.options[sortingPropertySelect.selectedIndex].value;
+	// For Count, sortingProperty is undefined. 
+	if(sortingProperty === 'none') {
+		sortingProperty = undefined;
+	}
 	return sortingProperty;
 }
 function getSortingOrder()
