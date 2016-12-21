@@ -20,7 +20,7 @@
 	
 	
 	<select id='sortingProperties'>
-		<option value="none" selected>Count</option>
+		<option value="none" class='prexist' selected>count</option>
 	</select>
 	<select id='sortingAscending'>
 	 	<option value='true' selected>Ascending</option>
@@ -52,10 +52,11 @@ d3.select('#render').on('click', function(){
 });
 
 d3.select('#sortingProperties')
-	.selectAll('option')
+	.selectAll('option.added')
 	.data(Object.keys(displayProperties))
 	.enter()
 	.append('option')
+	.append('class', 'added')
 	.attr('value', function(d){ return d;})
 	.text( function(d){ return d;});
 
