@@ -437,8 +437,9 @@ function renderIcon(glyphGroup, aggregated)
 	icon
 		.append('text')
 		.attr('class', 'badge-text')
-		.attr('x', 3* imageAreaWidth/4-3)
-		.attr('y',10)
+		.attr('text-anchor', 'middle')
+		.attr('x', 3* imageAreaWidth/4)
+		.attr('y',imageAreaHeight/4+3)
 		.text(function(name){
 			var timestamp = d3.select(this.parentNode.parentNode.parentNode).datum();
 			var aggredatedDataOccurrence = aggregated[timestamp].items[name].count;
