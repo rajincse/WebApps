@@ -1,18 +1,18 @@
 item	image
-BMW850i	images/car.png
+BMW850i	images/bmw.png
 Bulldozer B10 N080211	images/bulldozer.jpg
-Car kraz N220114	images/car.png
+Car kraz N220114	images/kraz.png
 Car02	images/car.png
 Crane-01	images/crane.jpg
 Cylinder	images/cylinder.png
 ExcavatorC-03	images/excavator.jpg
 ExcavatorD-01	images/excavator.jpg
-Honda01 	images/car.png
+Honda01 	images/honda.png
 I-beam-3D 	images/beam.png
 Layer:0-Boundry-Wood 	images/fence.png
 Plane002 	images/plane.gif
 Truck N260213 	images/truck.png
-Tyota-Harrier-01 	images/car.png
+Tyota-Harrier-01 	images/toyota.png
 Worker Ham 1 	images/beam.png
 Worker Walker 5 	images/worker.png
 Worker Walker 7 	images/worker.png
