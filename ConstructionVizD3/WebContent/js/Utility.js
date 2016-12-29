@@ -65,8 +65,8 @@ function getMashedupDataRange(data, interval, range)
  * returns aggregatedData ={ <timeStamp>:{items:{<name>:{count, prop1: , prop2: ... }}
  * , aggregate:{count, prop1: , prop2: ... }}
  * */
-function getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty , displayProperties)
-{
+function getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty , displayProperties, filter)
+{	
 	var aggregatedData ={};
 	 for(var i = 0; i< Object.keys(mashedData).length;i++)
 	 {
@@ -78,6 +78,15 @@ function getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty 
 		{
 			var viewedObject = value[j];
 			var name = viewedObject.name;
+			
+			var filterValue = getDenormalizedFilterValue(filter, sortingProperty);
+			var sortingPropertyValue = getPropertyValue(viewedObject, sortingProperty);
+			if(sortingPropertyValue < filterValue.min || sortingPropertyValue > filterValue.max)
+			{
+				continue;
+			}
+			
+			
 			if(!nameMap[name])
 			{
 				nameMap[name] = {'count':0};			
@@ -183,6 +192,10 @@ function getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty 
 	 return aggregatedData;
 }
 
+function getDenormalizedFilterValue(filter, propertyName)
+{
+	return {min:filter.min * getMax(propertyName), max:filter.max * getMax(propertyName)};
+}
 
 function getMax(propertyName)
 {

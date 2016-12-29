@@ -61,7 +61,7 @@ function renderGlyphGuide()
 		.attr('y', function(l) { return (l.y1 * 1+l.y2 * 3)/4;})
 	
 }
-function renderContext(context, xScaleContext, heightContext,maxY, sortingProperty, sortAscending)
+function renderContext(context, xScaleContext, heightContext,maxY, sortingProperty, sortAscending, filter)
 {
 	 var maxXContext = xScaleContext.range()[1];
 	 var maxTimeContext = xScaleContext.domain()[1];
@@ -71,7 +71,7 @@ function renderContext(context, xScaleContext, heightContext,maxY, sortingProper
 	 var mashedData=getMashedupData(mainData, timeInterval);
 	 var itemCount =  Math.floor(heightContext/ imageAreaHeight);
 	 
-	 var aggregated = getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty,Object.keys(displayProperties));
+	 var aggregated = getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty,Object.keys(displayProperties), filter);
 	 
 	 var aggregatedKeys = Object.keys(aggregated);
 	 
@@ -154,7 +154,7 @@ function renderContext(context, xScaleContext, heightContext,maxY, sortingProper
 		;
 	renderIcon(glyphGroup, aggregated);
 }
-function renderFocus(focus, xScaleFocus, heightFocus, maxY, sortingProperty, sortAscending)
+function renderFocus(focus, xScaleFocus, heightFocus, maxY, sortingProperty, sortAscending, filter)
 {
 	d3.select(focus).node().selectAll('g.image-area').remove();
 	 
@@ -168,7 +168,8 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY, sortingProperty, sor
 	 
 	 var mashedData=getMashedupDataRange(mainData, timeInterval,xScaleFocus.domain() );
 	 var itemCount = Math.floor(heightFocus/ imageAreaHeight);
-	 var aggregated = getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty,Object.keys(displayProperties));
+	 var aggregated = getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty,Object.keys(displayProperties), filter);
+	 
 	 var aggregatedKeys = Object.keys(aggregated);
 	 
 	 
@@ -264,8 +265,8 @@ function renderIcon(glyphGroup, aggregated)
 			{	
 				var timestamp = d3.select(this.parentNode.parentNode).datum();
 				var item = aggregated[timestamp].items[name];
-				
-				var opacity = 1- (item.viewed/ item.count/ getMax('viewed'));
+				var normalizedViewed =item.viewed/ item.count/ getMax('viewed'); 
+				var opacity = 1- normalizedViewed * normalizedViewed;
 				return opacity;
 			})
 	;

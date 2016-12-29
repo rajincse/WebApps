@@ -100,4 +100,7 @@ svg
 .attribute-circle{
 	fill-opacity: 0.5;
 }
-
+.filter-input
+{
+	width:25px;
+}

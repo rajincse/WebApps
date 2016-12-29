@@ -26,6 +26,11 @@
 	 	<option value='true' selected>Ascending</option>
 	 	<option value='false'>Descending</option>
 	</select>
+	<div>
+		Min:<input type='text' id='filterMin'value='0' class='filter-input'>
+		Max:<input type='text' id='filterMax' value='1' class='filter-input'>
+	</div>
+	
 	<button id="render">Render</button>
 </div>
 <div id="status"></div>
@@ -91,7 +96,11 @@ function render()
 		var sortingProperty = getSelectedProperty();		
 		
 		var  sortAscending= getSortingOrder();
-		contextRendering(sortingProperty, sortAscending);
+		
+		var filterMin = document.getElementById("filterMin").value;
+		var filterMax = document.getElementById("filterMax").value;
+		var filter ={min:parseFloat(filterMin), max : parseFloat(filterMax)}
+		contextRendering(sortingProperty, sortAscending,filter);
 		renderGlyphGuide();
 	}
 	else
