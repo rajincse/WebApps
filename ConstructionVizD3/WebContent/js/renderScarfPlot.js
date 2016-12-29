@@ -259,7 +259,16 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY, sortingProperty, sor
 function renderIcon(glyphGroup, aggregated)
 {
 	var icon = glyphGroup.append('g')
-	.attr('class','icon');
+	.attr('class','icon')
+	.style('opacity', function(name)
+			{	
+				var timestamp = d3.select(this.parentNode.parentNode).datum();
+				var item = aggregated[timestamp].items[name];
+				
+				var opacity = 1- (item.viewed/ item.count/ getMax('viewed'));
+				return opacity;
+			})
+	;
 
 	icon	
 	.append('image')

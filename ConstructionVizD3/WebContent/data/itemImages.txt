@@ -1,31 +1,31 @@
 item	image
-BMW850i	images/car.png
-Bulldozer B10 N080211	images/bulldozer.jpg
-Car kraz N220114	images/car.png
-Car02	images/car.png
-Crane-01	images/crane.jpg
+BMW850i	images/car_bw.png
+Bulldozer B10 N080211	images/machinery_bw.png
+Car kraz N220114	images/car_bw.png
+Car02	images/car_bw.png
+Crane-01	images/machinery_bw.png
 Cylinder	images/cylinder.png
-ExcavatorC-03	images/excavator.jpg
-ExcavatorD-01	images/excavator.jpg
-Honda01 	images/car.png
-I-beam-3D 	images/beam.png
-Layer:0-Boundry-Wood 	images/fence.png
-Plane002 	images/plane.gif
-Truck N260213 	images/truck.png
-Tyota-Harrier-01 	images/car.png
-Worker Ham 1 	images/beam.png
-Worker Walker 5 	images/worker.png
-Worker Walker 7 	images/worker.png
-Worker struckby 	images/worker.png
-WorkerBarrier 1 	images/worker.png
-WorkerHam 	images/worker.png
-WorkerSmoking 	images/worker.png
-WorkerSmoking 3 	images/worker.png
-Yellow Worker 06 	images/worker.png
-Yellow Worker 1 	images/worker.png
-Yellow Worker 2 	images/worker.png
-Yellow Worker 3 	images/worker.png
-Yellow Worker 7 	images/worker.png
-powerline 	images/electricity.png
-powerline (1) 	images/electricity.png
-powerline (2) 	images/electricity.png
+ExcavatorC-03	images/machinery_bw.png
+ExcavatorD-01	images/machinery_bw.png
+Honda01 	images/car_bw.png
+I-beam-3D 	images/beam_bw.png
+Layer:0-Boundry-Wood 	images/fence_bw.png
+Plane002 	images/plane_bw.png
+Truck N260213 	images/truck_bw.png
+Tyota-Harrier-01 	images/car_bw.png
+Worker Ham 1 	images/worker_bw.png
+Worker Walker 5 	images/worker_bw.png
+Worker Walker 7 	images/worker_bw.png
+Worker struckby 	images/worker_bw.png
+WorkerBarrier 1 	images/worker_bw.png
+WorkerHam 	images/worker_bw.png
+WorkerSmoking 	images/worker_bw.png
+WorkerSmoking 3 	images/worker_bw.png
+Yellow Worker 06 	images/worker_bw.png
+Yellow Worker 1 	images/worker_bw.png
+Yellow Worker 2 	images/worker_bw.png
+Yellow Worker 3 	images/worker_bw.png
+Yellow Worker 7 	images/worker_bw.png
+powerline 	images/thunder_bw.png
+powerline (1) 	images/thunder_bw.png
+powerline (2) 	images/thunder_bw.png
