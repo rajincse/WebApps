@@ -129,7 +129,7 @@ function contextRendering(sortingProperty, sortAscending)
 																					// zoom-by-brush
 	  var t = d3.event.transform;
 	  xScaleFocus.domain(t.rescaleX(xScaleContext).domain());
-	  renderFocus(focus, xScaleFocus, heightFocus, maxY);
+	  renderFocus(focus, xScaleFocus, heightFocus, maxY, sortingProperty, sortAscending);
 	  focus.select(".axis--x").call(xAxisFocus);
 	  context.select(".brush").call(brushContext.move, xScaleFocus.range().map(t.invertX, t));
 	}
