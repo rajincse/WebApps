@@ -126,8 +126,9 @@ function getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty 
 						var itemB = nameMap[b]['count'];
 						if(sortingProperty)
 						{
-							itemA = nameMap[a][sortingProperty];
-							itemB = nameMap[b][sortingProperty];
+							// sort over average property value
+							itemA = nameMap[a][sortingProperty]/ nameMap[a]['count'];
+							itemB = nameMap[b][sortingProperty]/ nameMap[b]['count'];
 						}
 						if(!sortAscending)
 						{
