@@ -152,7 +152,7 @@ function renderContext(context, xScaleContext, heightContext,maxY, sortingProper
 					})
 					
 		;
-	renderIcon(glyphGroup, aggregated);
+	renderIcon(glyphGroup, aggregated, filter);
 }
 function renderFocus(focus, xScaleFocus, heightFocus, maxY, sortingProperty, sortAscending, filter)
 {
@@ -253,11 +253,11 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY, sortingProperty, sor
 					})
 					
 		;
-	renderIcon(glyphGroup, aggregated);
+	renderIcon(glyphGroup, aggregated, filter);
 
 }
 
-function renderIcon(glyphGroup, aggregated)
+function renderIcon(glyphGroup, aggregated, filter)
 {
 	var icon = glyphGroup.append('g')
 	.attr('class','icon')
@@ -265,7 +265,7 @@ function renderIcon(glyphGroup, aggregated)
 			{	
 				var timestamp = d3.select(this.parentNode.parentNode).datum();
 				var item = aggregated[timestamp].items[name];
-				var normalizedViewed =item.viewed/ item.count/ getMax('viewed'); 
+				var normalizedViewed =item.viewed/ item.count/ getMax('viewed')/ filter.max; 
 				var opacity = 1- normalizedViewed * normalizedViewed;
 				return opacity;
 			})
