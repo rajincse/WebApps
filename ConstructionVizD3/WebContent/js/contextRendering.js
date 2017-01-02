@@ -8,8 +8,8 @@ function contextRendering(sortingProperty, sortAscending, filter)
 	
 
 	
-	var marginFocus = {top: 20, right: 20, bottom: 160, left: 40},
-    marginContext = {top: 430, right: 20, bottom: 20, left: 40},
+	var marginFocus = {top: gap, right: 20, bottom: svgHeight - focusHeight-gap, left: 40},
+    marginContext = {top: svgHeight -contextHeight  - gap, right: 20, bottom: gap, left: 40},
     width = +svg.attr("width") - marginFocus.left - marginFocus.right,
     heightFocus = +svg.attr("height") - marginFocus.top - marginFocus.bottom,
     heightContext = +svg.attr("height") - marginContext.top - marginContext.bottom;
@@ -40,7 +40,7 @@ function contextRendering(sortingProperty, sortAscending, filter)
     .attr("class", "zoom")
     .attr("width", width)
     .attr("height", heightFocus)
-    .attr("transform", "translate(" + marginFocus.left + "," + marginFocus.top + ")")
+    .attr("transform", "translate(" + marginContext.left + "," + marginContext.top + ")")
     .call(zoomFocus);
 	
 	var focus = svg.append("g")

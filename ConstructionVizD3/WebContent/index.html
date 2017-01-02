@@ -20,11 +20,11 @@
 	
 	
 	<select id='sortingProperties'>
-		<option value="none" class='prexist' selected>count</option>
+		<option value="none" class='prexist' >count</option>
 	</select>
 	<select id='sortingAscending'>
-	 	<option value='true' selected>Ascending</option>
-	 	<option value='false'>Descending</option>
+	 	<option value='true' >Ascending</option>
+	 	<option value='false' selected>Descending</option>
 	</select>
 	<div>
 		Min:<input type='text' id='filterMin'value='0' class='filter-input'>
@@ -56,15 +56,20 @@ d3.select('#render').on('click', function(){
 	render();
 });
 
+var defaultSortingProperty = 'viewed';
 d3.select('#sortingProperties')
 	.selectAll('option.added')
 	.data(Object.keys(displayProperties))
 	.enter()
 	.append('option')
-	.append('class', 'added')
+	.attr('class', 'added')
+	.attr('selected', function(d){ // select default property
+		if( d === defaultSortingProperty) return '';
+		else return null;
+	})
 	.attr('value', function(d){ return d;})
 	.text( function(d){ return d;});
-
+	
 function getSelectedProperty()
 {
 	var sortingPropertySelect = document.getElementById('sortingProperties');		
