@@ -40,7 +40,7 @@ function contextRendering(sortingProperty, sortAscending, filter)
     .attr("class", "zoom")
     .attr("width", width)
     .attr("height", heightFocus)
-    .attr("transform", "translate(" + marginContext.left + "," + marginContext.top + ")")
+    .attr("transform", "translate(" + marginFocus.left + "," + marginFocus.top + ")")
     .call(zoomFocus);
 	
 	var focus = svg.append("g")

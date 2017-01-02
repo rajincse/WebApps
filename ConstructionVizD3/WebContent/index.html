@@ -18,17 +18,18 @@
 	<button id="zoomOut">zoom-</button>
 <div id='controlDiv'>
 	
-	
+	<label class='label'>Sorting Property:</label>
 	<select id='sortingProperties'>
 		<option value="none" class='prexist' >count</option>
 	</select>
+	<label class='label'>Order:</label>
 	<select id='sortingAscending'>
 	 	<option value='true' >Ascending</option>
 	 	<option value='false' selected>Descending</option>
 	</select>
 	<div>
-		Min:<input type='text' id='filterMin'value='0' class='filter-input'>
-		Max:<input type='text' id='filterMax' value='1' class='filter-input'>
+		<label class='label'>Min:</label><input type='text' id='filterMin'value='0' class='filter-input'>
+		<label class='label'>Max:</label><input type='text' id='filterMax' value='1' class='filter-input'>
 	</div>
 	
 	<button id="render">Render</button>

@@ -4,7 +4,7 @@ Bulldozer B10 N080211	images/machinery_bw.png
 Car kraz N220114	images/car_bw.png
 Car02	images/car_bw.png
 Crane-01	images/machinery_bw.png
-Cylinder	images/cylinder.png
+Cylinder	images/cylinder_bw.png
 ExcavatorC-03	images/machinery_bw.png
 ExcavatorD-01	images/machinery_bw.png
 Honda01 	images/car_bw.png
