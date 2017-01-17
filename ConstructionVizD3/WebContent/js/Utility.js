@@ -85,6 +85,11 @@ function getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty 
 			{
 				continue;
 			}
+			var viewed =  getPropertyValue(viewedObject, 'viewed');			
+			if( viewed > filter.viewRadius)
+			{
+				continue;
+			}
 			
 			
 			if(!nameMap[name])

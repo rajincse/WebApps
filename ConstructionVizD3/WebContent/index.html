@@ -24,12 +24,14 @@
 	</select>
 	<label class='label'>Order:</label>
 	<select id='sortingAscending'>
-	 	<option value='true' >Ascending</option>
-	 	<option value='false' selected>Descending</option>
+	 	<option value='true' selected>Ascending</option>
+	 	<option value='false' >Descending</option>
 	</select>
 	<div>
+		<input type="checkbox" id="renderStarPlot" checked><label class='label'>StarPlot</label>
 		<label class='label'>Min:</label><input type='text' id='filterMin'value='0' class='filter-input'>
 		<label class='label'>Max:</label><input type='text' id='filterMax' value='1' class='filter-input'>
+		<label class='label'>View radius</label><input type='text' id='viewRadius' value='50' class='filter-input'>
 	</div>
 	
 	<button id="render">Render</button>
@@ -105,7 +107,11 @@ function render()
 		
 		var filterMin = document.getElementById("filterMin").value;
 		var filterMax = document.getElementById("filterMax").value;
-		var filter ={min:parseFloat(filterMin), max : parseFloat(filterMax)}
+		var viewRadius = document.getElementById("viewRadius").value;
+		var renderStarPlot =document.getElementById("renderStarPlot").checked ; 
+		var filter ={min:parseFloat(filterMin), max : parseFloat(filterMax),
+				viewRadius:viewRadius, renderStarPlot: renderStarPlot };
+		
 		contextRendering(sortingProperty, sortAscending,filter);
 		renderGlyphGuide();
 	}

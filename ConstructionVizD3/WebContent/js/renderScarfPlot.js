@@ -117,18 +117,18 @@ function renderContext(context, xScaleContext, heightContext,maxY, sortingProper
 			
 			return translateText;
 		});
-	glyphGroup
-		.append('rect')
-		.attr('class', 'glyph-rect')
-		.attr('width', imageAreaWidth)
-		.attr('height', function(name)
-				{	
-					return heightContext / itemCount; 
-				})				
-		.attr('x',0)
-		.attr('y', 0)
-		.attr('fill', function(name){ return colorData[name];})
-		;
+//	glyphGroup
+//		.append('rect')
+//		.attr('class', 'glyph-rect')
+//		.attr('width', imageAreaWidth)
+//		.attr('height', function(name)
+//				{	
+//					return heightContext / itemCount; 
+//				})				
+//		.attr('x',0)
+//		.attr('y', 0)
+//		.attr('fill', function(name){ return colorData[name];})
+//		;
 	
 	glyphGroup		
 		.append('title')
@@ -218,18 +218,18 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY, sortingProperty, sor
 			
 			return translateText;
 		});
-	glyphGroup
-		.append('rect')
-		.attr('class', 'glyph-rect')
-		.attr('width', imageAreaWidth)
-		.attr('height', function(name)
-				{
-					return heightFocus / itemCount;
-				})				
-		.attr('x',0)
-		.attr('y', 0)
-		.attr('fill', function(name){ return colorData[name];})
-		;
+//	glyphGroup
+//		.append('rect')
+//		.attr('class', 'glyph-rect')
+//		.attr('width', imageAreaWidth)
+//		.attr('height', function(name)
+//				{
+//					return heightFocus / itemCount;
+//				})				
+//		.attr('x',0)
+//		.attr('y', 0)
+//		.attr('fill', function(name){ return colorData[name];})
+//		;
 	
 	glyphGroup		
 		.append('title')
@@ -249,27 +249,45 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY, sortingProperty, sor
 						
 						var jsonData = JSON.stringify(showData);
 						
-						return "name:"+name+', data:'+jsonData;
+						return "name:"+name+', opacity:'+getOpacity(name, aggregated, filter, timestamp).toFixed(2)+', data:'+jsonData;
 					})
 					
 		;
 	renderIcon(glyphGroup, aggregated, filter);
 
 }
-
+function getOpacity(name, aggregated, filter, timestamp)
+{
+	var item = aggregated[timestamp].items[name];
+	var aggregate = aggregated[timestamp].aggregate;
+	
+	var averageViewed = item.viewed/ item.count;
+	var opacity =0;
+	if( averageViewed < filter.viewRadius)
+	{	
+		var n = filter.viewRadius * item.count - item.viewed;
+		var dn = filter.viewRadius * aggregate.count - aggregate.viewed;
+		
+		opacity = n/dn;
+	}
+	return opacity;
+}
 function renderIcon(glyphGroup, aggregated, filter)
 {
-	var icon = glyphGroup.append('g')
-	.attr('class','icon')
+	
+	glyphGroup
 	.style('opacity', function(name)
 			{	
-				var timestamp = d3.select(this.parentNode.parentNode).datum();
-				var item = aggregated[timestamp].items[name];
-				var normalizedViewed =item.viewed/ item.count/ getMax('viewed')/ filter.max; 
-				var opacity = 1- normalizedViewed * normalizedViewed;
+				var timestamp = d3.select(this.parentNode).datum();
+				
+				var opacity = getOpacity(name, aggregated, filter, timestamp);
+
 				return opacity;
 			})
 	;
+	
+	var icon = glyphGroup.append('g')
+	.attr('class','icon');
 
 	icon	
 	.append('image')
@@ -284,123 +302,15 @@ function renderIcon(glyphGroup, aggregated, filter)
 		.attr('y', imageAreaHeight/2 - imageHeight/2)
 		.attr('preserveAspectRatio','none')
 	;
-	icon
-	.append('path')
-	.attr('class', 'starplot-value')
-	.attr('d', function(name)
-			{
-				var timestamp = d3.select(this.parentNode.parentNode.parentNode).datum();
-				var item = aggregated[timestamp].items[name];
-				var data = '';
-				
-				var centerX = imageAreaWidth /2;
-				var centerY = imageAreaHeight /2;
-				var radiusX =imageAreaWidth /2;
-				var radiusY =imageAreaHeight /2;
-				
-				
-				var attributes = Object.keys(item);
-				//remove count
-				var countIndex = attributes.indexOf('count');				
-				attributes.splice(countIndex,1);
-				
-				
-				var thetaDiff =Math.PI * 2 / attributes.length;
-				
-			
-				for(var i =0;i<attributes.length;i++)
-				{
-					var attributeName =attributes[i];						
-					
-					var avgValue = item[attributeName]	/item.count;
-					var maxValue= getMax(attributeName);
-					var value = 	avgValue /maxValue; //normalized		
-					
-					
-					if(!value) value =0;
-					
-					value = getLevitatedValue(value, levitation);
-					
-					var theta = thetaDiff * i;
-					
-					if( i==0)
-					{
-						var x = centerX+radiusX *value;
-						var y = centerY;
-						data+= 'M '+x+' '+y+' ';
-					}
-					else
-					{
-						var x = centerX+radiusX *value * Math.cos(theta);
-						var y = centerY + radiusY *value * Math.sin(theta);
-						data+= 'L '+x+' '+y+' ';
-					}
-					
-				}
-				data+= 'Z';
-				return data;
-			})
-			;
-		
-	icon
-		.selectAll('circle')
-		.data( function(name)
-			{
-				var timestamp = d3.select(this.parentNode.parentNode).datum();
-				var item = aggregated[timestamp].items[name];
-				
-				var data =[];
-				
-				var centerX = imageAreaWidth /2;
-				var centerY = imageAreaHeight /2;
-				var radiusX =imageAreaWidth /2;
-				var radiusY =imageAreaHeight /2;
-				
-				
-				var attributes = Object.keys(item);
-				attributes.splice(0,1);
-				var thetaDiff =Math.PI * 2 / attributes.length;
-				
-			
-				for(var i =0;i<attributes.length;i++)
-				{
-					var attributeName =attributes[i];						
-					
-					var avgValue = item[attributeName]	/item.count;
-					var maxValue= getMax(attributeName);
-					var value = 	avgValue /maxValue; //normalized		
-					
-					if(!value) value =0;
-					value = getLevitatedValue(value, levitation);
-					
-					var theta = thetaDiff * i;
-					
-					var x = centerX+radiusX *value * Math.cos(theta);
-					var y = centerY + radiusY *value * Math.sin(theta);
-					data.push({'attribute':attributeName, 'x':x, 'y':y});
-					
-					
-				}
-				
-				return data;
-				
-			})	
-		.enter()
-		.append('circle')
-		.attr('attribute-name', function(d){ return d.attribute;})
-		.attr('class', 'attribute-circle')
-		.attr('r', 2)
-		.attr('cx', function(d){return d.x;})
-		.attr('cy', function(d){ return d.y;})
-		.style( 'fill',function(d){
-				return displayProperties[d.attribute];
-			});
 	
-	icon
-		.selectAll('line')
-		.data( function(name)
+	if(filter.renderStarPlot)
+	{
+		icon
+		.append('path')
+		.attr('class', 'starplot-value')
+		.attr('d', function(name)
 				{
-					var timestamp = d3.select(this.parentNode.parentNode).datum();
+					var timestamp = d3.select(this.parentNode.parentNode.parentNode).datum();
 					var item = aggregated[timestamp].items[name];
 					var data = '';
 					
@@ -409,32 +319,146 @@ function renderIcon(glyphGroup, aggregated, filter)
 					var radiusX =imageAreaWidth /2;
 					var radiusY =imageAreaHeight /2;
 					
-					var data =[];
+					
+					var attributes = Object.keys(item);
+					//remove count
+					var countIndex = attributes.indexOf('count');				
+					attributes.splice(countIndex,1);
+					
+					
+					var thetaDiff =Math.PI * 2 / attributes.length;
+					
+				
+					for(var i =0;i<attributes.length;i++)
+					{
+						var attributeName =attributes[i];						
+						
+						var avgValue = item[attributeName]	/item.count;
+						var maxValue= getMax(attributeName);
+						var value = 	avgValue /maxValue; //normalized		
+						
+						
+						if(!value) value =0;
+						
+						value = getLevitatedValue(value, levitation);
+						
+						var theta = thetaDiff * i;
+						
+						if( i==0)
+						{
+							var x = centerX+radiusX *value;
+							var y = centerY;
+							data+= 'M '+x+' '+y+' ';
+						}
+						else
+						{
+							var x = centerX+radiusX *value * Math.cos(theta);
+							var y = centerY + radiusY *value * Math.sin(theta);
+							data+= 'L '+x+' '+y+' ';
+						}
+						
+					}
+					data+= 'Z';
+					return data;
+				})
+				;
 			
+		icon
+			.selectAll('circle')
+			.data( function(name)
+				{
+					var timestamp = d3.select(this.parentNode.parentNode).datum();
+					var item = aggregated[timestamp].items[name];
+					
+					var data =[];
+					
+					var centerX = imageAreaWidth /2;
+					var centerY = imageAreaHeight /2;
+					var radiusX =imageAreaWidth /2;
+					var radiusY =imageAreaHeight /2;
+					
+					
 					var attributes = Object.keys(item);
 					attributes.splice(0,1);
 					var thetaDiff =Math.PI * 2 / attributes.length;
 					
-					for(var i=0;i< attributes.length;i++)
+				
+					for(var i =0;i<attributes.length;i++)
 					{
-						var attributeName =attributes[i];
+						var attributeName =attributes[i];						
+						
+						var avgValue = item[attributeName]	/item.count;
+						var maxValue= getMax(attributeName);
+						var value = 	avgValue /maxValue; //normalized		
+						
+						if(!value) value =0;
+						value = getLevitatedValue(value, levitation);
+						
 						var theta = thetaDiff * i;
-						var x = centerX+radiusX * Math.cos(theta);
-						var y = centerY + radiusY * Math.sin(theta);
-						data.push( {'attribute':attributeName, 'x1':centerX,'y1':centerY,'x2':x, 'y2': y});
+						
+						var x = centerX+radiusX *value * Math.cos(theta);
+						var y = centerY + radiusY *value * Math.sin(theta);
+						data.push({'attribute':attributeName, 'x':x, 'y':y});
+						
+						
 					}
+					
 					return data;
-				})
+					
+				})	
 			.enter()
-			.append('line')
-			.attr('class', 'starplot-axes')
+			.append('circle')
 			.attr('attribute-name', function(d){ return d.attribute;})
-			.attr('x1', function(d){ return d.x1;})
-			.attr('y1', function(d){ return d.y1;})
-			.attr('x2', function(d){ return d.x2;})
-			.attr('y2', function(d){ return d.y2;})
-			.style('stroke', function(d){return displayProperties[d.attribute].color; })
-			;
+			.attr('class', 'attribute-circle')
+			.attr('r', 2)
+			.attr('cx', function(d){return d.x;})
+			.attr('cy', function(d){ return d.y;})
+			.style( 'fill',function(d){
+					return displayProperties[d.attribute];
+				});
+		
+		icon
+			.selectAll('line')
+			.data( function(name)
+					{
+						var timestamp = d3.select(this.parentNode.parentNode).datum();
+						var item = aggregated[timestamp].items[name];
+						var data = '';
+						
+						var centerX = imageAreaWidth /2;
+						var centerY = imageAreaHeight /2;
+						var radiusX =imageAreaWidth /2;
+						var radiusY =imageAreaHeight /2;
+						
+						var data =[];
+				
+						var attributes = Object.keys(item);
+						attributes.splice(0,1);
+						var thetaDiff =Math.PI * 2 / attributes.length;
+						
+						for(var i=0;i< attributes.length;i++)
+						{
+							var attributeName =attributes[i];
+							var theta = thetaDiff * i;
+							var x = centerX+radiusX * Math.cos(theta);
+							var y = centerY + radiusY * Math.sin(theta);
+							data.push( {'attribute':attributeName, 'x1':centerX,'y1':centerY,'x2':x, 'y2': y});
+						}
+						return data;
+					})
+				.enter()
+				.append('line')
+				.attr('class', 'starplot-axes')
+				.attr('attribute-name', function(d){ return d.attribute;})
+				.attr('x1', function(d){ return d.x1;})
+				.attr('y1', function(d){ return d.y1;})
+				.attr('x2', function(d){ return d.x2;})
+				.attr('y2', function(d){ return d.y2;})
+				.style('stroke', function(d){return displayProperties[d.attribute].color; })
+				;
+		
+		
+	}
 			
 			
 	
