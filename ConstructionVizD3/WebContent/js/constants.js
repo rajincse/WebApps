@@ -17,3 +17,5 @@ var imageAreaWidth = imageWidth+padding;
 var imageAreaHeight =imageHeight+padding;
 
 var levitation = 0.25;
+
+var eyeResponseTime =0.04;

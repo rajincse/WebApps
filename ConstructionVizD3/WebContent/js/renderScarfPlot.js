@@ -152,7 +152,7 @@ function renderContext(context, xScaleContext, heightContext,maxY, sortingProper
 					})
 					
 		;
-	renderIcon(glyphGroup, aggregated, filter);
+	renderIcon(glyphGroup, aggregated, filter, timeInterval);
 }
 function renderFocus(focus, xScaleFocus, heightFocus, maxY, sortingProperty, sortAscending, filter)
 {
@@ -249,11 +249,12 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY, sortingProperty, sor
 						
 						var jsonData = JSON.stringify(showData);
 						
-						return "name:"+name+', opacity:'+getOpacity(name, aggregated, filter, timestamp).toFixed(2)+', data:'+jsonData;
+						return "name:"+name+', count:'+aggregated[timestamp].items[name].count+						
+						', data:'+jsonData;
 					})
 					
 		;
-	renderIcon(glyphGroup, aggregated, filter);
+	renderIcon(glyphGroup, aggregated, filter, timeInterval);
 
 }
 function getOpacity(name, aggregated, filter, timestamp)
@@ -272,17 +273,33 @@ function getOpacity(name, aggregated, filter, timestamp)
 	}
 	return opacity;
 }
-function renderIcon(glyphGroup, aggregated, filter)
+
+function renderIcon(glyphGroup, aggregated, filter, timeInterval)
 {
-	
+	var preferredViewCount = Math.max(1,Math.floor(timeInterval/ eyeResponseTime));
 	glyphGroup
 	.style('opacity', function(name)
 			{	
 				var timestamp = d3.select(this.parentNode).datum();
-				
-				var opacity = getOpacity(name, aggregated, filter, timestamp);
+				var item = aggregated[timestamp].items[name];
+				var normalizedViewed =item.viewed/ item.count/ filter.viewRadius;
+				var opacity = 1- normalizedViewed * normalizedViewed;
+//				var opacity = getOpacity(name, aggregated, filter, timestamp);
 
 				return opacity;
+			})
+	.attr('transform', function(name)
+			{
+					var transform = d3.select(this).attr('transform');
+					
+					var timestamp = d3.select(this.parentNode).datum();
+					var item = aggregated[timestamp].items[name];				
+					var count = Math.min(preferredViewCount, item.count);
+					var minScale =0;
+					var scale = minScale + (1-minScale) * ( count/ preferredViewCount) ;
+					
+					transform+= 'scale('+scale+','+scale+')';
+					return transform;
 			})
 	;
 	
@@ -301,7 +318,7 @@ function renderIcon(glyphGroup, aggregated, filter)
 		.attr('x',imageAreaWidth /2 - imageWidth/2)
 		.attr('y', imageAreaHeight/2 - imageHeight/2)
 		.attr('preserveAspectRatio','none')
-	;
+		;
 	
 	if(filter.renderStarPlot)
 	{
