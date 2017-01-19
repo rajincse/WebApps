@@ -96,7 +96,7 @@ function renderContext(context, xScaleContext, heightContext,maxY, sortingProper
 			return "g-"+share;
 		})		
 		.attr('transform', function(name){
-			var timestamp = d3.select(this.parentNode).datum();
+			var timestamp =parseFloat( d3.select(this.parentNode).datum());
 			
 			var height = heightContext / itemCount;
 			var x =( timestamp*maxXContext / maxTimeContext);
@@ -197,7 +197,7 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY, sortingProperty, sor
 		})		
 		.attr('transform', function(name)
 				{
-			var timestamp = d3.select(this.parentNode).datum();
+			var timestamp =parseFloat( d3.select(this.parentNode).datum());
 			
 			var height = heightFocus / itemCount;
 			var x =(timestamp-minTimeFocus)*(maxXFocus - minXFocus) / ( maxTimeFocus - minTimeFocus);
@@ -283,8 +283,7 @@ function renderIcon(glyphGroup, aggregated, filter, timeInterval)
 				var timestamp = d3.select(this.parentNode).datum();
 				var item = aggregated[timestamp].items[name];
 				var normalizedViewed =item.viewed/ item.count/ filter.viewRadius;
-				var opacity = 1- normalizedViewed * normalizedViewed;
-//				var opacity = getOpacity(name, aggregated, filter, timestamp);
+				var opacity = 1- normalizedViewed * normalizedViewed ;
 
 				return opacity;
 			})
@@ -295,7 +294,7 @@ function renderIcon(glyphGroup, aggregated, filter, timeInterval)
 					var timestamp = d3.select(this.parentNode).datum();
 					var item = aggregated[timestamp].items[name];				
 					var count = Math.min(preferredViewCount, item.count);
-					var minScale =0;
+					var minScale =0.25;
 					var scale = minScale + (1-minScale) * ( count/ preferredViewCount) ;
 					
 					transform+= 'scale('+scale+','+scale+')';
@@ -311,7 +310,10 @@ function renderIcon(glyphGroup, aggregated, filter, timeInterval)
 		.attr('class', 'glyph-image')
 		.attr('href', function(name)
 			{						
-			return imageData[name];
+				if(imageData[name])
+					return imageData[name];
+				else
+					return 'images/default.png';
 			})
 		.attr('width', imageWidth)
 		.attr('height', imageHeight)

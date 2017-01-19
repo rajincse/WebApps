@@ -31,9 +31,17 @@
 		<input type="checkbox" id="renderStarPlot"><label class='label'>StarPlot</label>
 		<label class='label'>Min:</label><input type='text' id='filterMin'value='0' class='filter-input'>
 		<label class='label'>Max:</label><input type='text' id='filterMax' value='1' class='filter-input'>
-		<label class='label'>View radius</label><input type='text' id='viewRadius' value='50' class='filter-input'>
+		<label class='label'>View radius</label>
+		<select id='viewRadiusSelect'>
+		 	<option value='5' >5</option>
+		 	<option value='10' >10</option>
+		 	<option value='20' selected>20</option>
+		 	<option value='30' >30</option>
+		 	<option value='40' >40</option>
+		 	<option value='50' >50</option>
+		</select>
 	</div>
-	
+	<button id="loadData">LoadData</button>
 	<button id="render">Render</button>
 </div>
 <div id="status"></div>
@@ -53,7 +61,10 @@
 
 
 <script type="text/javascript">
-loadData();
+d3.select('#loadData').on('click', function(){
+	var fileName = 'data/allVisible'+getViewRadius()+'.txt';
+	loadData(fileName);	
+});
 
 d3.select('#render').on('click', function(){	
 	render();
@@ -90,6 +101,13 @@ function getSortingOrder()
 	var sortAscending = (sortAscendingString === 'true');
 	return sortAscending;
 }
+function getViewRadius()
+{
+	var viewRadiusSelect = document.getElementById('viewRadiusSelect');
+	
+	var viewRadius = viewRadiusSelect.options[viewRadiusSelect.selectedIndex].value;
+	return viewRadius;
+}
 function render()
 {
 	var dataLength = Object.keys(mainData).length;
@@ -107,7 +125,7 @@ function render()
 		
 		var filterMin = document.getElementById("filterMin").value;
 		var filterMax = document.getElementById("filterMax").value;
-		var viewRadius = document.getElementById("viewRadius").value;
+		var viewRadius = getViewRadius;
 		var renderStarPlot =document.getElementById("renderStarPlot").checked ; 
 		var filter ={min:parseFloat(filterMin), max : parseFloat(filterMax),
 				viewRadius:viewRadius, renderStarPlot: renderStarPlot };

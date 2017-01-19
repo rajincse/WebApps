@@ -6,7 +6,7 @@ var maxTime =0.0;
 var propertyMax = {};
 var propertyMin ={};
 
-function loadData()
+function loadData(dataFile)
 {
 	d3.tsv(dataFile, function(data) {
 		  

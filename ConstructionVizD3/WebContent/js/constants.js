@@ -1,5 +1,5 @@
-var dataFile = "data/smallVisible.txt";
-//var dataFile = "data/allVisible.txt";
+//var dataFile = "data/smallVisible.txt";
+//var dataFile = "data/allVisible5.txt";
 
 
 
