@@ -44,7 +44,7 @@
 	<button id="loadData">LoadData</button>
 	<button id="render">Render</button>
 </div>
-<div id="status"></div>
+<div id="status" class='label'>Click LoadData</div>
 <div class='parent-container'>
 	<div class="container">
 		<svg id='mainSVG'>
@@ -64,8 +64,12 @@
 d3.select('#loadData').on('click', function(){
 	var fileName = 'data/allVisible'+getViewRadius()+'.txt';
 	loadData(fileName);	
+	d3.select('#status').text('Click Render');
 });
 
+d3.select('#viewRadiusSelect').on('change', function(){
+	d3.select('#status').text('Click LoadData');
+});
 d3.select('#render').on('click', function(){	
 	render();
 });
@@ -125,7 +129,7 @@ function render()
 		
 		var filterMin = document.getElementById("filterMin").value;
 		var filterMax = document.getElementById("filterMax").value;
-		var viewRadius = getViewRadius;
+		var viewRadius = getViewRadius();
 		var renderStarPlot =document.getElementById("renderStarPlot").checked ; 
 		var filter ={min:parseFloat(filterMin), max : parseFloat(filterMax),
 				viewRadius:viewRadius, renderStarPlot: renderStarPlot };
