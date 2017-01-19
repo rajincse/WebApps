@@ -56,11 +56,14 @@
         </java>
     </target>
 	<property name="lib.dir"       value="lib"/>
-	<target name="jar">
+	<target depends="clean-jar" name="jar">
 		<jar destfile = "dist/rajin.jar"
 		   basedir = "bin"
 		 >
 			<zipgroupfileset dir="${lib.dir}" includes="json-simple-1.1.1.jar" />
 		</jar>
 	</target>
+	<target name="clean-jar">
+	        <delete dir="dist"/>
+	 </target>
 </project>

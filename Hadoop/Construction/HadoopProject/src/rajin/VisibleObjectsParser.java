@@ -26,6 +26,9 @@ public class VisibleObjectsParser {
 	public static final String DELIMITER ="\\|\\|";
 	public static final String KEY_VISIBLE="visible";
 	public static final String KEY_VIEWED="viewed";
+	
+	public static final String KEY_VIEW_RADIUS ="viewRadius";
+	public static final double INFINITY = 10000;
 	public static boolean isNewTimeStampLine(String line)
 	{
 		return line.matches(TIME_REGEX);
@@ -73,7 +76,11 @@ public class VisibleObjectsParser {
 		protected void map(Object key, Text value, Mapper<Object, Text, Text, Text>.Context context)
 				throws IOException, InterruptedException {
 			// TODO Auto-generated method stub
+		  Configuration conf = context.getConfiguration();
+		  double viewRadius = Double.parseDouble(conf.get(KEY_VIEW_RADIUS));
+		  
 		  String line = value.toString();
+		  
 		  if(isNewTimeStampLine(line))
 		  {
 			  lastTimestampLine= line;
@@ -81,7 +88,14 @@ public class VisibleObjectsParser {
 		  else
 		  {
 			  HashMap<String, String>map =KeyValueParser.getKeyValues(line, DELIMITER);
-			  if(map.containsKey(KEY_VISIBLE) && map.get(KEY_VISIBLE).equals("true"))
+			  if(
+					  map.containsKey(KEY_VISIBLE) 
+					  && map.get(KEY_VISIBLE).equals("true")
+					  
+					  &&
+					  map.containsKey(KEY_VIEWED)
+					  && Double.parseDouble(map.get(KEY_VIEWED)) < viewRadius 
+				)
 			  {
 				  word.set(lastTimestampLine);
 				  context.write(word, new Text(line));
@@ -116,6 +130,15 @@ public class VisibleObjectsParser {
 	
 	public static void main(String[] args) throws Exception{
         Configuration conf = new Configuration();
+        if( args.length > 2)
+        {
+        	conf.set(KEY_VIEW_RADIUS, args[2]);
+        }
+        else
+        {
+        	conf.set(KEY_VIEW_RADIUS, ""+INFINITY);
+        }
+        
 
         Job job = new Job(conf, "VisibleObjectsParser");
         job.setOutputKeyClass(Text.class);
