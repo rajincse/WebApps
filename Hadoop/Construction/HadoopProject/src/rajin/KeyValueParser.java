@@ -5,6 +5,7 @@ import java.util.HashMap;
 import org.json.simple.JSONObject;
 
 public class KeyValueParser {
+	public static final String KEY_NAME ="name";
 	public static HashMap<String, String> getKeyValues(String line, String delimiter)
 	{
 		HashMap< String , String> map = new HashMap< String, String> ();
@@ -21,7 +22,7 @@ public class KeyValueParser {
 			}
 			else if(keyValueSplit.length==1)
 			{
-				map.put("name", keyValueSplit[0].trim());
+				map.put(KEY_NAME, keyValueSplit[0].trim());
 			}
 			else
 			{
