@@ -60,7 +60,7 @@ public class UniqueKeyParser {
 
         Job job = new Job(conf, "UniqueKeyParser");
         job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(Text.class);
+        job.setOutputValueClass(IntWritable.class);
 
         job.setMapperClass(Map.class);
         job.setReducerClass(Reduce.class);
