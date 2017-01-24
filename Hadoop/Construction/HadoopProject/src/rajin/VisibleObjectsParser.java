@@ -22,7 +22,7 @@ import org.json.simple.parser.ParseException;
 
 
 public class VisibleObjectsParser {
-	public static final String TIME_REGEX ="T=\\d*.\\d.*";
+	public static final String TIME_REGEX ="T=\\d*.\\d*.*";
 	public static final String DELIMITER ="\\|\\|";
 	public static final String KEY_VISIBLE="visible";
 	public static final String KEY_VIEWED="viewed";
