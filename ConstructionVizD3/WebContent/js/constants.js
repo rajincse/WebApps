@@ -19,3 +19,6 @@ var imageAreaHeight =imageHeight+padding;
 var levitation = 0.25;
 
 var eyeResponseTime =0.04;
+
+var attentionSpan = 2;
+var frequency = 50;

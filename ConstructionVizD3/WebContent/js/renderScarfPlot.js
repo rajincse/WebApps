@@ -155,6 +155,7 @@ function renderScarfplot(area,minX,maxX, minTime,maxTime, heightArea, sortingPro
 						return "name:"+name
 						+', count:'+ data.count
 						+', time:'+timestamp
+						+', interval:'+timeInterval
 						+', data:'+jsonData;
 					})
 					
@@ -180,7 +181,8 @@ function getOpacity(name, aggregated, filter, timestamp)
 
 function renderIcon(glyphGroup, aggregated, filter, timeInterval)
 {
-	var preferredViewCount = Math.max(1,Math.floor(timeInterval/ eyeResponseTime));
+	var preferredViewCount = 
+		Math.min(attentionSpan/eyeResponseTime,Math.max(1,Math.floor(timeInterval/ eyeResponseTime)));
 	glyphGroup
 	.style('opacity', function(name)
 			{	
