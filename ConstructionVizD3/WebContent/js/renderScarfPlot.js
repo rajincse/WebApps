@@ -67,16 +67,34 @@ function renderContext(context, xScaleContext, heightContext, sortingProperty, s
 	 var maxTimeContext = xScaleContext.domain()[1];
 	 var timeInterval = imageAreaWidth* maxTimeContext/ maxXContext;
 	 
+	renderScarfplot(context,0,maxXContext, 0,maxTimeContext, heightContext,  sortingProperty, sortAscending, filter);
 	 
-	 var mashedData=getMashedupData(mainData, timeInterval);
-	 var itemCount =  Math.floor(heightContext/ imageAreaHeight);
+}
+function renderFocus(focus, xScaleFocus, heightFocus, sortingProperty, sortAscending, filter)
+{
+	d3.select(focus).node().selectAll('g.image-area').remove();
+	 
+	 var minXFocus = xScaleFocus.range()[0];
+	 var maxXFocus = xScaleFocus.range()[1];
+	 
+	 var minTimeFocus = xScaleFocus.domain()[0];
+	 var maxTimeFocus = xScaleFocus.domain()[1];
+	 renderScarfplot(focus,minXFocus,maxXFocus, minTimeFocus,maxTimeFocus, heightFocus,  sortingProperty, sortAscending, filter);	 
+	 
+}
+function renderScarfplot(area,minX,maxX, minTime,maxTime, heightArea, sortingProperty, sortAscending, filter)
+{
+	 var timeInterval = imageAreaWidth* (maxTime-minTime)/ (maxX-minX);
+	 
+	 var mashedData=getMashedupDataRange(mainData, timeInterval,[minTime,maxTime] );
+	 var itemCount =  Math.floor(heightArea/ imageAreaHeight);
 	 
 	 var aggregated = getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty,Object.keys(displayProperties), filter);
 	 
 	 var aggregatedKeys = Object.keys(aggregated);
 	 
 	 
-	 var imageGroup = context.append("g")
+	 var imageGroup = area.append("g")
 		.attr('class', 'image-area');
 	 
 	 var timestampGroup= imageGroup.selectAll('g')
@@ -94,20 +112,20 @@ function renderContext(context, xScaleContext, heightContext, sortingProperty, s
 			return "g-"+name;
 		})		
 		.attr('transform', function(name){
-			var timestamp =parseFloat( d3.select(this.parentNode).datum());
+			var timestamp =parseFloat( d3.select(this.parentNode).datum());			
 			
-			var height = heightContext / itemCount;
-			var x =( timestamp*maxXContext / maxTimeContext);
+			var height = heightArea / itemCount;
+			var x =(timestamp-minTime)*(maxX - minX) / ( maxTime - minTime);
 			
 			
 			if(timestamp != lastTime)
 			{
-				lastTime = timestamp;
-				lastY =0;
+				lastTime = timestamp;	
+				lastY = 0;
 			}
 			
-			
 			var translateText ='translate('+x+','+lastY+')';
+			
 			var y = lastY+height;
 			lastY = y;
 			
@@ -139,94 +157,6 @@ function renderContext(context, xScaleContext, heightContext, sortingProperty, s
 					
 		;
 	renderIcon(glyphGroup, aggregated, filter, timeInterval);
-}
-function renderFocus(focus, xScaleFocus, heightFocus, sortingProperty, sortAscending, filter)
-{
-	d3.select(focus).node().selectAll('g.image-area').remove();
-	 
-	 var minXFocus = xScaleFocus.range()[0];
-	 var maxXFocus = xScaleFocus.range()[1];
-	 
-	 var minTimeFocus = xScaleFocus.domain()[0];
-	 var maxTimeFocus = xScaleFocus.domain()[1];
-	 
-	 var timeInterval = imageAreaWidth*( maxTimeFocus - minTimeFocus)/ (maxXFocus - minXFocus);
-	 
-	 var mashedData=getMashedupDataRange(mainData, timeInterval,xScaleFocus.domain() );
-	 var itemCount = Math.floor(heightFocus/ imageAreaHeight);
-	 var aggregated = getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty,Object.keys(displayProperties), filter);
-	 
-	 var aggregatedKeys = Object.keys(aggregated);
-	 
-	 
-	 var imageGroup = focus.append("g")
-		.attr('class', 'image-area')
-		;
-	 
-	 var timestampGroup= imageGroup.selectAll('g')
-		.data(aggregatedKeys).enter()
-		.append('g')
-		.attr('id', function(key){ return 'T-'+key;});
-	
-	 var lastY =-1;
-	 var lastTime =-1;
-	 
-	 var glyphGroup = timestampGroup.selectAll('g')		
-	 .data(function(key){ return Object.keys(aggregated[key].items);})
-	 .enter()
-	 	.append('g')
-	 	.attr('name', function(name){
-			return "g-"+name;
-		})		
-		.attr('transform', function(name)
-				{
-			var timestamp =parseFloat( d3.select(this.parentNode).datum());
-			
-			var height = heightFocus / itemCount;
-			var x =(timestamp-minTimeFocus)*(maxXFocus - minXFocus) / ( maxTimeFocus - minTimeFocus);
-			
-			
-			if(timestamp != lastTime)
-			{
-				lastTime = timestamp;	
-				lastY = 0;
-			}
-			
-			var translateText ='translate('+x+','+lastY+')';
-			
-			var y = lastY+height;
-			lastY = y;
-			
-			
-			
-			return translateText;
-		});
-	
-	glyphGroup		
-		.append('title')
-			.text(function(name)
-					{
-						var timestamp = d3.select(this.parentNode.parentNode).datum();						
-						var data =aggregated[timestamp].items[name];
-						var showData = {};
-						var properties = Object.keys(data); 
-						for(var i= 0;i<properties.length;i++)
-						{
-							if(properties[i] != 'count')
-							{
-								showData[properties[i]] = (data[properties[i]] / data.count / getMax(properties[i])).toFixed(2); 
-							}
-						}
-						
-						var jsonData = JSON.stringify(showData);
-						
-						return "name:"+name+', count:'+aggregated[timestamp].items[name].count+						
-						', data:'+jsonData;
-					})
-					
-		;
-	renderIcon(glyphGroup, aggregated, filter, timeInterval);
-
 }
 function getOpacity(name, aggregated, filter, timestamp)
 {
