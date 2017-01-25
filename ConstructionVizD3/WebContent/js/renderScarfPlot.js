@@ -152,7 +152,10 @@ function renderScarfplot(area,minX,maxX, minTime,maxTime, heightArea, sortingPro
 						
 						var jsonData = JSON.stringify(showData);
 						
-						return "name:"+name+', data:'+jsonData;
+						return "name:"+name
+						+', count:'+ data.count
+						+', time:'+timestamp
+						+', data:'+jsonData;
 					})
 					
 		;
