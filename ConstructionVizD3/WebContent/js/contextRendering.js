@@ -98,7 +98,7 @@ function contextRendering(sortingProperty, sortAscending, filter)
 	 
 	 
 	 // Context Region 
-	 renderContext(context, xScaleContext, heightContext, maxY,sortingProperty, sortAscending, filter);
+	 renderContext(context, xScaleContext, heightContext,sortingProperty, sortAscending, filter);
 	 context.append("g")
 	    .attr("class", "axis axis--x")
 	    .attr("transform", "translate(0," + heightContext + ")")
@@ -109,7 +109,7 @@ function contextRendering(sortingProperty, sortAscending, filter)
 	      .call(brushContext.move, xScaleFocus.range());
 	
 	 // Focus Region
-	 renderFocus(focus, xScaleFocus, heightFocus, maxY, sortingProperty, sortAscending, filter);
+	 renderFocus(focus, xScaleFocus, heightFocus, sortingProperty, sortAscending, filter);
 	
 	
 	function brushed() {
@@ -129,7 +129,7 @@ function contextRendering(sortingProperty, sortAscending, filter)
 																					// zoom-by-brush
 	  var t = d3.event.transform;
 	  xScaleFocus.domain(t.rescaleX(xScaleContext).domain());
-	  renderFocus(focus, xScaleFocus, heightFocus, maxY, sortingProperty, sortAscending, filter);
+	  renderFocus(focus, xScaleFocus, heightFocus, sortingProperty, sortAscending, filter);
 	  focus.select(".axis--x").call(xAxisFocus);
 	  context.select(".brush").call(brushContext.move, xScaleFocus.range().map(t.invertX, t));
 	}

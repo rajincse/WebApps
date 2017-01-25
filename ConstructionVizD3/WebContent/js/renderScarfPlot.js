@@ -61,7 +61,7 @@ function renderGlyphGuide()
 		.attr('y', function(l) { return (l.y1 * 1+l.y2 * 3)/4;})
 	
 }
-function renderContext(context, xScaleContext, heightContext,maxY, sortingProperty, sortAscending, filter)
+function renderContext(context, xScaleContext, heightContext, sortingProperty, sortAscending, filter)
 {
 	 var maxXContext = xScaleContext.range()[1];
 	 var maxTimeContext = xScaleContext.domain()[1];
@@ -90,10 +90,8 @@ function renderContext(context, xScaleContext, heightContext,maxY, sortingProper
 		.data(function(key){ return Object.keys(aggregated[key].items);})
 	 .enter()
 	 	.append('g')
-	 	.attr('id', function(name){
-			var timestamp = d3.select(this.parentNode).datum();			
-			var share = 100*getShare(aggregated[timestamp], name, sortingProperty);
-			return "g-"+share;
+	 	.attr('name', function(name){
+			return "g-"+name;
 		})		
 		.attr('transform', function(name){
 			var timestamp =parseFloat( d3.select(this.parentNode).datum());
@@ -102,7 +100,7 @@ function renderContext(context, xScaleContext, heightContext,maxY, sortingProper
 			var x =( timestamp*maxXContext / maxTimeContext);
 			
 			
-			if(timestamp > lastTime)
+			if(timestamp != lastTime)
 			{
 				lastTime = timestamp;
 				lastY =0;
@@ -117,18 +115,6 @@ function renderContext(context, xScaleContext, heightContext,maxY, sortingProper
 			
 			return translateText;
 		});
-//	glyphGroup
-//		.append('rect')
-//		.attr('class', 'glyph-rect')
-//		.attr('width', imageAreaWidth)
-//		.attr('height', function(name)
-//				{	
-//					return heightContext / itemCount; 
-//				})				
-//		.attr('x',0)
-//		.attr('y', 0)
-//		.attr('fill', function(name){ return colorData[name];})
-//		;
 	
 	glyphGroup		
 		.append('title')
@@ -154,7 +140,7 @@ function renderContext(context, xScaleContext, heightContext,maxY, sortingProper
 		;
 	renderIcon(glyphGroup, aggregated, filter, timeInterval);
 }
-function renderFocus(focus, xScaleFocus, heightFocus, maxY, sortingProperty, sortAscending, filter)
+function renderFocus(focus, xScaleFocus, heightFocus, sortingProperty, sortAscending, filter)
 {
 	d3.select(focus).node().selectAll('g.image-area').remove();
 	 
@@ -189,11 +175,8 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY, sortingProperty, sor
 	 .data(function(key){ return Object.keys(aggregated[key].items);})
 	 .enter()
 	 	.append('g')
-	 	.attr('id', function(name){
-			var timestamp = d3.select(this.parentNode).datum();
-			
-			var share = 100*getShare(aggregated[timestamp], name, sortingProperty);
-			return "g-"+share.toFixed(2)+'%';
+	 	.attr('name', function(name){
+			return "g-"+name;
 		})		
 		.attr('transform', function(name)
 				{
@@ -203,7 +186,7 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY, sortingProperty, sor
 			var x =(timestamp-minTimeFocus)*(maxXFocus - minXFocus) / ( maxTimeFocus - minTimeFocus);
 			
 			
-			if(timestamp > lastTime)
+			if(timestamp != lastTime)
 			{
 				lastTime = timestamp;	
 				lastY = 0;
@@ -218,18 +201,6 @@ function renderFocus(focus, xScaleFocus, heightFocus, maxY, sortingProperty, sor
 			
 			return translateText;
 		});
-//	glyphGroup
-//		.append('rect')
-//		.attr('class', 'glyph-rect')
-//		.attr('width', imageAreaWidth)
-//		.attr('height', function(name)
-//				{
-//					return heightFocus / itemCount;
-//				})				
-//		.attr('x',0)
-//		.attr('y', 0)
-//		.attr('fill', function(name){ return colorData[name];})
-//		;
 	
 	glyphGroup		
 		.append('title')
