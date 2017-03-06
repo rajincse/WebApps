@@ -67,13 +67,13 @@ public class VisibleObjectsParser {
 		
 	}
 	
-	public static class Map extends Mapper<Object, Text, Text, Text> {
+	public static class Map extends Mapper<Object, Text, TimeKeyTextWritable, Text> {
 		private String lastTimestampLine="";
 		
-		private Text word = new Text();
+		private TimeKeyTextWritable word = new TimeKeyTextWritable();
 		
 	  @Override
-		protected void map(Object key, Text value, Mapper<Object, Text, Text, Text>.Context context)
+		protected void map(Object key, Text value, Mapper<Object, Text, TimeKeyTextWritable, Text>.Context context)
 				throws IOException, InterruptedException {
 			// TODO Auto-generated method stub
 		  Configuration conf = context.getConfiguration();
@@ -105,10 +105,10 @@ public class VisibleObjectsParser {
 	}
 	
 	public static class Reduce
-    extends Reducer<Text, Text, Text, Text> {
+    extends Reducer<TimeKeyTextWritable, Text, TimeKeyTextWritable, Text> {
 		@Override
-		protected void reduce(Text key, Iterable<Text> values,
-				Reducer<Text, Text, Text, Text>.Context context) throws IOException, InterruptedException {
+		protected void reduce(TimeKeyTextWritable key, Iterable<Text> values,
+				Reducer<TimeKeyTextWritable, Text, TimeKeyTextWritable, Text>.Context context) throws IOException, InterruptedException {
 			ArrayList<Event> list = new ArrayList<Event>();
 			for(Text t: values)
 			{
@@ -141,7 +141,7 @@ public class VisibleObjectsParser {
         
 
         Job job = new Job(conf, "VisibleObjectsParser");
-        job.setOutputKeyClass(Text.class);
+        job.setOutputKeyClass(TimeKeyTextWritable.class);
         job.setOutputValueClass(Text.class);
 
         job.setMapperClass(Map.class);

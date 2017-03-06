@@ -182,7 +182,13 @@ function getOpacity(name, aggregated, filter, timestamp)
 function renderIcon(glyphGroup, aggregated, filter, timeInterval)
 {
 	var preferredViewCount = 
-		Math.min(attentionSpan/eyeResponseTime,Math.max(1,Math.floor(timeInterval/ eyeResponseTime)));
+		Math.max(1,
+			Math.min(
+					Math.floor(attentionSpan/eyeResponseTime),
+					Math.floor(timeInterval/ eyeResponseTime)
+			)
+		);
+	
 	glyphGroup
 	.style('opacity', function(name)
 			{	
