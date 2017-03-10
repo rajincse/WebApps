@@ -26,6 +26,7 @@ public class VisibleObjectsParser {
 	public static final String DELIMITER ="\\|\\|";
 	public static final String KEY_VISIBLE="visible";
 	public static final String KEY_VIEWED="viewed";
+	public static final String KEY_ON_SURFACE ="onSurface";
 	
 	public static final double INFINITY = 10000;
 	public static final String KEY_FILTER_PROPERTY = "filter";
@@ -95,6 +96,10 @@ public class VisibleObjectsParser {
 					  && map.get(KEY_VISIBLE).equals("true")
 					  
 					  &&
+					  map.containsKey(KEY_ON_SURFACE)
+					  && map.get(KEY_ON_SURFACE).equals("true")
+					  
+					  &&
 					  map.containsKey(filterProperty)
 					  && Double.parseDouble(map.get(filterProperty)) < filterValue 
 				)
@@ -114,8 +119,8 @@ public class VisibleObjectsParser {
 			ArrayList<Event> list = new ArrayList<Event>();
 			for(Text t: values)
 			{
-				String jsonString = t.toString();
-				Event e = new Event(jsonString);
+				String line = t.toString();
+				Event e = new Event(line);
 				list.add(e);
 			}
 			Collections.sort(list);
