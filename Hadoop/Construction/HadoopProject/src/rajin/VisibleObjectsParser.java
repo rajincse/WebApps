@@ -27,8 +27,9 @@ public class VisibleObjectsParser {
 	public static final String KEY_VISIBLE="visible";
 	public static final String KEY_VIEWED="viewed";
 	
-	public static final String KEY_VIEW_RADIUS ="viewRadius";
 	public static final double INFINITY = 10000;
+	public static final String KEY_FILTER_PROPERTY = "filter";
+	public static final String KEY_FILTER_PROPERTY_VALUE = "filterValue";
 	public static boolean isNewTimeStampLine(String line)
 	{
 		return line.matches(TIME_REGEX);
@@ -77,7 +78,8 @@ public class VisibleObjectsParser {
 				throws IOException, InterruptedException {
 			// TODO Auto-generated method stub
 		  Configuration conf = context.getConfiguration();
-		  double viewRadius = Double.parseDouble(conf.get(KEY_VIEW_RADIUS));
+		  String filterProperty = conf.get(KEY_FILTER_PROPERTY);
+		  double filterValue = Double.parseDouble(conf.get(KEY_FILTER_PROPERTY_VALUE));
 		  
 		  String line = value.toString();
 		  
@@ -93,8 +95,8 @@ public class VisibleObjectsParser {
 					  && map.get(KEY_VISIBLE).equals("true")
 					  
 					  &&
-					  map.containsKey(KEY_VIEWED)
-					  && Double.parseDouble(map.get(KEY_VIEWED)) < viewRadius 
+					  map.containsKey(filterProperty)
+					  && Double.parseDouble(map.get(filterProperty)) < filterValue 
 				)
 			  {
 				  word.set(lastTimestampLine);
@@ -130,13 +132,15 @@ public class VisibleObjectsParser {
 	
 	public static void main(String[] args) throws Exception{
         Configuration conf = new Configuration();
-        if( args.length > 2)
+        if( args.length > 3)
         {
-        	conf.set(KEY_VIEW_RADIUS, args[2]);
+        	conf.set(KEY_FILTER_PROPERTY, args[2]);
+        	conf.set(KEY_FILTER_PROPERTY_VALUE, args[3]);
         }
         else
         {
-        	conf.set(KEY_VIEW_RADIUS, ""+INFINITY);
+        	conf.set(KEY_FILTER_PROPERTY, "viewed");
+        	conf.set(KEY_FILTER_PROPERTY_VALUE, ""+INFINITY);
         }
         
 
