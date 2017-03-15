@@ -61,6 +61,52 @@ function getMashedupDataRange(data, interval, range)
 	return mashedData;
 }
 
+function cleanupData(mashedData)
+{
+	var cleanMashedData ={};
+	for(var i = 0; i< Object.keys(mashedData).length;i++)
+	{
+		var key = Object.keys(mashedData)[i];
+		var value = mashedData[key];
+		cleanMashedData[key] =[];
+		var temp=[];
+		var lastName ="";
+		for(var j=0;j<value.length;j++){
+			var viewedObject = value[j];
+			var name = viewedObject.name;
+			
+			var cameraDistance = getPropertyValue(viewedObject, 'cameraDistance');
+			
+			if(cameraDistance > minimumCameraDistance)
+			{
+				if(temp.length ==0)
+				{
+					lastName = name;
+					temp.push(viewedObject);
+				}
+				else if(temp.length < viewedWindowSize)
+				{
+					if(name !== lastName)
+					{
+						temp =[];
+						lastName = name;
+					}
+					temp.push(viewedObject);
+				}	
+				else {
+					cleanMashedData[key]= cleanMashedData[key].concat(temp);
+					temp =[];
+				}
+				
+			}
+			
+			
+		}
+	 }
+	return cleanMashedData;
+}
+
+
 /*
  * returns aggregatedData ={ <timeStamp>:{items:{<name>:{count, prop1: , prop2: ... }}
  * , aggregate:{count, prop1: , prop2: ... }}
@@ -85,11 +131,7 @@ function getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty 
 			{
 				continue;
 			}
-			var viewed =  getPropertyValue(viewedObject, 'viewed');			
-			if( viewed > filter.viewRadius)
-			{
-				continue;
-			}
+
 			
 			
 			if(!nameMap[name])

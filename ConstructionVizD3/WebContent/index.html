@@ -24,8 +24,8 @@
 	</select>
 	<label class='label'>Order:</label>
 	<select id='sortingAscending'>
-	 	<option value='true' selected>Ascending</option>
-	 	<option value='false' >Descending</option>
+	 	<option value='true' >Ascending</option>
+	 	<option value='false' selected>Descending</option>
 	</select>
 	<div>
 		<input type="checkbox" id="renderStarPlot"><label class='label'>StarPlot</label>
@@ -33,9 +33,9 @@
 		<label class='label'>Max:</label><input type='text' id='filterMax' value='1' class='filter-input'>
 		<label class='label'>View radius</label>
 		<select id='viewRadiusSelect'>
-		 	<option value='5' >5</option>
+		 	<option value='5' selected >5</option>
 		 	<option value='10' >10</option>
-		 	<option value='20' selected>20</option>
+		 	<option value='20' >20</option>
 		 	<option value='30' >30</option>
 		 	<option value='40' >40</option>
 		 	<option value='50' >50</option>
@@ -74,7 +74,7 @@ d3.select('#render').on('click', function(){
 	render();
 });
 
-var defaultSortingProperty = 'viewed';
+var defaultSortingProperty = 'count';
 d3.select('#sortingProperties')
 	.selectAll('option.added')
 	.data(Object.keys(displayProperties))

@@ -87,6 +87,7 @@ function renderScarfplot(area,minX,maxX, minTime,maxTime, heightArea, sortingPro
 	 var timeInterval = imageAreaWidth* (maxTime-minTime)/ (maxX-minX);
 	 
 	 var mashedData=getMashedupDataRange(mainData, timeInterval,[minTime,maxTime] );
+	 var mashedData = cleanupData(mashedData);
 	 var itemCount =  Math.floor(heightArea/ imageAreaHeight);
 	 
 	 var aggregated = getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty,Object.keys(displayProperties), filter);
@@ -190,24 +191,24 @@ function renderIcon(glyphGroup, aggregated, filter, timeInterval)
 		);
 	
 	glyphGroup
-	.style('opacity', function(name)
-			{	
-				var timestamp = d3.select(this.parentNode).datum();
-				var item = aggregated[timestamp].items[name];
-				var normalizedViewed =item.viewed/ item.count/ filter.viewRadius;
-				var opacity = 1- normalizedViewed * normalizedViewed ;
-
-				return opacity;
-			})
+//	.style('opacity', function(name)
+//			{	
+//				var timestamp = d3.select(this.parentNode).datum();
+//				var item = aggregated[timestamp].items[name];
+//				var normalizedViewed =item.cameraDistance/ item.count/ getMax('cameraDistance');
+//				var opacity = 1- normalizedViewed * normalizedViewed ;
+//
+//				return opacity;
+//			})
 	.attr('transform', function(name)
 			{
 					var transform = d3.select(this).attr('transform');
 					
 					var timestamp = d3.select(this.parentNode).datum();
-					var item = aggregated[timestamp].items[name];				
-					var count = Math.min(preferredViewCount, item.count);
-					var minScale =0.25;
-					var scale = minScale + (1-minScale) * ( count/ preferredViewCount) ;
+					var item = aggregated[timestamp].items[name];			
+					var cameraDistance = item.cameraDistance / item.count;
+					var minScale =0.55;
+					var scale = minScale + (1-minScale) *(1- ( cameraDistance/ getMax('cameraDistance'))) ;
 					
 					transform+= 'scale('+scale+','+scale+')';
 					return transform;
