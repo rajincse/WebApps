@@ -5,7 +5,8 @@ var displayProperties ={
 		'viewed':{ 'color':'#0000ff'}, 
 		'rotationSpeed':{ 'color':'#58E87F'}, 
 		'translationSpeed':{ 'color':'#b25221'},
-		'cameraDistance': { 'color':'ff00ff'}
+		'cameraDistance': { 'color':'ff00ff'},
+		'hazard': { 'color':'ff00ff'}
 };
 
 function renderGlyphGuide()
@@ -218,6 +219,26 @@ function renderIcon(glyphGroup, aggregated, filter, timeInterval)
 	var icon = glyphGroup.append('g')
 	.attr('class','icon');
 
+	icon
+	.append('rect')
+	.attr('style', function(name)
+		{
+			var style ="fill:none";
+			var timestamp = d3.select(this.parentNode.parentNode.parentNode).datum();
+			var item = aggregated[timestamp].items[name];
+			if(item.hazard >=viewedWindowSize)
+			{
+				style ="fill: red";
+			}
+			
+			return style;
+		})	
+		.attr('width', imageWidth)
+		.attr('height', imageHeight)
+		.attr('x',imageAreaWidth /2 - imageWidth/2)
+		.attr('y', imageAreaHeight/2 - imageHeight/2)
+	
+	
 	icon	
 	.append('image')
 		.attr('class', 'glyph-image')

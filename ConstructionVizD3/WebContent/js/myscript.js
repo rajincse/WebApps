@@ -5,6 +5,7 @@ var maxTime =0.0;
 
 var propertyMax = {};
 var propertyMin ={};
+var hazardData ={};
 
 function loadData(dataFile)
 {
@@ -40,6 +41,31 @@ function loadData(dataFile)
 			
 			imageData[item]=image;
 			colorData[item] = colores_google(i);
+		}
+
+	});
+	
+	d3.tsv("data/hazardData.txt", function(data)
+	{
+		for(var i=0;i<data.length;i++)
+		{
+			var doi = data[i].DOI.trim();
+			var startTime = parseFloat(data[i].TimeStart);
+			var endTime = parseFloat(data[i].TimeEnd);
+			var hazard = data[i].Hazard;
+			
+			var hazardInfoObject ={
+					"startTime":startTime,
+					"endTime":endTime,
+					"hazard": hazard
+			};
+			
+			if(!hazardData[doi])
+			{
+				hazardData[doi] =[];
+			}
+			hazardData[doi].push(hazardInfoObject);
+			
 		}
 
 	});

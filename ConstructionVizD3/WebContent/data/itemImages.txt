@@ -11,7 +11,7 @@ ExcavatorC-03	images/machinery_bw.png
 ExcavatorD-01	images/machinery_bw.png
 Honda01	images/car_bw.png
 I-beam-3D	images/beam_bw.png
-Layer:0-Boundry-Wood	images/beam_bw.png
+Layer:0-Boundry-Wood	images/fence_bw.png
 Particle System	images/dust_bw.png
 Plane002	images/plane_bw.png
 Terrain	images/terrain_bw.png
