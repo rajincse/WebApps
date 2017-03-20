@@ -28,17 +28,14 @@
 	 	<option value='false' selected>Descending</option>
 	</select>
 	<div>
-		<input type="checkbox" id="renderStarPlot"><label class='label'>StarPlot</label>
+		<input type="checkbox" id="renderStarPlot" checked><label class='label'>StarPlot</label>
 		<label class='label'>Min:</label><input type='text' id='filterMin'value='0' class='filter-input'>
 		<label class='label'>Max:</label><input type='text' id='filterMax' value='1' class='filter-input'>
-		<label class='label'>View radius</label>
-		<select id='viewRadiusSelect'>
-		 	<option value='5' selected >5</option>
-		 	<option value='10' >10</option>
-		 	<option value='20' >20</option>
-		 	<option value='30' >30</option>
-		 	<option value='40' >40</option>
-		 	<option value='50' >50</option>
+		<label class='label'>Subject:</label>
+		<select id='subjectSelect'>
+		 	<option value='allVisibleAmirmasoud.txt' selected >Amirmasoud</option>
+		 	<option value='allVisibleAmit.txt'  >Amit</option>
+		 	<option value='allVisibleAnna.txt'  >Anna</option>
 		</select>
 	</div>
 	<button id="loadData">LoadData</button>
@@ -62,13 +59,21 @@
 
 <script type="text/javascript">
 d3.select('#loadData').on('click', function(){
-	var fileName = 'data/allVisible'+getViewRadius()+'.txt';
+	
+	var fileName = 'data/'+getSubjectFileName();
 	loadData(fileName);	
 	d3.select('#status').text('Click Render');
 });
 
-d3.select('#viewRadiusSelect').on('change', function(){
+d3.select('#subjectSelect').on('change', function(){
 	d3.select('#status').text('Click LoadData');
+});
+d3.select('#renderStarPlot').on('change', function(){
+	if(d3.select('#status').text() === 'OK')
+	{
+		d3.select('#status').text('Click Render');
+	}
+	
 });
 d3.select('#render').on('click', function(){	
 	render();
@@ -105,20 +110,20 @@ function getSortingOrder()
 	var sortAscending = (sortAscendingString === 'true');
 	return sortAscending;
 }
-function getViewRadius()
+function getSubjectFileName()
 {
-	var viewRadiusSelect = document.getElementById('viewRadiusSelect');
+	var subjectSelect = document.getElementById('subjectSelect');
 	
-	var viewRadius = viewRadiusSelect.options[viewRadiusSelect.selectedIndex].value;
-	return viewRadius;
+	var fileName = subjectSelect.options[subjectSelect.selectedIndex].value;
+	return fileName;
 }
 function render()
 {
+	d3.select('#status').text('Please wait ...');
 	var dataLength = Object.keys(mainData).length;
 	
 	if(dataLength > 0)
 	{
-		d3.select('#status').text('OK');
 		
 		d3.select('#mainSVG').selectAll('*').remove();
 		d3.select('#legendSVG').selectAll('*').remove();		
@@ -129,17 +134,18 @@ function render()
 		
 		var filterMin = document.getElementById("filterMin").value;
 		var filterMax = document.getElementById("filterMax").value;
-		var viewRadius = getViewRadius();
+		
 		var renderStarPlot =document.getElementById("renderStarPlot").checked ; 
 		var filter ={min:parseFloat(filterMin), max : parseFloat(filterMax),
-				viewRadius:viewRadius, renderStarPlot: renderStarPlot };
+				 renderStarPlot: renderStarPlot };
 		
 		contextRendering(sortingProperty, sortAscending,filter);
 		renderGlyphGuide();
+		d3.select('#status').text('OK');
 	}
 	else
 	{
-		d3.select('#status').text('Try Again');
+		d3.select('#status').text('Click Render Again!');
 	}
 }
 

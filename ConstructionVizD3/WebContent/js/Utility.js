@@ -47,24 +47,17 @@ function getMashedupDataRange(data, interval, range)
 		 var dataArray =  JSON.parse(data[key]);
 		 var mashedKey = Math.floor(timestamp/interval) * interval;
 		 
-		 if(!mashedData[mashedKey])
+
+		 if(mashedData[mashedKey])
 		 {
-			 mashedData[mashedKey]={};
+			 var previousArray =mashedData[mashedKey];
+			 mashedData[mashedKey]= previousArray.concat(dataArray);
 		 }
-		 mashedData[mashedKey][timestamp] = dataArray;
+		 else
+		 {
+			 mashedData[mashedKey]= dataArray;			 
+		 }
 		 
-//		 if(mashedData[mashedKey])
-//		 {
-//			 var previousArray =mashedData[mashedKey];
-////			 mashedData[mashedKey]= previousArray.concat(dataArray);
-//			 mashedData[mashedKey][timestamp] = dataArray;
-//			 
-//		 }
-//		 else
-//		 {
-//			 mashedData[mashedKey]= dataArray;
-//			 
-//		 }
 		 
 		 
 		 
@@ -82,58 +75,57 @@ function cleanupData(mashedData)
 		var temp=[];
 		var lastName ="";
 		
-		for(var k=0;k<Object.keys(mashedData[key]).length;k++)
-		{
-			var timestamp = Object.keys(mashedData[key])[k];
-			var value = mashedData[key][timestamp];
+		
+		var value = mashedData[key];
+		
+		for(var j=0;j<value.length;j++){
+			var viewedObject = value[j];
+			var name = viewedObject.name;
 			
-			for(var j=0;j<value.length;j++){
-				var viewedObject = value[j];
-				var name = viewedObject.name;
-				
-				var cameraDistance = getPropertyValue(viewedObject, 'cameraDistance');
-				
-				if(cameraDistance > minimumCameraDistance)
+			var cameraDistance = getPropertyValue(viewedObject, 'cameraDistance');
+			
+			if(cameraDistance > minimumCameraDistance)
+			{
+				viewedObject['hazard'] = 0;
+				var timestamp = getPropertyValue(viewedObject,'T');
+				if(hazardData[name])
 				{
-					viewedObject['hazard'] = 0;
-					if(hazardData[name])
+					for(var l=0;l<hazardData[name].length;l++)
 					{
-						for(var l=0;l<hazardData[name].length;l++)
+						var hazardObject = hazardData[name][l];
+						if(timestamp>= hazardObject.startTime && timestamp<=hazardObject.endTime)
 						{
-							var hazardObject = hazardData[name][l];
-							if(timestamp>= hazardObject.startTime && timestamp<=hazardObject.endTime)
-							{
-								viewedObject['hazard'] = 1;
-								break;
-							}
+							viewedObject['hazard'] = 1;
+							break;
 						}
 					}
-					
-					if(temp.length ==0)
+				}
+				
+				if(temp.length ==0)
+				{
+					lastName = name;
+					temp.push(viewedObject);
+				}
+				else if(temp.length < viewedWindowSize)
+				{
+					if(name !== lastName)
 					{
-						lastName = name;
-						temp.push(viewedObject);
-					}
-					else if(temp.length < viewedWindowSize)
-					{
-						if(name !== lastName)
-						{
-							temp =[];
-							lastName = name;
-						}
-						temp.push(viewedObject);
-					}	
-					else {
-						cleanMashedData[key]= cleanMashedData[key].concat(temp);
 						temp =[];
+						lastName = name;
 					}
-					
+					temp.push(viewedObject);
+				}	
+				else {
+					cleanMashedData[key]= cleanMashedData[key].concat(temp);
+					temp =[];
 				}
 				
 			}
 			
-			
 		}
+			
+			
+		
 	 }
 	return cleanMashedData;
 }

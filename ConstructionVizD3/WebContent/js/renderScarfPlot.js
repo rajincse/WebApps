@@ -1,12 +1,12 @@
 
 var displayProperties ={
-		'size': { 'color': '#ff0000'}, 
-		'center':{ 'color':'#00ff00'}, 
-		'viewed':{ 'color':'#0000ff'}, 
-		'rotationSpeed':{ 'color':'#58E87F'}, 
-		'translationSpeed':{ 'color':'#b25221'},
-		'cameraDistance': { 'color':'ff00ff'},
-		'hazard': { 'color':'ff00ff'}
+		'size': { 'color': '#a0e85b'}, 
+		'center':{ 'color':'#9f49f0'}, 
+		'viewed':{ 'color':'#54a32f'}, 
+		'rotationSpeed':{ 'color':'#fb0998'}, 
+		'translationSpeed':{ 'color':'#00d618'},
+		'cameraDistance': { 'color':'961d6b'},
+		'hazard': { 'color':'75eab6'}
 };
 
 function renderGlyphGuide()
