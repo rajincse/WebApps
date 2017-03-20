@@ -90,7 +90,8 @@ public class VisibleObjectsParser {
 		  }
 		  else
 		  {
-			  HashMap<String, String>map =KeyValueParser.getKeyValues(line, DELIMITER);
+			  String timeAddedLine = line +"|| "+lastTimestampLine;
+			  HashMap<String, String>map =KeyValueParser.getKeyValues(timeAddedLine, DELIMITER);
 			  if(
 					  map.containsKey(KEY_VISIBLE) 
 					  && map.get(KEY_VISIBLE).equals("true")
@@ -105,7 +106,7 @@ public class VisibleObjectsParser {
 				)
 			  {
 				  word.set(lastTimestampLine);
-				  context.write(word, new Text(line));
+				  context.write(word, new Text(timeAddedLine));
 			  }
 		  }
 		}
