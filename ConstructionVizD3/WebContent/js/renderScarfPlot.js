@@ -156,8 +156,8 @@ function renderScarfplot(area,minX,maxX, minTime,maxTime, heightArea, sortingPro
 						
 						return "name:"+name
 						+', count:'+ data.count
+						+', hazard:'+data.hazard
 						+', time:'+timestamp
-						+', interval:'+timeInterval
 						+', data:'+jsonData;
 					})
 					

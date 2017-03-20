@@ -3,8 +3,12 @@ var imageData={};
 var colorData={};
 var maxTime =0.0;
 
-var propertyMax = {};
-var propertyMin ={};
+var propertyMax = {
+		'hazard':1
+};
+var propertyMin ={ 
+		'hazard': 0
+}
 var hazardData ={};
 
 function loadData(dataFile)
