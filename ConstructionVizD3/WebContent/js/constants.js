@@ -23,5 +23,5 @@ var eyeResponseTime =0.1;
 var attentionSpan = 2;
 var frequency = 50;
 
-var minimumCameraDistance = 25;
+var minimumCameraDistance = 5;
 var viewedWindowSize =6;

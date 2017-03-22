@@ -1,7 +1,7 @@
 
 var displayProperties ={
 		'size': { 'color': '#a0e85b'}, 
-		'center':{ 'color':'#9f49f0'}, 
+		'viewTime':{ 'color':'#9f49f0'}, 
 		'viewed':{ 'color':'#54a32f'}, 
 		'rotationSpeed':{ 'color':'#fb0998'}, 
 		'translationSpeed':{ 'color':'#00d618'},
@@ -157,6 +157,7 @@ function renderScarfplot(area,minX,maxX, minTime,maxTime, heightArea, sortingPro
 						return "name:"+name
 						+', count:'+ data.count
 						+', hazard:'+data.hazard
+						+', viewTime:'+data.viewTime
 						+', time:'+timestamp
 						+', data:'+jsonData;
 					})

@@ -4,10 +4,12 @@ var colorData={};
 var maxTime =0.0;
 
 var propertyMax = {
-		'hazard':1
+		'hazard':1,
+		'viewTime':100
 };
 var propertyMin ={ 
-		'hazard': 0
+		'hazard': 0,
+		'viewTime':0
 }
 var hazardData ={};
 

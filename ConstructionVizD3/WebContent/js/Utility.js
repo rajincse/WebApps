@@ -72,8 +72,10 @@ function cleanupData(mashedData)
 	{
 		var key = Object.keys(mashedData)[i];
 		cleanMashedData[key] =[];
-		var temp=[];
-		var lastName ="";
+		var lastTime =0;
+		var currentTimeDiff =0;
+		var itemBuffer ={};
+		var currentItemBuffer ={};
 		
 		
 		var value = mashedData[key];
@@ -83,11 +85,44 @@ function cleanupData(mashedData)
 			var name = viewedObject.name;
 			
 			var cameraDistance = getPropertyValue(viewedObject, 'cameraDistance');
-			
+			var timestamp = getPropertyValue(viewedObject,'T');
+
 			if(cameraDistance > minimumCameraDistance)
 			{
+				
+				
+				if(timestamp > lastTime)
+				{
+					for(var keyIndex=0;keyIndex<Object.keys(itemBuffer).length;keyIndex++)
+					{
+						var keyName = Object.keys(itemBuffer)[keyIndex];
+						if(currentItemBuffer[keyName]){
+							currentItemBuffer[keyName]['items'] 
+							= currentItemBuffer[keyName]['items']
+								.concat( itemBuffer[keyName]['items']);
+							currentItemBuffer[keyName]['time'] += itemBuffer[keyName]['time'];
+						}
+					}	
+					for(var keyIndex=0;keyIndex<Object.keys(currentItemBuffer).length;keyIndex++)
+					{
+						var keyName = Object.keys(currentItemBuffer)[keyIndex];
+						
+						var time = currentItemBuffer[keyName]['time'];
+						
+						if(time > eyeResponseTime){
+							cleanMashedData[key] = cleanMashedData[key].concat(currentItemBuffer[keyName]['items']);
+							delete currentItemBuffer[keyName];
+						}							
+					}
+					
+					itemBuffer = currentItemBuffer;
+					currentItemBuffer = {};		
+					currentTimeDiff = timestamp - lastTime;
+					lastTime = timestamp;
+				}
+				
 				viewedObject['hazard'] = 0;
-				var timestamp = getPropertyValue(viewedObject,'T');
+				viewedObject['viewTime'] = currentTimeDiff;
 				if(hazardData[name])
 				{
 					for(var l=0;l<hazardData[name].length;l++)
@@ -101,25 +136,17 @@ function cleanupData(mashedData)
 					}
 				}
 				
-				if(temp.length ==0)
+				if(!currentItemBuffer[name])
 				{
-					lastName = name;
-					temp.push(viewedObject);
+					currentItemBuffer[name] ={items:[], time:0}
 				}
-				else if(temp.length < viewedWindowSize)
-				{
-					if(name !== lastName)
-					{
-						temp =[];
-						lastName = name;
-					}
-					temp.push(viewedObject);
-				}	
-				else {
-					cleanMashedData[key]= cleanMashedData[key].concat(temp);
-					temp =[];
-				}
+				currentItemBuffer[name]['items'].push(viewedObject);
+				currentItemBuffer[name]['time'] = currentTimeDiff;
 				
+			}
+			else if(timestamp > lastTime){
+				currentTimeDiff = timestamp - lastTime;
+				lastTime = timestamp;
 			}
 			
 		}
