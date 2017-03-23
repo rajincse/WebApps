@@ -1,0 +1,12 @@
+HazardType	HazardName	Color
+1	Personal Protective Equipment	#78b4c6
+2	Construction Safety Sign	#3cfdd7
+3	Electrocution	#37b181
+4	Struck by Hazard	#bdfee6
+5	Fall Hazard	#5ab220
+6	Caught In between	#83fd73
+7	Scaffolding Protection	#a4b174
+8	HouseKeeping	#d8fe8d
+9	Timber Shoring	#d4a07f
+10	Dust	#f47d0d
+11	Lifting/Hoisting	#fbedf1
