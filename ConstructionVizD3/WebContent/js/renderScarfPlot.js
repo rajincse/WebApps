@@ -1,12 +1,13 @@
 
 var displayProperties ={
-		'size': { 'color': '#a0e85b'}, 
-		'viewTime':{ 'color':'#9f49f0'}, 
-		'viewed':{ 'color':'#54a32f'}, 
-		'rotationSpeed':{ 'color':'#fb0998'}, 
-		'translationSpeed':{ 'color':'#00d618'},
-		'cameraDistance': { 'color':'961d6b'},
-		'hazard': { 'color':'75eab6'}
+		'size': { 'color': '#a0e85b', 'sortingValue':'average'}, 
+		'viewTime':{ 'color':'#9f49f0' , 'sortingValue':'sum'}, 
+		'viewed':{ 'color':'#54a32f', 'sortingValue':'average'}, 
+		'rotationSpeed':{ 'color':'#fb0998', 'sortingValue':'average'}, 
+		'translationSpeed':{ 'color':'#00d618', 'sortingValue':'average'},
+		'cameraDistance': { 'color':'961d6b', 'sortingValue':'average'},
+		'hazard': { 'color':'75eab6', 'sortingValue':'average'}
+		
 };
 
 function renderGlyphGuide()
@@ -91,7 +92,7 @@ function renderScarfplot(area,minX,maxX, minTime,maxTime, heightArea, sortingPro
 	 var mashedData = cleanupData(mashedData);
 	 var itemCount =  Math.floor(heightArea/ imageAreaHeight);
 	 
-	 var aggregated = getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty,Object.keys(displayProperties), filter);
+	 var aggregated = getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty,displayProperties, filter);
 	 
 	 var aggregatedKeys = Object.keys(aggregated);
 	 
@@ -146,10 +147,8 @@ function renderScarfplot(area,minX,maxX, minTime,maxTime, heightArea, sortingPro
 						var properties = Object.keys(data); 
 						for(var i= 0;i<properties.length;i++)
 						{
-							if(properties[i] != 'count')
-							{
-								showData[properties[i]] = (data[properties[i]] / data.count / getMax(properties[i])).toFixed(2); 
-							}
+							showData[properties[i]] = getShowValue(data,properties[i] );
+							
 						}
 						
 						var jsonData = JSON.stringify(showData);
@@ -227,7 +226,7 @@ function renderIcon(glyphGroup, aggregated, filter, timeInterval)
 			var style ="fill:none";
 			var timestamp = d3.select(this.parentNode.parentNode.parentNode).datum();
 			var item = aggregated[timestamp].items[name];
-			if(item.hazard >=viewedWindowSize)
+			if(item.hazard >=eyeResponseTime)
 			{
 				style ="fill: red";
 			}

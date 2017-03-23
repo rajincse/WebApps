@@ -68,14 +68,14 @@ function getMashedupDataRange(data, interval, range)
 function cleanupData(mashedData)
 {
 	var cleanMashedData ={};
+	var lastTime =0;
+	var currentTimeDiff =0;
+	var itemBuffer ={};
+	var currentItemBuffer ={};
 	for(var i = 0; i< Object.keys(mashedData).length;i++)
 	{
 		var key = Object.keys(mashedData)[i];
 		cleanMashedData[key] =[];
-		var lastTime =0;
-		var currentTimeDiff =0;
-		var itemBuffer ={};
-		var currentItemBuffer ={};
 		
 		
 		var value = mashedData[key];
@@ -98,8 +98,8 @@ function cleanupData(mashedData)
 						var keyName = Object.keys(itemBuffer)[keyIndex];
 						if(currentItemBuffer[keyName]){
 							currentItemBuffer[keyName]['items'] 
-							= currentItemBuffer[keyName]['items']
-								.concat( itemBuffer[keyName]['items']);
+							= itemBuffer[keyName]['items']
+								.concat(currentItemBuffer[keyName]['items'] );
 							currentItemBuffer[keyName]['time'] += itemBuffer[keyName]['time'];
 						}
 					}	
@@ -130,7 +130,7 @@ function cleanupData(mashedData)
 						var hazardObject = hazardData[name][l];
 						if(timestamp>= hazardObject.startTime && timestamp<=hazardObject.endTime)
 						{
-							viewedObject['hazard'] = 1;
+							viewedObject['hazard'] = currentTimeDiff;
 							break;
 						}
 					}
@@ -165,6 +165,7 @@ function cleanupData(mashedData)
 function getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty , displayProperties, filter)
 {	
 	var aggregatedData ={};
+	var displayPropertyKeys = Object.keys(displayProperties);
 	 for(var i = 0; i< Object.keys(mashedData).length;i++)
 	 {
 		 var key = Object.keys(mashedData)[i];
@@ -188,13 +189,13 @@ function getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty 
 			if(!nameMap[name])
 			{
 				nameMap[name] = {'count':0};			
-				if(displayProperties)
+				if(displayPropertyKeys)
 				{
 					for(var propertyIndex=0
-							;propertyIndex<displayProperties.length 
+							;propertyIndex<displayPropertyKeys.length 
 							;propertyIndex++) 
 					{
-						var propertyName = displayProperties[propertyIndex];
+						var propertyName = displayPropertyKeys[propertyIndex];
 						nameMap[name][propertyName] =0;
 						aggregate[propertyName] =0;	
 					}
@@ -202,13 +203,13 @@ function getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty 
 			}
 			
 			
-			if(displayProperties)
+			if(displayPropertyKeys)
 			{
 				for(var propertyIndex=0
-						;propertyIndex<displayProperties.length 
+						;propertyIndex<displayPropertyKeys.length 
 						;propertyIndex++) 
 				{
-					var propertyName = displayProperties[propertyIndex];
+					var propertyName = displayPropertyKeys[propertyIndex];
 					var propertyValue = getPropertyValue(viewedObject, propertyName);
 					
 					nameMap[name][propertyName] += propertyValue;
@@ -231,11 +232,18 @@ function getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty 
 					{	
 						var itemA = nameMap[a]['count'];
 						var itemB = nameMap[b]['count'];
-						if(sortingProperty)
+						if(sortingProperty && sortingProperty != 'count')
 						{
 							// sort over average property value
-							itemA = nameMap[a][sortingProperty]/ nameMap[a]['count'];
-							itemB = nameMap[b][sortingProperty]/ nameMap[b]['count'];
+							if(displayProperties[sortingProperty].sortingValue === 'average'){
+								itemA = nameMap[a][sortingProperty]/ nameMap[a]['count'];
+								itemB = nameMap[b][sortingProperty]/ nameMap[b]['count'];
+							}
+							else if(displayProperties[sortingProperty].sortingValue === 'sum'){
+								itemA = nameMap[a][sortingProperty];
+								itemB = nameMap[b][sortingProperty];
+							}
+							
 						}
 						if(!sortAscending)
 						{
@@ -289,6 +297,20 @@ function getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty 
 	 
 	 return aggregatedData;
 }
+
+function getShowValue(data, property){
+	if(property == 'count'){
+		return data.count;
+	} else if(property == 'hazard'){
+		return (100.0 * data.hazard / data.viewTime).toFixed(2)+"%";
+	}else if(property == 'viewTime'){
+		return data.viewTime.toFixed(2);
+	}
+	else{
+		return (data[property] / data.count / getMax(property)).toFixed(2);
+	}
+}
+
 
 function getDenormalizedFilterValue(filter, propertyName)
 {

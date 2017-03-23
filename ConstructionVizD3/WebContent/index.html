@@ -93,7 +93,7 @@ d3.select('#render').on('click', function(){
 	render();
 });
 
-var defaultSortingProperty = 'count';
+var defaultSortingProperty = 'viewTime';
 d3.select('#sortingProperties')
 	.selectAll('option.added')
 	.data(Object.keys(displayProperties))
