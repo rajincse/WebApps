@@ -12,6 +12,7 @@ var propertyMin ={
 		'viewTime':0
 }
 var hazardData ={};
+var hazardTypeData ={};
 
 function loadData(dataFile)
 {
@@ -58,12 +59,12 @@ function loadData(dataFile)
 			var doi = data[i].DOI.trim();
 			var startTime = parseFloat(data[i].TimeStart);
 			var endTime = parseFloat(data[i].TimeEnd);
-			var hazard = data[i].Hazard;
+			var hazardType = data[i].HazardType;
 			
 			var hazardInfoObject ={
 					"startTime":startTime,
 					"endTime":endTime,
-					"hazard": hazard
+					"hazardType": hazardType
 			};
 			
 			if(!hazardData[doi])
@@ -71,6 +72,27 @@ function loadData(dataFile)
 				hazardData[doi] =[];
 			}
 			hazardData[doi].push(hazardInfoObject);
+			
+		}
+
+	});
+	
+	d3.tsv("data/hazardType.txt", function(data)
+	{
+		for(var i=0;i<data.length;i++)
+		{
+			var hazardType = data[i].HazardType;
+			var hazardName = data[i].HazardName;
+			var color = data[i].Color;
+			
+			var hazardTypeInfoObject ={
+					"hazardType":hazardType,
+					"hazardName":hazardName,
+					"color": color
+			};
+			
+			
+			hazardTypeData[hazardType] = hazardTypeInfoObject;
 			
 		}
 

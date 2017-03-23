@@ -1,7 +1,3 @@
-//var dataFile = "data/smallVisible.txt";
-//var dataFile = "data/allVisible5.txt";
-
-
 
 var gap =20;
 var focusHeight =500;
@@ -25,3 +21,15 @@ var frequency = 50;
 
 var minimumCameraDistance = 5;
 var viewedWindowSize =6;
+
+var aggregateProperties ={
+		'size': { 'color': '#a0e85b', 'sortingValue':'average', 'starplot':true , 'type':'float'}, 
+		'viewTime':{ 'color':'#9f49f0' , 'sortingValue':'sum', 'starplot':true, 'type':'float'}, 
+		'viewed':{ 'color':'#54a32f', 'sortingValue':'average', 'starplot':true, 'type':'float'}, 
+		'rotationSpeed':{ 'color':'#fb0998', 'sortingValue':'average', 'starplot':true, 'type':'float'}, 
+		'translationSpeed':{ 'color':'#00d618', 'sortingValue':'average', 'starplot':true, 'type':'float'},
+		'cameraDistance': { 'color':'#961d6b', 'sortingValue':'average', 'starplot':true, 'type':'float'},
+		'hazardViewTime': { 'color':'#75eab6', 'sortingValue':'average', 'starplot':true, 'type':'float'},
+		'hazardTypeSet': { 'color':'#75eab6', 'sortingValue':'size', 'starplot':false, 'type':'list'}
+		
+};

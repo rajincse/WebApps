@@ -62,9 +62,8 @@
 		</svg>
 	</div>
 	<div class="container">
-		<svg id='legendSVG'>
-			
-		</svg>
+		<svg id='legendSVG' />			
+		<svg id='hazardSVG' / >
 	</div>
 </div>
 
@@ -96,7 +95,7 @@ d3.select('#render').on('click', function(){
 var defaultSortingProperty = 'viewTime';
 d3.select('#sortingProperties')
 	.selectAll('option.added')
-	.data(Object.keys(displayProperties))
+	.data(Object.keys(aggregateProperties))
 	.enter()
 	.append('option')
 	.attr('class', 'added')

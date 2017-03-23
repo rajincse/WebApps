@@ -1,14 +1,5 @@
 
-var displayProperties ={
-		'size': { 'color': '#a0e85b', 'sortingValue':'average'}, 
-		'viewTime':{ 'color':'#9f49f0' , 'sortingValue':'sum'}, 
-		'viewed':{ 'color':'#54a32f', 'sortingValue':'average'}, 
-		'rotationSpeed':{ 'color':'#fb0998', 'sortingValue':'average'}, 
-		'translationSpeed':{ 'color':'#00d618', 'sortingValue':'average'},
-		'cameraDistance': { 'color':'961d6b', 'sortingValue':'average'},
-		'hazard': { 'color':'75eab6', 'sortingValue':'average'}
-		
-};
+
 
 function renderGlyphGuide()
 {
@@ -24,7 +15,8 @@ function renderGlyphGuide()
 	var radiusX =width /2;
 	var radiusY =height /2;
 	
-	var attributes = Object.keys(displayProperties);
+	var attributes = Object.keys(aggregateProperties);
+	attributes = filterStarplotAttributes(attributes);
 	var lineData =[];
 	var thetaDiff =Math.PI * 2 / attributes.length;
 	
@@ -50,7 +42,7 @@ function renderGlyphGuide()
 		.attr('y1', function(d){ return d.y1;})
 		.attr('x2', function(d){ return d.x2;})
 		.attr('y2', function(d){ return d.y2;})
-		.style('stroke', function(d){return displayProperties[d.attribute].color; })
+		.style('stroke', function(d){return aggregateProperties[d.attribute].color; })
 	
 	guide
 		.selectAll('text')
@@ -60,7 +52,45 @@ function renderGlyphGuide()
 		.attr('class', 'label')
 		.text( function (l) { return l.attribute;})
 		.attr('x', function(l) { return (l.x1 *1+l.x2 *3)/4;})
-		.attr('y', function(l) { return (l.y1 * 1+l.y2 * 3)/4;})
+		.attr('y', function(l) { return (l.y1 * 1+l.y2 * 3)/4;});
+	
+	var hazardGuide = d3.select('#hazardSVG')
+		.attr('width', width)
+		.attr('height', height)	
+		.append('g')
+		.attr('class', 'hazard-guide')
+		.attr('transform', 'translate(0,10)')
+		;
+	
+	var hazardGroup = hazardGuide.selectAll('g')
+	.data(Object.keys(hazardTypeData))
+		.enter()
+		.append('g');
+	
+	hazardGroup
+		.append('rect')
+		.attr('width', imageWidth)
+		.attr('height', 17)
+		.attr('x',0)
+		.attr('y', function(d, i) { return i * (25);})
+		.style('fill', function(d) { 
+				return hazardTypeData[d].color;
+			})
+		.style('stroke', 'black')	
+		;
+			
+		
+	
+	hazardGroup
+		.append('text')
+		.attr('class', 'label')
+//		.attr('text-anchor', 'middle')
+		.attr('x',imageWidth + gap)
+		.attr('y',function(d, i) { return i * 25+15;})
+		.text(function(d){			
+			return "-"+d+": "+hazardTypeData[d].hazardName; 
+		});
+	
 	
 }
 function renderContext(context, xScaleContext, heightContext, sortingProperty, sortAscending, filter)
@@ -92,7 +122,7 @@ function renderScarfplot(area,minX,maxX, minTime,maxTime, heightArea, sortingPro
 	 var mashedData = cleanupData(mashedData);
 	 var itemCount =  Math.floor(heightArea/ imageAreaHeight);
 	 
-	 var aggregated = getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty,displayProperties, filter);
+	 var aggregated = getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty, filter);
 	 
 	 var aggregatedKeys = Object.keys(aggregated);
 	 
@@ -155,7 +185,7 @@ function renderScarfplot(area,minX,maxX, minTime,maxTime, heightArea, sortingPro
 						
 						return "name:"+name
 						+', count:'+ data.count
-						+', hazard:'+data.hazard
+						+', hazardViewTime:'+data.hazardViewTime
 						+', viewTime:'+data.viewTime
 						+', time:'+timestamp
 						+', data:'+jsonData;
@@ -226,9 +256,11 @@ function renderIcon(glyphGroup, aggregated, filter, timeInterval)
 			var style ="fill:none";
 			var timestamp = d3.select(this.parentNode.parentNode.parentNode).datum();
 			var item = aggregated[timestamp].items[name];
-			if(item.hazard >=eyeResponseTime)
+			if(item.hazardViewTime >=eyeResponseTime)
 			{
-				style ="fill: red";
+				var hazardTypeSetColor = hazardTypeData[item.hazardTypeSet[0]].color;
+				
+				style ="fill:"+hazardTypeSetColor;
 			}
 			
 			return style;
@@ -274,9 +306,7 @@ function renderIcon(glyphGroup, aggregated, filter, timeInterval)
 					
 					
 					var attributes = Object.keys(item);
-					//remove count
-					var countIndex = attributes.indexOf('count');				
-					attributes.splice(countIndex,1);
+					attributes = filterStarplotAttributes(attributes);
 					
 					
 					var thetaDiff =Math.PI * 2 / attributes.length;
@@ -332,7 +362,7 @@ function renderIcon(glyphGroup, aggregated, filter, timeInterval)
 					
 					
 					var attributes = Object.keys(item);
-					attributes.splice(0,1);
+					attributes = filterStarplotAttributes(attributes);
 					var thetaDiff =Math.PI * 2 / attributes.length;
 					
 				
@@ -367,7 +397,7 @@ function renderIcon(glyphGroup, aggregated, filter, timeInterval)
 			.attr('cx', function(d){return d.x;})
 			.attr('cy', function(d){ return d.y;})
 			.style( 'fill',function(d){
-					return displayProperties[d.attribute];
+					return aggregateProperties[d.attribute].color;
 				});
 		
 		icon
@@ -386,7 +416,7 @@ function renderIcon(glyphGroup, aggregated, filter, timeInterval)
 						var data =[];
 				
 						var attributes = Object.keys(item);
-						attributes.splice(0,1);
+						attributes = filterStarplotAttributes(attributes);
 						var thetaDiff =Math.PI * 2 / attributes.length;
 						
 						for(var i=0;i< attributes.length;i++)
@@ -407,7 +437,7 @@ function renderIcon(glyphGroup, aggregated, filter, timeInterval)
 				.attr('y1', function(d){ return d.y1;})
 				.attr('x2', function(d){ return d.x2;})
 				.attr('y2', function(d){ return d.y2;})
-				.style('stroke', function(d){return displayProperties[d.attribute].color; })
+				.style('stroke', function(d){return aggregateProperties[d.attribute].color; })
 				;
 		
 		

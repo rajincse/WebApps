@@ -121,7 +121,7 @@ function cleanupData(mashedData)
 					lastTime = timestamp;
 				}
 				
-				viewedObject['hazard'] = 0;
+				viewedObject['hazardViewTime'] = 0;
 				viewedObject['viewTime'] = currentTimeDiff;
 				if(hazardData[name])
 				{
@@ -130,7 +130,8 @@ function cleanupData(mashedData)
 						var hazardObject = hazardData[name][l];
 						if(timestamp>= hazardObject.startTime && timestamp<=hazardObject.endTime)
 						{
-							viewedObject['hazard'] = currentTimeDiff;
+							viewedObject['hazardViewTime'] = currentTimeDiff;
+							viewedObject['hazardTypeSet'] =  hazardObject.hazardType;
 							break;
 						}
 					}
@@ -162,10 +163,10 @@ function cleanupData(mashedData)
  * returns aggregatedData ={ <timeStamp>:{items:{<name>:{count, prop1: , prop2: ... }}
  * , aggregate:{count, prop1: , prop2: ... }}
  * */
-function getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty , displayProperties, filter)
+function getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty , filter)
 {	
 	var aggregatedData ={};
-	var displayPropertyKeys = Object.keys(displayProperties);
+	var aggregatePropertyKeys = Object.keys(aggregateProperties);
 	 for(var i = 0; i< Object.keys(mashedData).length;i++)
 	 {
 		 var key = Object.keys(mashedData)[i];
@@ -189,31 +190,51 @@ function getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty 
 			if(!nameMap[name])
 			{
 				nameMap[name] = {'count':0};			
-				if(displayPropertyKeys)
+				if(aggregatePropertyKeys)
 				{
 					for(var propertyIndex=0
-							;propertyIndex<displayPropertyKeys.length 
+							;propertyIndex<aggregatePropertyKeys.length 
 							;propertyIndex++) 
 					{
-						var propertyName = displayPropertyKeys[propertyIndex];
-						nameMap[name][propertyName] =0;
-						aggregate[propertyName] =0;	
+						var propertyName = aggregatePropertyKeys[propertyIndex];
+						if(aggregateProperties[propertyName].type === 'float'){
+							nameMap[name][propertyName] =0;
+							aggregate[propertyName] =0;
+						}else if(aggregateProperties[propertyName].type === 'list'){
+							nameMap[name][propertyName] =[];
+							aggregate[propertyName] =[];
+						}
+							
 					}
 				}
 			}
 			
 			
-			if(displayPropertyKeys)
+			if(aggregatePropertyKeys)
 			{
 				for(var propertyIndex=0
-						;propertyIndex<displayPropertyKeys.length 
+						;propertyIndex<aggregatePropertyKeys.length 
 						;propertyIndex++) 
 				{
-					var propertyName = displayPropertyKeys[propertyIndex];
+					var propertyName = aggregatePropertyKeys[propertyIndex];
 					var propertyValue = getPropertyValue(viewedObject, propertyName);
 					
-					nameMap[name][propertyName] += propertyValue;
-					aggregate[propertyName]+=propertyValue;
+					if(propertyValue != null){
+						if(aggregateProperties[propertyName].type === 'list') {
+							if(!nameMap[name][propertyName].includes(propertyValue)){							
+								nameMap[name][propertyName].push(propertyValue);
+							}
+							if(!aggregate[propertyName].includes(propertyValue)){							
+								aggregate[propertyName].push(propertyValue);
+							}
+							
+						}else{
+							nameMap[name][propertyName] += propertyValue;
+							aggregate[propertyName]+=propertyValue;
+						}
+
+					}
+										
 				}
 				
 			}
@@ -235,13 +256,17 @@ function getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty 
 						if(sortingProperty && sortingProperty != 'count')
 						{
 							// sort over average property value
-							if(displayProperties[sortingProperty].sortingValue === 'average'){
+							if(aggregateProperties[sortingProperty].sortingValue === 'average'){
 								itemA = nameMap[a][sortingProperty]/ nameMap[a]['count'];
 								itemB = nameMap[b][sortingProperty]/ nameMap[b]['count'];
 							}
-							else if(displayProperties[sortingProperty].sortingValue === 'sum'){
+							else if(aggregateProperties[sortingProperty].sortingValue === 'sum'){
 								itemA = nameMap[a][sortingProperty];
 								itemB = nameMap[b][sortingProperty];
+							}
+							else if(aggregateProperties[sortingProperty].sortingValue === 'size'){
+								itemA = nameMap[a][sortingProperty].length;
+								itemB = nameMap[b][sortingProperty].length;
 							}
 							
 						}
@@ -301,17 +326,28 @@ function getAggregatedData(mashedData,itemCount, sortAscending, sortingProperty 
 function getShowValue(data, property){
 	if(property == 'count'){
 		return data.count;
-	} else if(property == 'hazard'){
-		return (100.0 * data.hazard / data.viewTime).toFixed(2)+"%";
+	} else if(property == 'hazardViewTime'){
+		return (100.0 * data.hazardViewTime / data.viewTime).toFixed(2)+"%";
 	}else if(property == 'viewTime'){
 		return data.viewTime.toFixed(2);
+	}else if(property == 'hazardTypeSet'){
+		return JSON.stringify(data.hazardTypeSet);
 	}
 	else{
 		return (data[property] / data.count / getMax(property)).toFixed(2);
 	}
 }
 
-
+function filterStarplotAttributes(attributes){	
+	//remove count and remove non star plot attributes
+	for(var i=0;i<attributes.length;i++){
+		if(attributes[i] === 'count' || !aggregateProperties[attributes[i]].starplot){
+			attributes.splice(i,1);
+		}
+	}
+	
+	return attributes;
+}
 function getDenormalizedFilterValue(filter, propertyName)
 {
 	return {min:filter.min * getMax(propertyName), max:filter.max * getMax(propertyName)};
@@ -328,7 +364,10 @@ function getMin(propertyName)
 
 function getPropertyValue(data, propertyName)
 {
-	if(propertyName ==='cameraDistance')
+	if(!data[propertyName]){
+		return null;
+	}
+	else if(propertyName ==='cameraDistance')
 	{
 		return parseFloat(data[propertyName]);
 	}
