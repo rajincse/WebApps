@@ -5,6 +5,7 @@ import { ReducerHook } from "./ReducerHook";
 import { StateHook } from "./StateHook";
 import { MemoHook } from "./MemoHook";
 import { CallbackHook } from "./CallbackHook";
+import { RefHook } from "./RefHook";
 
 export function HooksList(props)
 {
@@ -38,6 +39,11 @@ export function HooksList(props)
             <div>...............................</div>
             <Title>CallbackHook</Title>
             <CallbackHook />
+            <div>...............................</div>
+
+            <div>...............................</div>
+            <Title>RefHook</Title>
+            <RefHook />
             <div>...............................</div>
         </div>
         
