@@ -3,6 +3,8 @@ import { ContextHook } from "./ContextHook";
 import { EffectHook } from "./EffectHook";
 import { ReducerHook } from "./ReducerHook";
 import { StateHook } from "./StateHook";
+import { MemoHook } from "./MemoHook";
+import { CallbackHook } from "./CallbackHook";
 
 export function HooksList(props)
 {
@@ -26,6 +28,16 @@ export function HooksList(props)
             <div>...............................</div>
             <Title>ReducerHook</Title>
             <ReducerHook />
+            <div>...............................</div>
+
+            <div>...............................</div>
+            <Title>MemoHook</Title>
+            <MemoHook />
+            <div>...............................</div>
+
+            <div>...............................</div>
+            <Title>CallbackHook</Title>
+            <CallbackHook />
             <div>...............................</div>
         </div>
         
