@@ -1,4 +1,5 @@
 import { Title } from "../utils/Title";
+import { ContextHook } from "./ContextHook";
 import { EffectHook } from "./EffectHook";
 import { StateHook } from "./StateHook";
 
@@ -14,6 +15,11 @@ export function HooksList(props)
             <div>...............................</div>
             <Title>EffectHook</Title>
             <EffectHook />
+            <div>...............................</div>
+
+            <div>...............................</div>
+            <Title>ContextHook</Title>
+            <ContextHook />
             <div>...............................</div>
         </div>
         

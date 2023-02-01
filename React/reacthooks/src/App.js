@@ -1,14 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
 import { HooksList } from './hooks/HooksList';
+import { UserContext, Users } from './utils/Users';
 
 function App() {
   return (
-    <div>
-      <div>Hello Rajin. How are you?</div>
-      <HooksList/>
-    </div>
-    
+    <UserContext.Provider value={Users.Nahid}>
+      <div>      
+        <HooksList/>
+      </div>
+    </UserContext.Provider>    
   );
 }
 
