@@ -5,7 +5,6 @@ export function EffectHook(props)
     const [a,setA] = useState(0);
     const [b, setB] = useState(100);
     useEffect(()=>{
-        console.log(`A:${a}, B:${b}`);
         setB(a);
     });
     return (
