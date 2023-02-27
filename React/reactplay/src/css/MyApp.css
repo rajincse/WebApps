@@ -1,0 +1,41 @@
+/* $sideBarItemHeight: 50px;
+$sideBarThumbnailWidth: 80px;
+$sideBarThumbnailMargin: 15px;
+$Color_Palette_C02: #00bcf2; // Blue */
+
+.tileGalleryItem {
+    display: flex;
+    min-height: 50px;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0px 2px 4px rgb(0 0 0 / 14%), 0px 0px 2px rgb(0 0 0 / 12%);
+    border-radius: 4px;
+
+    /* &:active {
+        outline: $Color_Palette_C02 dashed 1px;
+        outline-offset: -1px;
+    } */
+}
+
+.ext-tilegallery-thumbnail {
+    flex: 0 0 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    fill: #fff;
+    background-color: #fff;
+
+    /* img {
+        width: $sideBarThumbnailWidth;        
+    } */
+}
+
+.ext-tilegallery-wrapper {
+    margin-left: 15px;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-width: 0;
+}

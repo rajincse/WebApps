@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@typescript-eslint/scope-manager": "^5.53.0"
+  }
+}
