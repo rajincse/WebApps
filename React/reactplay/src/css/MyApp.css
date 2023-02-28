@@ -5,37 +5,65 @@ $Color_Palette_C02: #00bcf2; // Blue */
 
 .tileGalleryItem {
     display: flex;
-    min-height: 50px;
-    width: 100%;
-    box-sizing: border-box;
-    box-shadow: 0px 2px 4px rgb(0 0 0 / 14%), 0px 0px 2px rgb(0 0 0 / 12%);
+    flex-direction: column;
+
+    box-shadow: 0px 3.2px 7.2px rgba(0, 0, 0, 0.132), 0px 0.6px 1.8px rgba(0, 0, 0, 0.108);
     border-radius: 4px;
-
-    /* &:active {
-        outline: $Color_Palette_C02 dashed 1px;
-        outline-offset: -1px;
-    } */
 }
 
-.ext-tilegallery-thumbnail {
-    flex: 0 0 80px;
-    height: 80px;
+.tileGalleryItem span {    
+    font-family: 'Segoe UI';
+    font-style: normal;
+}
+.tileGalleryItem-preview {
     display: flex;
+    flex-direction: row;
+    margin-top: 15px;
+    margin-left: 15px;
+}
+.tileGalleryItem-thumbnail {    
+    display: flex;
+    flex-basis: 80px;
     justify-content: center;
-    align-items: center;
-    border: 1px solid #ccc;
-    fill: #fff;
-    background-color: #fff;
-
-    /* img {
-        width: $sideBarThumbnailWidth;        
-    } */
+}
+.tileGalleryItem-thumbnail-image {
+    box-sizing: border-box;
+    border: 0.5625px solid #8A8886;
+    border-radius: 4px;
 }
 
-.ext-tilegallery-wrapper {
-    margin-left: 15px;
+.tileGalleryItem-thumbnail-image img{
+    width: 44px;
+}
+.tileGalleryItem-header {
     display: flex;
     flex-direction: column;
-    flex: 1 1 auto;
-    min-width: 0;
+    margin-left: 15px;
+}
+
+.tileGalleryItem-description{
+    display: flex;
+}
+.tileGalleryItem-header-title {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #242424;
+}
+.tileGalleryItem-header-subtitle {
+    color: #616161;
+    
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+}
+.tileGalleryItem-description {
+    margin-top: 15px;
+    margin-left: 15px;
+    margin-bottom: 15px;
+}
+.tileGalleryItem-description span{
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
 }

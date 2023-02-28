@@ -28,8 +28,8 @@ export const TileGallery = () => {
                 closeButtonAriaLabel={DashboardsRes.close}
             >
                 <Stack tokens={containerStackTokens}>
-                    <TileGalleryItem title="Query" description="Add a query tile" />
-                    <TileGalleryItem title="Markdown" description="Add a Markdown tile" />
+                    <TileGalleryItem title="Query" type="Editor" description="Add a query tile" />
+                    <TileGalleryItem title="Markdown" type="Editor" description="Add a Markdown tile" />
                 </Stack>
             </Panel>
         </div>

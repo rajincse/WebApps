@@ -5,11 +5,16 @@ export const TileGalleryItem = (props) => {
 
     return (
         <div className="tileGalleryItem">
-            <div className="ext-tilegallery-thumbnail msportalfx-svg-palette-blue">
-                <ImageIcon imageProps={ {src: MetricsChartTile} } />
+            <div className="tileGalleryItem-preview">
+                <div className="tileGalleryItem-thumbnail">
+                    <ImageIcon className="tileGalleryItem-thumbnail-image" imageProps={{ src: MetricsChartTile }} />
+                </div>
+                <div className="tileGalleryItem-header">
+                    <span  className="tileGalleryItem-header-title" title={props.title}>{props.title}</span>
+                    <span className="tileGalleryItem-header-subtitle" title={props.type}>{props.type}</span>
+                </div>
             </div>
-            <div className="ext-tilegallery-wrapper">
-                <span title={props.title}>{props.title}</span>
+            <div className="tileGalleryItem-description">
                 <span title={props.description}>{props.description}</span>
             </div>
         </div>
