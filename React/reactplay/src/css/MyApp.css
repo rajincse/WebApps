@@ -23,8 +23,6 @@ $Color_Palette_C02: #00bcf2; // Blue */
 }
 .tileGalleryItem-thumbnail {    
     display: flex;
-    flex-basis: 80px;
-    justify-content: center;
 }
 .tileGalleryItem-thumbnail-image {
     box-sizing: border-box;
