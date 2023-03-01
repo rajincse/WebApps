@@ -23,6 +23,8 @@ $Color_Palette_C02: #00bcf2; // Blue */
 }
 .tileGalleryItem-thumbnail {    
     display: flex;
+    width: 44px;
+    height: 44px;
 }
 .tileGalleryItem-thumbnail-image {
     box-sizing: border-box;
@@ -30,8 +32,10 @@ $Color_Palette_C02: #00bcf2; // Blue */
     border-radius: 4px;
 }
 
-.tileGalleryItem-thumbnail-image img{
-    width: 44px;
+.tileGalleryItem-thumbnail-image svg,img{
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 .tileGalleryItem-header {
     display: flex;

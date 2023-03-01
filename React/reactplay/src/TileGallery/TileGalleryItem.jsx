@@ -1,5 +1,6 @@
-import { ImageIcon } from "@fluentui/react";
-import MetricsChartTile from "../svg/MetricsChartTile.svg"
+import { FontIcon } from "@fluentui/react";
+import { registerCustomIcons } from "../utils/RegisterIcons";
+registerCustomIcons();
 
 export const TileGalleryItem = (props) => {
 
@@ -7,7 +8,7 @@ export const TileGalleryItem = (props) => {
         <div className="tileGalleryItem">
             <div className="tileGalleryItem-preview">
                 <div className="tileGalleryItem-thumbnail">
-                    <ImageIcon className="tileGalleryItem-thumbnail-image" imageProps={{ src: MetricsChartTile }} />
+                    <FontIcon iconName="MetricsChartTileImage" className="tileGalleryItem-thumbnail-image" />
                 </div>
                 <div className="tileGalleryItem-header">
                     <span  className="tileGalleryItem-header-title" title={props.title}>{props.title}</span>
