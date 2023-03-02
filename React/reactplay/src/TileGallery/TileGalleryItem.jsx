@@ -1,21 +1,23 @@
 import { FontIcon } from "@fluentui/react";
 import { registerCustomIcons } from "../utils/RegisterIcons";
+import styles from "../css/TileGallery.module.scss";
+
 registerCustomIcons();
 
 export const TileGalleryItem = (props) => {
 
     return (
-        <div className="tileGalleryItem">
-            <div className="tileGalleryItem-preview">
-                <div className="tileGalleryItem-thumbnail">
-                    <FontIcon iconName="MetricsChartTileImage" className="tileGalleryItem-thumbnail-image" />
+        <div className={styles.tileGalleryItem}>
+            <div className={styles.tileGalleryItemPreview}>
+                <div className={styles.tileGalleryItemThumbnail}>
+                    <FontIcon iconName={props.iconName} className={styles.tileGalleryItemThumbnailImage} />
                 </div>
-                <div className="tileGalleryItem-header">
-                    <span  className="tileGalleryItem-header-title" title={props.title}>{props.title}</span>
-                    <span className="tileGalleryItem-header-subtitle" title={props.type}>{props.type}</span>
+                <div className={styles.tileGalleryItemHeader}>
+                    <span className={styles.tileGalleryItemHeaderTitle} title={props.title}>{props.title}</span>
+                    <span className={styles.tileGalleryItemHeaderSubtitle} title={props.subTitle}>{props.subTitle}</span>
                 </div>
             </div>
-            <div className="tileGalleryItem-description">
+            <div className={styles.tileGalleryItemDescription}>
                 <span title={props.description}>{props.description}</span>
             </div>
         </div>

@@ -2,6 +2,7 @@ import { DefaultButton, Stack } from "@fluentui/react";
 import { Panel } from '@fluentui/react/lib/Panel';
 import { useState } from "react";
 import { TileGalleryItem } from "./TileGalleryItem";
+
 export const TileGallery = () => {
     const [showTileGallery, setShowTileGallery] = useState(false);
     const TileGalleryRes = {
@@ -28,8 +29,8 @@ export const TileGallery = () => {
                 closeButtonAriaLabel={DashboardsRes.close}
             >
                 <Stack tokens={containerStackTokens}>
-                    <TileGalleryItem title="Query" type="Editor" description="Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet." />
-                    <TileGalleryItem title="Markdown" type="Editor" description="Monitor your key metrics on a line, area, bar, or scatter chart." />
+                    <TileGalleryItem title="Query" subTitle="Editor" iconName="MetricsChartTileImage" description="Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet." />
+                    <TileGalleryItem title="Markdown" subTitle="Editor" iconName="MetricsChartTileImage" description="Monitor your key metrics on a line, area, bar, or scatter chart." />
                 </Stack>
             </Panel>
         </div>
