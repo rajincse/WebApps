@@ -1,4 +1,6 @@
 $contentMargin: 15px;
+$tileListMargin: 20px;
+$searchBoxMargin: 12px;
 
 $regularFontWeight : 400;
 $regularFontSize: 12px;
@@ -8,8 +10,8 @@ $titleFontWeight : 600;
 $titleFontSize: 14px;
 $titleLineHeight: 20px;
 
-$tileGalleryDescriptionFontSize: 13px;
-$tileGalleryDescriptionLineHeight: 18px;
+$mediumFontSize: 13px;
+$mediumLineHeight: 18px;
 
 $fontFamily: 'Segoe UI';
 $fontStyle: normal;
@@ -20,6 +22,11 @@ $colorFullBlack: #000000;
 $linkColor: #0078d4;
 
 $thumbnailSize: 44px;
+
+$searchBoxHeight: 24px;
+$searchBoxIconContainerWidth: 24px;
+$searchBoxIconSize: 12px;
+$searchBoxIconMargin: 6px;
 
 $borderShadowRoundedGray: 0px 3.2px 7.2px rgba(0, 0, 0, 0.132), 0px 0.6px 1.8px rgba(0, 0, 0, 0.108);
 $borderShadowSolidBlack: 0.5625px solid #8A8886;
@@ -40,12 +47,30 @@ $borderRadius: 4px;
     display: flex;
     flex-direction: column;
 }
-.tileGallerySearchBox {
-    display: flex;
+
+.tileGallerySearchBoxContainer {
+    display: block;
+    margin-top: $searchBoxIconMargin;
 }
+
+.tileGallerySearchBox {
+    height: $searchBoxHeight;
+    @include textMixin($regularFontWeight, $mediumFontSize, $mediumLineHeight);
+    div[class~="ms-SearchBox-iconContainer"] {
+        width: $searchBoxIconContainerWidth;
+    }
+    i,svg, img {
+        width: $searchBoxIconSize;
+        font-size: $searchBoxIconSize;
+        margin-left: $searchBoxIconMargin;
+    }
+}
+
 .tileGalleryTileList {
     display: flex;
+    margin-top: $tileListMargin;
 }
+
 .tileGalleryActions {
     display: flex;
 }
@@ -53,8 +78,9 @@ $borderRadius: 4px;
 .tileGalleryDescription {
     span {
         @include fontFamilyMixin;
-        @include textMixin($regularFontWeight, $tileGalleryDescriptionFontSize , $tileGalleryDescriptionLineHeight );        
+        @include textMixin($regularFontWeight, $mediumFontSize , $mediumLineHeight );
     }
+
     a {
         color: $linkColor;
 

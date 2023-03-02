@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DefaultButton, Stack, PrimaryButton, initializeIcons, Text, Link } from "@fluentui/react";
+import { DefaultButton, Stack, PrimaryButton, initializeIcons, Text, Link, SearchBox } from "@fluentui/react";
 import { Panel } from '@fluentui/react/lib/Panel';
 import { useState } from "react";
 import { TileGalleryItem } from "./TileGalleryItem";
@@ -52,11 +52,11 @@ export const TileGallery = () => {
                             <Link href="https://docs.microsoft.com/azure/lighthouse/how-to/onboard-customer" target="_blank">
                                 {TileGalleryRes.learnMore}
                             </Link>
-                            <IconButton iconProps={{ iconName: "NavigateExternalInline" }} className="reactview-inlineicon" ariaLabel={TileGalleryRes.learnMore} />
+                            <IconButton iconProps={{ iconName: "NavigateExternalInline" }} className="reactview-inlineicon" ariaLabel={DashboardsRes.learnMore} />
                         </Text>
                     </div>
-                    <div className={styles.tileGallerySearchBox}>
-
+                    <div className={styles.tileGallerySearchBoxContainer}>
+                        <SearchBox placeholder={TileGalleryRes.Search.placeHolder} onSearch={newValue => console.log('value is ' + newValue)} className={styles.tileGallerySearchBox} />
                     </div>
                     <div className={styles.tileGalleryTileList}>
                         <Stack tokens={containerStackTokens}>
@@ -65,7 +65,7 @@ export const TileGallery = () => {
                     </div>
                     <div className={styles.tileGalleryActions}>
                         <PrimaryButton onClick={dismissPanel} styles={{ root: { marginRight: 8 } }}>
-                            Add
+                            {DashboardsRes.add}
                         </PrimaryButton>
                     </div>
                 </div>

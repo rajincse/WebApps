@@ -53,12 +53,13 @@ export const TileGalleryRes = {
      * The text "Tile Gallery"
      */
       header: "Tile Gallery" ,
-    /**
-     * The text "Learn more"
-     */
-      learnMore: "Learn more" ,
+      Search: {
+        placeHolder: "Filter tiles",
+      }
 }
 
 export const DashboardsRes = {
+  add: "Add",
   close: "Close",
+  learnMore: "Learn more" ,
 }
