@@ -50,7 +50,7 @@ export const TileGallery = () => {
                         <Text style={{ marginTop: "auto" }}>
                             {TileGalleryRes.description}
                             <Link href="https://docs.microsoft.com/azure/lighthouse/how-to/onboard-customer" target="_blank">
-                                {TileGalleryRes.learnMore}
+                                {DashboardsRes.learnMore}
                             </Link>
                             <IconButton iconProps={{ iconName: "NavigateExternalInline" }} className="reactview-inlineicon" ariaLabel={DashboardsRes.learnMore} />
                         </Text>
