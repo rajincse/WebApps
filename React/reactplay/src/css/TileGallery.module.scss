@@ -36,6 +36,20 @@ $borderRadius: 4px;
     line-height: $lineHeight;
 }
 
+.tileGalleryContainer {
+    display: flex;
+    flex-direction: column;
+}
+.tileGallerySearchBox {
+    display: flex;
+}
+.tileGalleryTileList {
+    display: flex;
+}
+.tileGalleryActions {
+    display: flex;
+}
+
 .tileGalleryDescription {
     span {
         @include fontFamilyMixin;

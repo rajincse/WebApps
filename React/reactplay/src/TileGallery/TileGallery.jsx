@@ -14,7 +14,7 @@ export const TileGallery = () => {
         setShowTileGallery(false);
     }, []);
 
-    const tileGalleryItems = TileGalleryDefinition.TileTypes.map(item => {
+    const tileGalleryItems = TileGalleryDefinition.TileTypes.map((item,i) => {
         const resourceItem = TileGalleryRes[item.name];
 
         const title = resourceItem.title;
@@ -23,22 +23,11 @@ export const TileGallery = () => {
         const subTitle = TileGalleryRes.RedirectionType[item.redirectionType];
 
         return (
-            <TileGalleryItem title={title} subTitle={subTitle} description={description} iconName={item.icon} />
+            <TileGalleryItem title={title} subTitle={subTitle} description={description} iconName={item.icon} key={i}/>
         );
     });
 
     const containerStackTokens = { childrenGap: 5 };
-
-    const onRenderFooterContent = React.useCallback(
-        () => (
-            <div>
-                <PrimaryButton onClick={dismissPanel} styles={{ root: { marginRight: 8 } }}>
-                    Add
-                </PrimaryButton>
-            </div>
-        ),
-        [dismissPanel]
-    );
 
     return (
         <div>
@@ -50,24 +39,24 @@ export const TileGallery = () => {
                 isOpen={showTileGallery}
                 onDismiss={dismissPanel}
                 closeButtonAriaLabel={DashboardsRes.close}
-                onRenderFooterContent={onRenderFooterContent}
-                isFooterAtBottom={false}
             >
-                <div>
+                <div className={styles.tileGalleryContainer}>
                     <div className={styles.tileGalleryDescription}>
-                        <span>Drag and drop or select tile and click "Add". You can add other parts of the portal to the dashboard by pinning. </span>
-                        <a href="https://go.microsoft.com/fwLink/?LinkID=2155614&amp;amp;clcid=0x9" target="_blank" rel="noreferrer">Learn more</a>
+                        <span>{TileGalleryRes.description}</span>
+                        <a href="https://go.microsoft.com/fwLink/?LinkID=2155614&amp;amp;clcid=0x9" target="_blank" rel="noreferrer">{TileGalleryRes.learnMore}</a>
                     </div>
-                    <div>
+                    <div className={styles.tileGallerySearchBox}>
 
                     </div>
-                    <div>
+                    <div className={styles.tileGalleryTileList}>
                         <Stack tokens={containerStackTokens}>
                             {tileGalleryItems}
                         </Stack>
                     </div>
-                    <div>
-
+                    <div className={styles.tileGalleryActions}>
+                        <PrimaryButton onClick={dismissPanel} styles={{ root: { marginRight: 8 } }}>
+                            Add
+                        </PrimaryButton>
                     </div>
                 </div>
             </Panel>
