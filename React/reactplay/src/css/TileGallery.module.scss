@@ -8,10 +8,16 @@ $titleFontWeight : 600;
 $titleFontSize: 14px;
 $titleLineHeight: 20px;
 
+$tileGalleryDescriptionFontSize: 13px;
+$tileGalleryDescriptionLineHeight: 18px;
+
 $fontFamily: 'Segoe UI';
+$fontStyle: normal;
 
 $colorBlack: #242424;
 $colorGray: #616161;
+$colorFullBlack: #000000;
+$linkColor: #0078d4;
 
 $thumbnailSize: 44px;
 
@@ -19,11 +25,28 @@ $borderShadowRoundedGray: 0px 3.2px 7.2px rgba(0, 0, 0, 0.132), 0px 0.6px 1.8px 
 $borderShadowSolidBlack: 0.5625px solid #8A8886;
 $borderRadius: 4px;
 
+@mixin fontFamilyMixin {
+    font-family: $fontFamily;
+    font-style: $fontStyle;
+}
 
 @mixin textMixin($fontWeight, $fontSize, $lineHeight) {
     font-weight: $fontWeight;
     font-size: $fontSize;
     line-height: $lineHeight;
+}
+
+.tileGalleryDescription {
+    span {
+        @include fontFamilyMixin;
+        @include textMixin($regularFontWeight, $tileGalleryDescriptionFontSize , $tileGalleryDescriptionLineHeight );
+        color: $colorFullBlack;
+    }
+    a {
+        color: $linkColor;
+
+    }
+
 }
 
 .tileGalleryItem {
@@ -34,8 +57,8 @@ $borderRadius: 4px;
     border-radius: $borderRadius;
 
     span {
-        font-family: $fontFamily;
-        font-style: normal;
+        @include fontFamilyMixin;
+        padding-right: 15px;
     }
 }
 
