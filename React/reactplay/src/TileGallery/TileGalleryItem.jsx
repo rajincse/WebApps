@@ -1,8 +1,7 @@
 import { FontIcon } from "@fluentui/react";
-import { registerCustomIcons } from "../utils/RegisterIcons";
 import styles from "../css/TileGallery.module.scss";
 
-registerCustomIcons();
+
 
 export const TileGalleryItem = (props) => {
 

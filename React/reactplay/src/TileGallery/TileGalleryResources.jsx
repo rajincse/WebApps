@@ -48,7 +48,7 @@ export const TileGalleryRes = {
     /**
      * The text "Drag and drop or select tile and click "Add". You can add other parts of the portal to the dashboard by pinning."
      */
-      description: "Drag and drop or select tile and click \"Add\". You can add other parts of the portal to the dashboard by pinning." ,
+      description: "Drag and drop or select tile and click \"Add\". You can add other parts of the portal to the dashboard by pinning. " ,
     /**
      * The text "Tile Gallery"
      */

@@ -1,11 +1,16 @@
 import * as React from 'react';
-import { DefaultButton, Stack, PrimaryButton } from "@fluentui/react";
+import { DefaultButton, Stack, PrimaryButton, initializeIcons, Text, Link } from "@fluentui/react";
 import { Panel } from '@fluentui/react/lib/Panel';
 import { useState } from "react";
 import { TileGalleryItem } from "./TileGalleryItem";
 import styles from "../css/TileGallery.module.scss";
 import { TileGalleryRes, DashboardsRes } from "./TileGalleryResources";
 import { TileGalleryDefinition } from "./TileGalleryDefinition";
+import { registerCustomIcons } from '../utils/RegisterIcons';
+import { IconButton } from "@fluentui/react/lib/Button";
+
+registerCustomIcons();
+initializeIcons();
 
 export const TileGallery = () => {
     const [showTileGallery, setShowTileGallery] = useState(false);
@@ -14,7 +19,7 @@ export const TileGallery = () => {
         setShowTileGallery(false);
     }, []);
 
-    const tileGalleryItems = TileGalleryDefinition.TileTypes.map((item,i) => {
+    const tileGalleryItems = TileGalleryDefinition.TileTypes.map((item, i) => {
         const resourceItem = TileGalleryRes[item.name];
 
         const title = resourceItem.title;
@@ -23,7 +28,7 @@ export const TileGallery = () => {
         const subTitle = TileGalleryRes.RedirectionType[item.redirectionType];
 
         return (
-            <TileGalleryItem title={title} subTitle={subTitle} description={description} iconName={item.icon} key={i}/>
+            <TileGalleryItem title={title} subTitle={subTitle} description={description} iconName={item.icon} key={i} />
         );
     });
 
@@ -42,8 +47,13 @@ export const TileGallery = () => {
             >
                 <div className={styles.tileGalleryContainer}>
                     <div className={styles.tileGalleryDescription}>
-                        <span>{TileGalleryRes.description}</span>
-                        <a href="https://go.microsoft.com/fwLink/?LinkID=2155614&amp;amp;clcid=0x9" target="_blank" rel="noreferrer">{TileGalleryRes.learnMore}</a>
+                        <Text style={{ marginTop: "auto" }}>
+                            {TileGalleryRes.description}
+                            <Link href="https://docs.microsoft.com/azure/lighthouse/how-to/onboard-customer" target="_blank">
+                                {TileGalleryRes.learnMore}
+                            </Link>
+                            <IconButton iconProps={{ iconName: "NavigateExternalInline" }} className="reactview-inlineicon" ariaLabel={TileGalleryRes.learnMore} />
+                        </Text>
                     </div>
                     <div className={styles.tileGallerySearchBox}>
 

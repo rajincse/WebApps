@@ -53,8 +53,7 @@ $borderRadius: 4px;
 .tileGalleryDescription {
     span {
         @include fontFamilyMixin;
-        @include textMixin($regularFontWeight, $tileGalleryDescriptionFontSize , $tileGalleryDescriptionLineHeight );
-        color: $colorFullBlack;
+        @include textMixin($regularFontWeight, $tileGalleryDescriptionFontSize , $tileGalleryDescriptionLineHeight );        
     }
     a {
         color: $linkColor;
