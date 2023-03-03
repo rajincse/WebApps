@@ -8,6 +8,7 @@ import { TileGalleryRes, DashboardsRes } from "./TileGalleryResources";
 import { TileGalleryDefinition } from "./TileGalleryDefinition";
 import { registerCustomIcons } from '../utils/RegisterIcons';
 import { IconButton } from "@fluentui/react/lib/Button";
+import { DashboardConstants } from '../utils/Constants';
 
 registerCustomIcons();
 initializeIcons();
@@ -49,10 +50,10 @@ export const TileGallery = () => {
                     <div className={styles.tileGalleryDescription}>
                         <Text style={{ marginTop: "auto" }}>
                             {TileGalleryRes.description}
-                            <Link href="https://docs.microsoft.com/azure/lighthouse/how-to/onboard-customer" target="_blank">
+                            <Link href={DashboardConstants.Links.TileGalleryOverview} target="_blank">
                                 {DashboardsRes.learnMore}
                             </Link>
-                            <IconButton iconProps={{ iconName: "NavigateExternalInline" }} className="reactview-inlineicon" ariaLabel={DashboardsRes.learnMore} />
+                            <IconButton iconProps={{ iconName: "NavigateExternalInline" }} ariaLabel={DashboardsRes.learnMore} />
                         </Text>
                     </div>
                     <div className={styles.tileGallerySearchBoxContainer}>
